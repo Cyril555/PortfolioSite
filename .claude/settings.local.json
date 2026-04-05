@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm create:*)",
+      "Bash(cp -r /tmp/portfolio-site/src /Users/cyrilkumaar/PortfolioSite/)",
+      "Bash(cp -r /tmp/portfolio-site/public /Users/cyrilkumaar/PortfolioSite/)",
+      "Bash(cp /tmp/portfolio-site/package.json /tmp/portfolio-site/tsconfig.json /tmp/portfolio-site/next.config.ts /Users/cyrilkumaar/PortfolioSite/)",
+      "Bash(pnpm build:*)"
+    ]
+  }
+}
