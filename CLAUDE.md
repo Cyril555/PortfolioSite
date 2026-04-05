@@ -71,9 +71,9 @@ Every project must follow this structure. A recruiter reads these like mini-cons
 
 ## Content Data
 - Full name: Dr. Cyrilkumaar Vijayakumar
-- Email: c.vijayakumar@lse.ac.uk
-- LinkedIn: linkedin.com/in/cyrilvijayakumar
-- Phone: +44 7856 574 742
+- Email: 
+- LinkedIn: 
+- Phone: 
 - Location: London, UK
 - Languages: English (native), Mandarin, Spanish, Tamil (professional)
 - Positioning: "Doctor · Technologist · Strategist"
