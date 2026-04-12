@@ -25,6 +25,7 @@ export interface Project {
   readTime?: string;
   articleBody?: ArticleSection[];
   images?: ProjectImage[];
+  thumbnailImage?: string;
 }
 
 export type ArticleSection =
