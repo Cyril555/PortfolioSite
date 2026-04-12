@@ -47,6 +47,16 @@ function renderSection(section: ArticleSection, i: number) {
           )}
         </blockquote>
       );
+    case "image":
+      return (
+        <figure key={i} className={styles.articleImageFigure}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={section.src} alt={section.caption || ""} className={styles.articleImage} />
+          {section.caption && (
+            <figcaption className={styles.articleImageCaption}>{section.caption}</figcaption>
+          )}
+        </figure>
+      );
   }
 }
 

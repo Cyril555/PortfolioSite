@@ -6,41 +6,55 @@ import styles from "./Hero.module.css";
 export default function Hero() {
   return (
     <section className={styles.hero}>
-      <Reveal>
-        <div className={styles.eyebrow}>Doctor · Technologist · Strategist</div>
-      </Reveal>
-      <Reveal delay={0.08}>
-        <h1 className={styles.name}>
-          Cyrilkumaar<br />
-          Vijayakumar<span className={styles.dot}>.</span>
-        </h1>
-      </Reveal>
-      <Reveal delay={0.16}>
-        <p className={styles.sub}>
-          I sit at the intersection of clinical medicine, health technology, and management strategy.
-          LSE Master's candidate building the bridge between patient outcomes and business impact.
-        </p>
-      </Reveal>
-      <Reveal delay={0.26}>
-        <div className={styles.metrics}>
-          <div className={styles.metric}>
-            <div className={styles.metricVal}>100+</div>
-            <div className={styles.metricLabel}>Patients Managed<br />Across 6 Specialities</div>
-          </div>
-          <div className={styles.metric}>
-            <div className={styles.metricVal}>25%</div>
-            <div className={styles.metricLabel}>Monitoring Improvement<br />Glucose Sensors</div>
-          </div>
-          <div className={styles.metric}>
-            <div className={styles.metricVal}>100%</div>
-            <div className={styles.metricLabel}>Testing Increase<br />Vitamin D Audit</div>
-          </div>
-          <div className={styles.metric}>
-            <div className={styles.metricVal}>4</div>
-            <div className={styles.metricLabel}>Languages<br />EN · 中文 · ES · தமிழ்</div>
-          </div>
+      <div className={styles.heroContent}>
+        <div className={styles.heroText}>
+          <Reveal>
+            <div className={styles.eyebrow}>Doctor · Technologist · Strategist</div>
+          </Reveal>
+          <Reveal delay={0.08}>
+            <h1 className={styles.name}>
+              Hi, I am Cyril<span className={styles.dot}>.</span>
+            </h1>
+          </Reveal>
+          <Reveal delay={0.16}>
+            <p className={styles.sub}>
+              I sit at the intersection of clinical medicine, health technology, and management strategy.
+            </p>
+          </Reveal>
+          <Reveal delay={0.26}>
+            <div className={styles.metrics}>
+              <div className={styles.metric}>
+                <div className={styles.metricVal}>
+                  NHS <span style={{ fontFamily: "system-ui, sans-serif" }}>→</span> LSE
+                </div>
+                <div className={styles.metricLabel}>From Clinical Medicine<br />To Management Strategy</div>
+              </div>
+              <div className={styles.metric}>
+                <div className={styles.metricVal}>4</div>
+                <div className={styles.metricLabel}>Digital Health Products<br />Created And Shipped</div>
+              </div>
+              <div className={styles.metric}>
+                <div className={styles.metricVal}>6</div>
+                <div className={styles.metricLabel}>Clinical Audits<br />And QI Projects</div>
+              </div>
+              <div className={styles.metric}>
+                <div className={styles.metricVal}>4</div>
+                <div className={styles.metricLabel}>
+                  Languages<br />
+                  <span style={{ fontFamily: "var(--mono), system-ui, sans-serif" }}>
+                    EN · 中文 · ES · தமிழ்
+                  </span>
+                </div>
+              </div>
+            </div>
+          </Reveal>
         </div>
-      </Reveal>
+        <Reveal delay={0.3}>
+          <div className={styles.heroImageContainer}>
+            <img src="/profile.jpg" alt="Dr. Cyril" className={styles.profilePic} />
+          </div>
+        </Reveal>
+      </div>
       <div className={styles.scroll}>
         <div className={styles.scrollBar} />
         Scroll to explore

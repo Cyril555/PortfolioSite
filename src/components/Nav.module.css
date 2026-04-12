@@ -4,10 +4,10 @@
   left: 0;
   right: 0;
   z-index: 100;
-  background: rgba(244, 241, 236, 0.88);
+  background: rgba(4, 4, 4, 0.95);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .inner {
@@ -24,11 +24,12 @@
   font-size: 20px;
   cursor: pointer;
   letter-spacing: -0.5px;
+  color: #fafafa;
 }
 
 .logo em {
   font-style: italic;
-  color: var(--accent);
+  color: var(--muted-light);
 }
 
 .links {
@@ -39,22 +40,23 @@
 
 .links li {
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 13px;
+  font-weight: 600;
   letter-spacing: 2px;
   text-transform: uppercase;
   cursor: pointer;
-  color: var(--muted);
+  color: rgba(250, 250, 250, 0.6);
   transition: color 0.3s;
   padding-bottom: 3px;
 }
 
 .links li:hover,
 .links li.active {
-  color: var(--fg);
+  color: #fafafa;
 }
 
 .links li.active {
-  border-bottom: 2px solid var(--accent);
+  border-bottom: 2px solid #fafafa;
 }
 
 .right {
@@ -65,28 +67,47 @@
 
 .time {
   font-family: var(--mono);
-  font-size: 10px;
-  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(250, 250, 250, 0.6);
   letter-spacing: 1px;
+}
+
+.themeToggle {
+  background: none;
+  border: none;
+  color: rgba(250, 250, 250, 0.6);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  transition: color 0.3s;
+}
+
+.themeToggle:hover {
+  color: #fafafa;
 }
 
 .cta {
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 13px;
+  font-weight: 600;
   letter-spacing: 1.5px;
   text-transform: uppercase;
   padding: 8px 20px;
-  border: 1px solid var(--fg);
-  background: var(--fg);
-  color: var(--bg);
+  border: 1px solid #fafafa;
+  background: #fafafa;
+  color: #1a1a1a;
   cursor: pointer;
   transition: all 0.3s;
   text-decoration: none;
 }
 
 .cta:hover {
-  background: var(--accent);
-  border-color: var(--accent);
+  background: transparent;
+  border-color: #fafafa;
+  color: #fafafa;
 }
 
 .hamburger {
@@ -104,7 +125,7 @@
   display: block;
   width: 100%;
   height: 2px;
-  background: var(--fg);
+  background: #fafafa;
   position: absolute;
   left: 0;
   transition: all 0.3s;

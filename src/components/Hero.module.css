@@ -11,11 +11,41 @@
 
 .eyebrow {
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 16px;
   letter-spacing: 3px;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--muted);
   margin-bottom: 24px;
+}
+
+.heroContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 48px;
+}
+
+.heroText {
+  flex: 1;
+}
+
+.heroImageContainer {
+  flex-shrink: 0;
+  width: clamp(200px, 20vw, 300px);
+  height: clamp(200px, 20vw, 300px);
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid var(--accent);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profilePic {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .name {
@@ -70,7 +100,7 @@
   font-size: 9px;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--muted-light);
   line-height: 1.4;
 }
 
@@ -82,22 +112,16 @@
   font-size: 9px;
   letter-spacing: 2.5px;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--fg);
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
 .scrollBar {
-  width: 40px;
+  width: 56px;
   height: 1px;
   background: var(--accent);
-  animation: pulseLine 2s ease-in-out infinite;
-}
-
-@keyframes pulseLine {
-  0%, 100% { opacity: 0.3; width: 40px; }
-  50% { opacity: 1; width: 56px; }
 }
 
 @media (max-width: 1000px) {
@@ -110,6 +134,12 @@
   .hero {
     padding-left: 24px;
     padding-right: 24px;
+  }
+
+  .heroContent {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    gap: 32px;
   }
 
   .scroll {

@@ -1,5 +1,6 @@
 export interface ProjectMetric {
-  value: string;
+  value?: string;
+  icon?: string;
   label: string;
 }
 
@@ -30,14 +31,15 @@ export type ArticleSection =
   | { type: "paragraph"; text: string }
   | { type: "heading"; text: string }
   | { type: "list"; items: string[] }
-  | { type: "quote"; text: string; attribution?: string };
+  | { type: "quote"; text: string; attribution?: string }
+  | { type: "image"; src: string; caption?: string };
 
 export const PROJECTS: Project[] = [
   {
     slug: "continuous-glucose-monitoring",
     domains: ["medicine", "technology"],
-    tag: "CLINICAL INNOVATION",
-    title: "Continuous Glucose Monitoring in Surgery",
+    tag: "CLINICAL AUDIT",
+    title: "CGM in Surgery: A Lesson in Health Tech Adoption",
     problem:
       "Post-surgical patients lacked real-time glucose visibility, delaying interventions and increasing complication risk.",
     approach:
@@ -45,62 +47,71 @@ export const PROJECTS: Project[] = [
     outcome:
       "25% improvement in glucose monitoring accuracy. Findings presented at the 2025 Vascular Society AGM.",
     metrics: [
-      { value: "25%", label: "Monitoring Improvement" },
-      { value: "2025", label: "Vascular Society AGM" },
+      { value: "9/11", label: "Domains at good compliance" },
+      { value: "45", label: "Patients analysed" },
+      { icon: "Presentation", label: "2024 Presented at national conference" },
     ],
+    thumbnailImage: "/audit-charts.png",
     subtitle:
-      "How real-time glucose data transformed post-operative care in a vascular surgery unit.",
-    date: "2025",
+      "A two-cycle clinical audit measuring perioperative insulin management compliance, and how introducing continuous glucose monitoring reshaped clinical workflow.",
+    date: "2024",
     readTime: "6 min read",
     articleBody: [
       {
+        type: "heading",
+        text: "Context",
+      },
+      {
         type: "paragraph",
-        text: "In post-surgical care, the margin between optimal glucose control and a preventable complication can be a matter of hours. Traditional intermittent blood glucose monitoring — a finger-prick every four to six hours — creates blind spots in a patient's metabolic trajectory. For vascular surgery patients, many of whom have underlying diabetes or stress-induced hyperglycaemia, those blind spots carry real risk.",
+        text: "Approximately 15% of patients undergoing vascular surgery are diabetic. These patients face longer hospital stays, a higher incidence of complications, and significant variability in how their insulin is managed during the perioperative period. National guidelines provide clear standards for intravenous insulin infusion management in surgical patients, but formal measurement of adherence to those standards at the ward level remained limited.",
+      },
+      {
+        type: "paragraph",
+        text: "I saw an opportunity to quantify that gap and, more importantly, to test whether introducing continuous glucose monitoring into the perioperative workflow could close it.",
       },
       {
         type: "heading",
-        text: "The Problem",
+        text: "What I Did",
       },
       {
         type: "paragraph",
-        text: "On the vascular surgery ward, I observed a recurring pattern: glucose readings were only available at pre-defined intervals. When a patient's glucose began trending upward overnight, nursing staff had no early warning signal. By the time the next scheduled check captured an elevated reading, the window for early intervention had often closed.",
+        text: "I co-led a two-cycle clinical audit measuring adherence to 11 national guideline standards for perioperative insulin management. The first cycle ran for six months and gave us a baseline. We were doing well in most areas, but there were clear gaps, particularly around glucose monitoring frequency.",
       },
       {
         type: "paragraph",
-        text: "This wasn't a failure of clinical practice — it was a structural limitation of the monitoring system. The question I wanted to answer was: could continuous glucose monitoring (CGM) sensors, designed for outpatient diabetic management, translate into a meaningful improvement in inpatient post-operative care?",
+        text: "Between cycles, we introduced five changes. Most were process fixes: adjusting medication timings, adding routine checks at key handover points, extending insulin overlap windows. But the one that interested me most was the introduction of continuous glucose monitoring sensors for eligible patients.",
+      },
+      {
+        type: "paragraph",
+        text: "CGM is well established in outpatient diabetic care. It is not standard in surgical inpatient settings. I wanted to see whether giving clinical staff access to real-time glucose trend data, rather than isolated finger-prick readings every few hours, would change anything.",
       },
       {
         type: "heading",
-        text: "Designing the Protocol",
+        text: "What Changed",
       },
       {
         type: "paragraph",
-        text: "I worked with the surgical team to define a structured implementation protocol. Key design decisions included: sensor placement guidelines adapted for post-operative patients, alarm threshold calibration to reduce alert fatigue, and a nursing training programme on interpreting trend arrows rather than isolated values.",
+        text: "The second cycle, covering 45 consecutive patients over six months, showed improvement across nearly every domain. Compliance rose from 8 to 9 out of 11 domains at the good threshold.",
       },
       {
-        type: "list",
-        items: [
-          "Sensor placement protocol for post-surgical anatomical sites",
-          "Two-tier alarm system: advisory (trend) and critical (threshold breach)",
-          "30-minute nursing orientation on CGM dashboard interpretation",
-          "Daily consultant review of glucose trend data during ward rounds",
-        ],
+        type: "paragraph",
+        text: "But the more interesting finding was behavioural. CGM users showed meaningfully higher monitoring compliance than non-CGM users. The technology did not just produce better data. It changed how the team interacted with the data. Nurses started reading trend arrows rather than waiting for threshold breaches. Consultants began reviewing glucose trajectories during ward rounds rather than reacting to isolated spikes.",
+      },
+      {
+        type: "paragraph",
+        text: "The shift was from reactive to anticipatory. That mattered more than the percentage improvement.",
       },
       {
         type: "heading",
-        text: "Outcome",
+        text: "Why This Stuck With Me",
       },
       {
         type: "paragraph",
-        text: "Across the cohort, we observed a 25% improvement in glucose monitoring accuracy — measured by reduction in undetected excursions outside target range compared to the standard intermittent monitoring period. The findings were compiled and presented at the 2025 Vascular Society Annual General Meeting.",
-      },
-      {
-        type: "quote",
-        text: "The value wasn't just in the data — it was in shifting the team's mental model from reactive to anticipatory glucose management.",
+        text: "This project sits at the start of a thread that runs through most of what I have built since. The sensor technology was not new. The guidelines were not new. What was new was applying an existing tool in a context where it had not been tried, measuring the result properly, and showing that the real value was not in the device itself but in the workflow change it enabled.",
       },
       {
         type: "paragraph",
-        text: "This project reinforced a belief I carry into every clinical and technology initiative: the most impactful interventions are often not new inventions, but thoughtful applications of existing tools to contexts where they haven't yet been tried.",
+        text: "That pattern, taking proven technology and finding the right clinical context for it, is what I keep coming back to. It is the same instinct behind CarePass, behind DischargeKit, and behind most of the health tech work I care about. The technology is rarely the hard part. Adoption is.",
       },
     ],
     images: [],
@@ -118,7 +129,7 @@ export const PROJECTS: Project[] = [
       "Functional prototype enabling rapid access to emergency data via wearable devices.",
     metrics: [
       { value: "01", label: "Co-Founded" },
-      { value: "✍", label: "Published Article" },
+      { icon: "PenTool", label: "Published Article" },
     ],
     subtitle:
       "Co-founding a wearable-linked health passport to give emergency responders instant patient context.",
@@ -450,7 +461,7 @@ export const PROJECTS: Project[] = [
     outcome: "Strategies implemented to drive compliance beyond the 80% threshold.",
     metrics: [
       { value: ">80%", label: "Target Compliance" },
-      { value: "✍", label: "Presented to Team" },
+      { icon: "Presentation", label: "Presented to Team" },
     ],
     subtitle:
       "Auditing day case surgery rates and delivering a bottleneck analysis to the surgical team.",
@@ -518,7 +529,7 @@ export const PROJECTS: Project[] = [
       "Validated clinical utility confirmed through user testing. Published development journey.",
     metrics: [
       { value: "6", label: "Doctor Interviews" },
-      { value: "✍", label: "Published Article" },
+      { icon: "PenTool", label: "Published Article" },
     ],
     subtitle:
       "Building a ward round task management dashboard through iterative clinical user research.",

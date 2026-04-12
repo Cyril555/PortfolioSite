@@ -74,20 +74,48 @@
 }
 
 .cases {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
 }
 
 .case {
-  display: grid;
-  grid-template-columns: 280px 1fr 200px;
+  aspect-ratio: 1;
   border: 1px solid var(--border);
   background: var(--bg);
   transition: all 0.4s;
   overflow: hidden;
   text-decoration: none;
   color: var(--fg);
+  display: flex;
+  flex-direction: column;
+}
+
+.caseThumbnail {
+  width: 100%;
+  height: 38%;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: var(--card);
+}
+
+.caseThumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.caseContent {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
 }
 
 .case:hover {
@@ -95,12 +123,10 @@
   transform: translateY(-2px);
 }
 
-.caseLeft {
-  padding: 32px;
-  border-right: 1px solid var(--border);
+.caseTop {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  gap: 16px;
 }
 
 .caseTag {
@@ -121,7 +147,6 @@
 .caseDomains {
   display: flex;
   gap: 6px;
-  margin-top: 16px;
   flex-wrap: wrap;
 }
 
@@ -135,38 +160,16 @@
   color: var(--muted);
 }
 
-.caseBody {
-  padding: 32px;
+.caseBottom {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-}
-
-.caseLabel {
-  font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 4px;
-}
-
-.caseText {
-  font-family: var(--serif);
-  font-size: 15px;
-  line-height: 1.65;
-  color: #3a3630;
-  font-weight: 300;
-}
-
-.caseRight {
-  padding: 32px;
-  border-left: 1px solid var(--border);
-  background: var(--card);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   gap: 24px;
+}
+
+.metricsWrapper {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
 }
 
 .metric {
@@ -187,7 +190,7 @@
   font-size: 9px;
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--muted-light);
 }
 
 .readMore {
@@ -202,25 +205,6 @@
 
 .case:hover .readMore {
   letter-spacing: 2.5px;
-}
-
-@media (max-width: 1000px) {
-  .case {
-    grid-template-columns: 1fr;
-  }
-
-  .caseLeft {
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .caseRight {
-    border-left: none;
-    border-top: 1px solid var(--border);
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 24px;
-  }
 }
 
 @media (max-width: 700px) {

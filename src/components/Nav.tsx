@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { Sun, Moon } from "lucide-react";
 import styles from "./Nav.module.css";
 
-const NAV_ITEMS = ["Impact", "Domains", "Credentials", "Contact"];
+const NAV_ITEMS = ["Impact", "Projects", "Credentials", "Contact"];
 
 interface NavProps {
   /** On the homepage we scroll to sections; on project pages we link back */
@@ -15,6 +16,19 @@ export default function Nav({ mode = "home" }: NavProps) {
   const [activeNav, setActiveNav] = useState("Impact");
   const [menuOpen, setMenuOpen] = useState(false);
   const [time, setTime] = useState("");
+  const [theme, setTheme] = useState("light");
+
+  useEffect(() => {
+    const current = document.documentElement.getAttribute('data-theme') || 'light';
+    setTheme(current);
+  }, []);
+
+  const toggleTheme = () => {
+    const next = theme === 'light' ? 'dark' : 'light';
+    setTheme(next);
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+  };
 
   useEffect(() => {
     const tick = () =>
@@ -33,7 +47,7 @@ export default function Nav({ mode = "home" }: NavProps) {
   useEffect(() => {
     if (mode !== "home") return;
     const handleScroll = () => {
-      const ids = ["impact", "domains", "credentials", "contact"];
+      const ids = ["impact", "projects", "credentials", "contact"];
       for (let i = ids.length - 1; i >= 0; i--) {
         const el = document.getElementById(ids[i]);
         if (el && el.getBoundingClientRect().top <= 140) {
@@ -74,13 +88,16 @@ export default function Nav({ mode = "home" }: NavProps) {
           ) : (
             <ul className={styles.links}>
               <li>
-                <Link href="/#domains">← Back to Projects</Link>
+                <Link href="/#projects">← Back to Projects</Link>
               </li>
             </ul>
           )}
 
           <div className={styles.right}>
             <span className={styles.time}>London {time}</span>
+            <button className={styles.themeToggle} onClick={toggleTheme} aria-label="Toggle theme">
+              {theme === 'dark' ? <Sun size={15} strokeWidth={2.5} /> : <Moon size={15} strokeWidth={2.5} />}
+            </button>
             <a className={styles.cta} href="mailto:c.vijayakumar@lse.ac.uk">
               Get in Touch
             </a>
@@ -107,7 +124,7 @@ export default function Nav({ mode = "home" }: NavProps) {
           ))
         ) : (
           <li onClick={() => setMenuOpen(false)}>
-            <Link href="/#domains">← Back to Projects</Link>
+            <Link href="/#projects">← Back to Projects</Link>
           </li>
         )}
       </ul>

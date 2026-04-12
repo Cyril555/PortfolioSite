@@ -151,11 +151,20 @@
   font-family: var(--serif);
   font-size: 16px;
   line-height: 1.7;
-  color: #3a3630;
+  color: var(--fg);
   font-weight: 300;
 }
 
 /* ── Article ── */
+.articleImageFigure {
+  margin: 48px auto;
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .article {
   max-width: 1400px;
   margin: 0 auto;
@@ -206,7 +215,7 @@
   font-size: 18px;
   line-height: 1.8;
   font-weight: 300;
-  color: #3a3630;
+  color: var(--fg);
 }
 
 .articleList {
@@ -225,7 +234,7 @@
   font-size: 17px;
   line-height: 1.65;
   font-weight: 300;
-  color: #3a3630;
+  color: var(--fg);
 }
 
 .articleQuote {
