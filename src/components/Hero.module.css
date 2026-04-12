@@ -85,7 +85,8 @@
   padding: 28px 24px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  align-items: flex-start;
+  gap: 8px;
 }
 
 .metricVal {
@@ -95,13 +96,19 @@
   line-height: 1;
 }
 
+.metricValSmall {
+  composes: metricVal;
+  font-size: 26px;
+  white-space: nowrap;
+}
+
 .metricLabel {
   font-family: var(--mono);
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: var(--muted-light);
-  line-height: 1.4;
+  color: var(--muted);
+  line-height: 1.5;
 }
 
 .scroll {

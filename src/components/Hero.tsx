@@ -24,7 +24,7 @@ export default function Hero() {
           <Reveal delay={0.26}>
             <div className={styles.metrics}>
               <div className={styles.metric}>
-                <div className={styles.metricVal}>
+                <div className={styles.metricValSmall}>
                   NHS <span style={{ fontFamily: "system-ui, sans-serif" }}>→</span> LSE
                 </div>
                 <div className={styles.metricLabel}>From Clinical Medicine<br />To Management Strategy</div>
