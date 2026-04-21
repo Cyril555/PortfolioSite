@@ -13,12 +13,12 @@ export default function Hero() {
           </Reveal>
           <Reveal delay={0.08}>
             <h1 className={styles.name}>
-              Hi, I am Cyril<span className={styles.dot}>.</span>
+              Hi, I&apos;m Cyril<span className={styles.dot}>.</span>
             </h1>
           </Reveal>
           <Reveal delay={0.16}>
             <p className={styles.sub}>
-              I sit at the intersection of clinical medicine, health technology, and management strategy.
+              My expertise lies at the intersection of clinical medicine, health technology, and management strategy.
             </p>
           </Reveal>
           <Reveal delay={0.26}>

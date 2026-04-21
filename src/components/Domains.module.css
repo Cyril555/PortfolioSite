@@ -38,6 +38,8 @@
   position: relative;
   overflow: hidden;
   height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .card::after {
@@ -88,9 +90,17 @@
 
 .tags {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  align-items: center;
   gap: 6px;
-  margin-top: 20px;
+  margin-top: auto;
+  padding-top: 24px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.tags::-webkit-scrollbar {
+  display: none;
 }
 
 .tag {
@@ -102,6 +112,8 @@
   padding: 4px 10px;
   border: 1px solid var(--border);
   color: var(--muted);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 @media (max-width: 1000px) {

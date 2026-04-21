@@ -19,13 +19,13 @@ export default function Domains() {
           {
             num: "Domain 02",
             name: "Technology",
-            desc: "Health-tech prototyping, UI/UX design in Figma, and hands-on development. Building tools that solve real clinical problems — from glucose monitoring to digital dashboards.",
+            desc: "Health-tech prototyping, UI/UX design in Figma, and hands-on development. Building tools that solve real clinical problems, from glucose monitoring to digital dashboards.",
             tags: ["Health-Tech", "UI/UX", "Python", "Prototyping"],
           },
           {
             num: "Domain 03",
             name: "Strategy",
-            desc: "Project leadership in consulting engagements — digital growth for consumer brands, go-to-market for AI startups. LSE GMiM with predicted distinction.",
+            desc: "Project leadership in consulting engagements: digital growth for consumer brands, go-to-market for AI startups. LSE GMiM with predicted distinction.",
             tags: ["Consulting", "GTM Strategy", "LSE GMiM"],
           },
         ].map((d, i) => (
