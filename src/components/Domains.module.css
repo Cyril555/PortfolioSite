@@ -7,7 +7,7 @@
 .eyebrow {
   font-family: var(--mono);
   font-size: 10px;
-  letter-spacing: 3px;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--accent);
   margin-bottom: 16px;
@@ -16,9 +16,10 @@
 .heading {
   font-family: var(--display);
   font-size: clamp(28px, 3.5vw, 44px);
-  font-weight: 400;
+  font-weight: 600;
   letter-spacing: -1px;
   margin-bottom: 48px;
+  font-variation-settings: "opsz" 144;
 }
 
 .grid {
@@ -63,7 +64,7 @@
 .cardIcon {
   font-family: var(--mono);
   font-size: 10px;
-  letter-spacing: 2px;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--accent);
   margin-bottom: 20px;
@@ -72,12 +73,14 @@
 .cardName {
   font-family: var(--display);
   font-size: 28px;
+  font-weight: 600;
   margin-bottom: 12px;
+  font-variation-settings: "opsz" 144;
 }
 
 .cardDesc {
   font-family: var(--serif);
-  font-size: 15px;
+  font-size: 16px;
   color: var(--muted);
   line-height: 1.7;
   font-weight: 300;
@@ -91,11 +94,12 @@
 }
 
 .tag {
-  font-family: var(--mono);
+  font-family: var(--sans);
   font-size: 9px;
-  letter-spacing: 1.5px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  padding: 5px 10px;
+  padding: 4px 10px;
   border: 1px solid var(--border);
   color: var(--muted);
 }

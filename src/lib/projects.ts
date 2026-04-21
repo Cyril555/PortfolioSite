@@ -37,6 +37,130 @@ export type ArticleSection =
 
 export const PROJECTS: Project[] = [
   {
+    slug: "reframe-ai",
+    domains: ["medicine", "technology"],
+    tag: "CLINICAL AI",
+    title: "Reframe.ai — The AI That Agrees With You Too Much",
+    problem:
+      "LLMs are trained to be agreeable. In clinical settings this is dangerous: a sycophantic model validates a doctor's framing rather than reasoning from the evidence, turbocharging the anchoring bias already responsible for up to 75% of diagnostic errors.",
+    approach:
+      "Built a five-agent multi-agent system with a blinded adjudicator. A sycophancy monitor scores each turn 0–100 across five behavioural signals; above 70 it triggers a structured debate between two hypothesis agents, adjudicated by a judge that deliberately never sees the clinician's original framing.",
+    outcome:
+      "Won first place at the Claude × LSE Hackathon 2026. Live demo demonstrated catching a missed Type A Aortic Dissection (scored 84/100) that a standard LLM would have missed by agreeing with an incorrect STEMI framing.",
+    metrics: [
+      { value: "1st", label: "Claude × LSE Hackathon 2026" },
+      { value: "5", label: "Claude agents in parallel" },
+      { value: "84", label: "Sycophancy score on demo case" },
+    ],
+    subtitle:
+      "Building a clinical decision support tool designed to catch the one failure mode LLMs rarely get credit for — being too polite to disagree.",
+    date: "April 2026",
+    readTime: "4 min read",
+    articleBody: [
+      {
+        type: "paragraph",
+        text: "A few months ago I asked an LLM about a patient. I led with a hunch. The model obliged. It gave me a thoughtful, clinically literate answer that agreed with me. I was wrong, and the model had the evidence in front of it to tell me so. It didn't.",
+      },
+      {
+        type: "paragraph",
+        text: "That moment stuck with me. The model hadn't hallucinated. It hadn't refused. It had read the room and given me what I seemed to want. In a clinic, that is a different kind of dangerous.",
+      },
+      {
+        type: "paragraph",
+        text: "The pattern has a name: sycophancy. It is the tendency of a language model to validate the user's framing rather than reason from the evidence. Sharma et al. documented it at ICLR 2024. SycEval measured it at roughly 58% across GPT-4o, Claude, and Gemini on medical Q&A in 2025. A recent npj Digital Medicine paper found compliance rates up to 100% when frontier models were handed illogical medical requests. This is not a bug. It is a property of how these systems are trained.",
+      },
+      {
+        type: "quote",
+        text: "Anchoring bias already contributes to up to 75% of diagnostic errors in internal medicine. A sycophantic AI does not introduce a new failure mode. It turbocharges one we were already trying to train out of doctors.",
+      },
+      {
+        type: "paragraph",
+        text: "So Reframe.ai started with a simple question: if the model will not push back on its own, can we build something around it that will?",
+      },
+      {
+        type: "heading",
+        text: "01 / Architecture — Five agents, one blinded judge",
+      },
+      {
+        type: "paragraph",
+        text: "The first instinct is to write a better prompt. Challenge me. Disagree when the evidence warrants it. Do not be a pushover. It does not work. The model tries, and ten turns later it is agreeing with you again. The framing of your questions does more work than any system prompt can undo.",
+      },
+      {
+        type: "paragraph",
+        text: "What does work is structure. Not one model arguing with itself, but several models running against each other with incompatible goals, and a separate adjudicator ruling on the output. This is roughly what the multi-agent debate literature (Du et al., ICML 2024) suggests.",
+      },
+      {
+        type: "paragraph",
+        text: "Reframe runs five Claude agents in parallel on every clinical turn: a Clinical Assistant for the primary response, a Sycophancy Monitor scoring the turn 0–100, two debate Agents generating competing hypotheses, and a Blinded Judge that adjudicates on evidence alone.",
+      },
+      {
+        type: "paragraph",
+        text: "The key move is the blinding. When the judge ignores the clinician's framing entirely, the anchor cannot contaminate the adjudication. The judge receives the raw clinical data and the two agents' arguments, and rules on evidence alone. Mamede et al. (2024) showed that even experienced clinicians who know they are being anchored struggle to reason past it. Withholding the framing is the computational equivalent of removing the anchor from the decision step.",
+      },
+      {
+        type: "heading",
+        text: "02 / Detection — What sycophancy actually looks like",
+      },
+      {
+        type: "paragraph",
+        text: "The monitor watches for five behavioural signals rather than trying to detect 'agreement' in the abstract. These emerged from reading transcripts of models mid-capitulation. You start to see the same patterns over and over.",
+      },
+      {
+        type: "list",
+        items: [
+          "Agreement without cited evidence — model affirms without grounding in the case data",
+          "Differential narrowing after user preference — options collapse on framing, not on new data",
+          "Position drift on pushback — model reverses when challenged, with no new evidence",
+          "Affirmation language — 'you're right to consider…', 'this fits well with…'",
+          "Framing echo — model returns the clinician's diagnostic language verbatim",
+        ],
+      },
+      {
+        type: "paragraph",
+        text: "The monitor returns a single 0–100 score. Above 40 it surfaces an amber flag; above 70 the debate agents and blinded judge activate automatically.",
+      },
+      {
+        type: "heading",
+        text: "03 / In practice — The live demo",
+      },
+      {
+        type: "paragraph",
+        text: "The demo is a chest pain case. Type A Aortic Dissection versus STEMI. In turn one the clinician presents the case without committing to a diagnosis, and the AI returns a broad differential. The monitor scores it clean. In turn two the clinician anchors — they decide it is a STEMI and ask for anticoagulation dosing. This is precisely the moment where, in my experience, a real dissection can get missed. Anticoagulation of an aortic dissection is catastrophic.",
+      },
+      {
+        type: "image",
+        src: "/images/reframe-sycophancy-flag.jpeg",
+        caption: "Fig. 03 · Red flag, turn 2 — The monitor fires at 84/100. All dissection red flags present in turn 1 have been abandoned without new evidence. The bilateral BP differential — the single most decisive bedside test — was never taken.",
+      },
+      {
+        type: "paragraph",
+        text: "On the red flag, the debate runs automatically. Agent A argues for dissection. Agent B argues for STEMI. The judge, which has never seen that the clinician framed this as a STEMI, rules on the clinical evidence in isolation.",
+      },
+      {
+        type: "image",
+        src: "/images/reframe-debate-judge.jpeg",
+        caption: "Fig. 04 · Judge verdict — A different scenario (meningitis vs viral URTI), same structure. The judge's adjudication explicitly weighs the asymmetry of consequences, the core reasoning sycophancy tends to erase.",
+      },
+      {
+        type: "heading",
+        text: "04 / What's next — From hackathon to product",
+      },
+      {
+        type: "paragraph",
+        text: "Reframe won first place at the Claude × LSE Hackathon in March. That was the forcing function we needed to ship a demo. The interesting work starts now. The version that judges saw is a scripted front-end that demonstrates the experience. The real five-agent system runs in the background and needs to be rebuilt as a production clinical tool, not a 48-hour prototype.",
+      },
+      {
+        type: "paragraph",
+        text: "Three open questions interest me most. Is the monitor itself sycophantic? A Claude instance grading another Claude instance may inherit the same biases. Can clinicians tolerate a tool that disagrees with them, or does the friction kill adoption? And what does this look like embedded in an EHR, when the 'clinician input' is a whole patient record rather than a framed question?",
+      },
+      {
+        type: "quote",
+        text: "If you are a clinician, a researcher working on LLM alignment, or someone who has thought hard about this problem — I would love to hear from you.",
+        attribution: "Cyril V.",
+      },
+    ],
+  },
+  {
     slug: "continuous-glucose-monitoring",
     domains: ["medicine", "technology"],
     tag: "CLINICAL AUDIT",

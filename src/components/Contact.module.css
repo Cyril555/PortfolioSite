@@ -11,8 +11,10 @@
 .big {
   font-family: var(--display);
   font-size: clamp(36px, 5vw, 64px);
-  line-height: 1.1;
-  letter-spacing: -1px;
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  font-variation-settings: "opsz" 144;
 }
 
 .accent {
@@ -45,15 +47,16 @@
 .label {
   font-family: var(--mono);
   font-size: 9px;
-  letter-spacing: 2px;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--muted);
   margin-bottom: 4px;
 }
 
 .value {
-  font-family: var(--serif);
-  font-size: 15px;
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .arrow {
