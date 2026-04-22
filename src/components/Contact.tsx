@@ -4,7 +4,6 @@ import styles from "./Contact.module.css";
 const LINKS = [
   { label: "Email", value: "c.vijayakumar@lse.ac.uk", href: "mailto:c.vijayakumar@lse.ac.uk" },
   { label: "LinkedIn", value: "cyrilvijayakumar", href: "https://linkedin.com/in/cyrilvijayakumar" },
-  { label: "Phone", value: "+44 7856 574 742", href: "tel:+447856574742" },
 ];
 
 export default function Contact() {
