@@ -100,6 +100,17 @@ export default async function ProjectPage({ params }: Props) {
               ))}
             </div>
           </Reveal>
+
+          {/* Demo link */}
+          {project.demoUrl && (
+            <Reveal delay={0.15}>
+              <div className={styles.demoRow}>
+                <a href={project.demoUrl} target="_blank" rel="noopener noreferrer" className={styles.demoLink}>
+                  View live demo →
+                </a>
+              </div>
+            </Reveal>
+          )}
         </header>
 
         {/* Problem / Approach / Outcome — always shown */}

@@ -126,6 +126,30 @@
   line-height: 1.4;
 }
 
+/* ── Demo link ── */
+.demoRow {
+  margin-top: 24px;
+}
+
+.demoLink {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--bg);
+  background: var(--accent);
+  padding: 10px 20px;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.demoLink:hover {
+  background: var(--ink-soft);
+}
+
 /* ── Case Summary ── */
 .caseSummary {
   max-width: 720px;

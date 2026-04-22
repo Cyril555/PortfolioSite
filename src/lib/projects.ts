@@ -26,6 +26,7 @@ export interface Project {
   articleBody?: ArticleSection[];
   images?: ProjectImage[];
   thumbnailImage?: string;
+  demoUrl?: string;
 }
 
 export type ArticleSection =
@@ -646,6 +647,8 @@ export const PROJECTS: Project[] = [
     domains: ["medicine", "technology"],
     tag: "DIGITAL HEALTH TOOL",
     title: "TASKR — Ward Round Dashboard",
+    thumbnailImage: "/taskr-dashboard.png",
+    demoUrl: "https://taskr-five-rho.vercel.app",
     problem:
       "Doctors lacked a structured system to prioritise and track ward round tasks, leading to missed actions and inefficiency.",
     approach:
@@ -715,6 +718,11 @@ export const PROJECTS: Project[] = [
           "Team distribution: assign tasks to specific doctors, view team workload at a glance",
           "Audit trail: completed tasks remain visible with timestamp and completing clinician",
         ],
+      },
+      {
+        type: "image",
+        src: "/taskr-dashboard.png",
+        caption: "The TASKR dashboard — patient-anchored task cards across a ward, with urgency tiers, task tags, and real-time status visible at a glance. Built for Cardiology Ward 25.",
       },
       {
         type: "heading",
