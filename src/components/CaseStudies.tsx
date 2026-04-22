@@ -82,7 +82,7 @@ export default function CaseStudies() {
             aria-expanded={auditsOpen}
           >
             <span className={styles.auditsToggleLabel}>
-              Audits &amp; Further Work ({audits.length})
+              Clinical Audits &amp; Consulting Projects ({audits.length})
             </span>
             <span
               className={`${styles.auditsChevron} ${auditsOpen ? styles.auditsChevronOpen : ""}`}

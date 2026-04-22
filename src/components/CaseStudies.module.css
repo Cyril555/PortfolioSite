@@ -1,5 +1,5 @@
 .section {
-  padding: 100px 48px;
+  padding: 100px 48px 40px;
   max-width: 1400px;
   margin: 0 auto;
 }
@@ -37,6 +37,16 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
+  align-items: stretch;
+}
+
+.cases > * {
+  height: 100%;
+  display: flex;
+}
+
+.cases > * > * {
+  width: 100%;
 }
 
 .case {
@@ -48,6 +58,7 @@
   color: var(--fg);
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 
 .case:hover {
@@ -141,6 +152,9 @@
   line-height: 1.15;
   letter-spacing: -0.5px;
   font-variation-settings: "opsz" 144;
+  min-height: 2.3em;
+  display: flex;
+  align-items: flex-start;
 }
 
 .caseBottom {
@@ -193,9 +207,9 @@
 }
 
 .auditsWrapper {
-  margin-top: 80px;
+  margin-top: 56px;
   border-top: 1px solid var(--border);
-  padding-top: 32px;
+  padding-top: 24px;
 }
 
 .auditsToggle {
@@ -208,7 +222,10 @@
   border: 1px solid var(--border);
   cursor: pointer;
   transition: background 0.25s, border-color 0.25s;
-  margin-bottom: 32px;
+}
+
+.auditsWrapper .cases {
+  margin-top: 32px;
 }
 
 .auditsToggle:hover {
