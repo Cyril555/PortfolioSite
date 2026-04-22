@@ -41,6 +41,7 @@ export const PROJECTS: Project[] = [
     domains: ["medicine", "technology"],
     tag: "CLINICAL AI",
     title: "Reframe.ai",
+    thumbnailImage: "/reframe-debate.png",
     problem:
       "LLMs are trained to be agreeable. In clinical settings a sycophantic model validates a doctor's framing rather than reasoning from the evidence, amplifying anchoring bias, which contributes to up to 75% of diagnostic errors.",
     approach:
@@ -144,6 +145,7 @@ export const PROJECTS: Project[] = [
     domains: ["technology", "strategy"],
     tag: "HEALTH-TECH VENTURE",
     title: "CarePass",
+    thumbnailImage: "/carepass-passport.png",
     problem:
       "Emergency responders lack instant access to patient medical history, allergies, and medications during critical moments.",
     approach:
@@ -207,96 +209,6 @@ export const PROJECTS: Project[] = [
       {
         type: "paragraph",
         text: "A functional prototype demonstrating the core flow: a paramedic scans the wearable, retrieves a structured medical summary in under three seconds, and escalates to a full verified record with NHS credential authentication. I authored a technical development article documenting the build process and design rationale.",
-      },
-    ],
-    images: [],
-  },
-  {
-    slug: "taskr",
-    domains: ["medicine", "technology"],
-    tag: "DIGITAL HEALTH TOOL",
-    title: "TASKR",
-    problem:
-      "Doctors lack a structured system to prioritise and track ward round tasks, leading to missed actions and inefficiency.",
-    approach:
-      "Developed a digital dashboard prototype. Ran user research through interviews with 6 doctors, iterated on feedback, and authored a development article.",
-    outcome:
-      "Validated clinical utility confirmed through user testing. Published development journey.",
-    metrics: [
-      { value: "6", label: "Doctor Interviews" },
-      { icon: "PenTool", label: "Published Article" },
-    ],
-    subtitle:
-      "A ward round task management dashboard built through iterative clinical user research.",
-    date: "2024",
-    readTime: "4 min read",
-    articleBody: [
-      {
-        type: "paragraph",
-        text: "The ward round is information-dense. In 60 to 90 minutes, a team reviews every patient on the ward, generates a list of actions (blood tests, imaging, medication changes, referrals, discharges), and disperses to execute. That list typically lives in someone's head, on a paper handover sheet, or across multiple bleeps.",
-      },
-      {
-        type: "heading",
-        text: "The problem",
-      },
-      {
-        type: "paragraph",
-        text: "As an NHS doctor, I saw tasks generated on the ward round fall through the gaps. Not from negligence, but from the structural absence of a shared, prioritised task list that persists through shift handover.",
-      },
-      {
-        type: "heading",
-        text: "User research",
-      },
-      {
-        type: "paragraph",
-        text: "Before writing code, I ran structured interviews with six doctors: two foundation year, two core medical trainees, and two registrars. The goal was to map the actual workflow and identify the highest-friction points.",
-      },
-      {
-        type: "list",
-        items: [
-          "How do you currently track tasks generated on ward rounds?",
-          "What happens to tasks not completed by the end of your shift?",
-          "What information do you need attached to a task to action it without clarification?",
-          "Where do tasks most commonly fall through the gaps?",
-        ],
-      },
-      {
-        type: "heading",
-        text: "Findings",
-      },
-      {
-        type: "paragraph",
-        text: "Three consistent themes: tasks need to be patient-anchored rather than free-floating, urgency needs to be explicitly visible rather than implied, and handover is the highest-risk moment where task context degrades.",
-      },
-      {
-        type: "heading",
-        text: "Design",
-      },
-      {
-        type: "paragraph",
-        text: "TASKR centres on a patient-anchored task list with three urgency tiers, a structured handover mode that surfaces incomplete tasks with their context intact, and a team view that distributes tasks across the on-call team by workload.",
-      },
-      {
-        type: "list",
-        items: [
-          "Patient-anchored task cards with clinical context attached",
-          "Three-tier urgency: routine, urgent, critical",
-          "Handover mode: structured summary of outstanding tasks with status",
-          "Team distribution: assign tasks to specific doctors, view team workload at a glance",
-          "Audit trail: completed tasks remain visible with timestamp and completing clinician",
-        ],
-      },
-      {
-        type: "heading",
-        text: "Validation",
-      },
-      {
-        type: "paragraph",
-        text: "I returned to the same six doctors for usability testing. All six confirmed the core utility. Feedback drove three iterations: a simplified task creation flow, a bleep-free context field to reduce clarification calls, and a printable handover export for wards without tablet access.",
-      },
-      {
-        type: "paragraph",
-        text: "I documented the full development journey in a published article, contributing to the evidence base for clinician-led digital health product development.",
       },
     ],
     images: [],
@@ -370,7 +282,8 @@ export const PROJECTS: Project[] = [
     slug: "adhd-education-platform",
     domains: ["medicine", "technology"],
     tag: "DIGITAL HEALTH PRODUCT",
-    title: "ADHD Education Platform",
+    title: "Cognify ADHD",
+    thumbnailImage: "/cognify-adhd.png",
     problem:
       "Patients and families lacked accessible, structured ADHD education resources integrated with clinical pathways.",
     approach:
@@ -435,6 +348,7 @@ export const PROJECTS: Project[] = [
     domains: ["strategy"],
     tag: "MANAGEMENT CONSULTING",
     title: "Castore Digital Growth",
+    thumbnailImage: "/castore-logo.png",
     problem:
       "A fast-growing consumer startup brand needed digital solution recommendations aligned with its growth trajectory.",
     approach:
@@ -493,7 +407,8 @@ export const PROJECTS: Project[] = [
     slug: "us-ai-gtm-strategy",
     domains: ["technology", "strategy"],
     tag: "AI GO-TO-MARKET",
-    title: "US AI Startup Market Entry",
+    title: "GTM Strategy for AI Startup",
+    thumbnailImage: "/lsc-logo.png",
     problem:
       "A US-based AI startup needed a structured go-to-market strategy for a new market segment.",
     approach:
@@ -553,6 +468,7 @@ export const PROJECTS: Project[] = [
     domains: ["medicine"],
     tag: "CLINICAL AUDIT",
     title: "Vitamin D Testing Compliance",
+    thumbnailImage: "/vitamin-d-charts.png",
     problem:
       "Low vitamin D testing rates in at-risk patients led to missed diagnoses and preventable complications.",
     approach:
@@ -616,6 +532,7 @@ export const PROJECTS: Project[] = [
     domains: ["medicine"],
     tag: "SURGICAL AUDIT",
     title: "Day Case Surgery Compliance",
+    thumbnailImage: "/day-case-recommendations.png",
     problem:
       "Day case surgical rates were falling below the 80% national benchmark, increasing bed occupancy and costs.",
     approach:

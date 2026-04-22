@@ -2,23 +2,16 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { PenTool, Presentation, Activity, Stethoscope, Briefcase, Zap } from "lucide-react";
 import Reveal from "./Reveal";
 import { PROJECTS, Project } from "@/lib/projects";
 import styles from "./CaseStudies.module.css";
 
 const MAIN_SLUGS = ["carepass", "reframe-ai", "taskr"];
 
-const ICONS: Record<string, any> = {
-  PenTool,
-  Presentation,
-  Activity,
-  Stethoscope,
-  Briefcase,
-  Zap,
-};
-
 function ProjectCard({ project }: { project: Project }) {
+  const primaryDomain = project.domains[0];
+  const headlineMetric = project.metrics.find((m) => m.value);
+
   return (
     <Link href={`/projects/${project.slug}`} className={styles.case}>
       <div className={styles.caseThumbnail}>
@@ -35,28 +28,17 @@ function ProjectCard({ project }: { project: Project }) {
       </div>
       <div className={styles.caseContent}>
         <div className={styles.caseTop}>
+          <span className={styles.caseDomainPill}>{primaryDomain}</span>
           <div className={styles.caseTitle}>{project.title}</div>
-          <div className={styles.caseDomains}>
-            {project.domains.map((d) => (
-              <span key={d} className={styles.caseDomainPill}>{d}</span>
-            ))}
-          </div>
         </div>
 
         <div className={styles.caseBottom}>
-          <div className={styles.metricsWrapper}>
-            {project.metrics.map((m, j) => {
-              const IconComponent = m.icon ? ICONS[m.icon] : null;
-              return (
-                <div className={styles.metric} key={j}>
-                  <div className={styles.metricVal}>
-                    {IconComponent ? <IconComponent size={24} strokeWidth={2.5} /> : m.value}
-                  </div>
-                  <div className={styles.metricLabel}>{m.label}</div>
-                </div>
-              );
-            })}
-          </div>
+          {headlineMetric?.value && (
+            <div className={styles.metric}>
+              <div className={styles.metricVal}>{headlineMetric.value}</div>
+              <div className={styles.metricLabel}>{headlineMetric.label}</div>
+            </div>
+          )}
           <div className={styles.readMore}>Read article →</div>
         </div>
       </div>
