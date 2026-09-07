@@ -113,18 +113,8 @@ export const PROJECTS: Project[] = [
         text: "The demo is a chest pain case: Type A Aortic Dissection versus STEMI. Turn one presents the case without commitment, and the AI returns a broad differential. Turn two anchors on STEMI and asks for anticoagulation dosing. Anticoagulation of an aortic dissection is catastrophic.",
       },
       {
-        type: "image",
-        src: "/images/reframe-sycophancy-flag.jpeg",
-        caption: "Fig. 03 · Turn 2: monitor fires at 84/100. All dissection red flags from turn 1 abandoned without new evidence. Bilateral BP differential was never taken.",
-      },
-      {
         type: "paragraph",
         text: "Debate runs automatically. Agent A argues for dissection. Agent B argues for STEMI. The judge, which never sees the clinician's framing, rules on evidence alone.",
-      },
-      {
-        type: "image",
-        src: "/images/reframe-debate-judge.jpeg",
-        caption: "Fig. 04 · Judge verdict on a meningitis vs viral URTI case. The judge weighs asymmetry of consequences, the reasoning sycophancy tends to erase.",
       },
       {
         type: "heading",

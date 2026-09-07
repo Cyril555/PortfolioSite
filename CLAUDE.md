@@ -7,64 +7,61 @@ Personal portfolio for a medical doctor and LSE Master's student (GMiM). The sit
 Management consulting recruiters (McKinsey, BCG, Bain), health-tech companies, and MedTech investors. The site must communicate impact-first: quantified results visible within 10 seconds, structured thinking evident throughout, and leadership signals in every project.
 
 ## Tech Stack
-- Framework: Next.js 15 (App Router)
+- Framework: Next.js 16 (App Router)
 - Styling: CSS Modules + CSS custom properties (no Tailwind)
-- Fonts: Google Fonts — Instrument Serif (display), Cormorant Garamond (body), JetBrains Mono (mono/labels)
-- Deployment: Vercel
-- Package manager: pnpm
+- Fonts: Onest via `next/font/google` (the only typeface; exposed as `--font-sans`). No serif anywhere on the site.
+- Icons: hand-drawn line SVGs in `src/components/ProjectIcon.tsx` (one per project slug) and inline in `Domains.tsx`. No emojis, no screenshots as thumbnails.
+- Deployment: Vercel via GitHub integration (every push to `main` deploys to production; other branches get preview URLs)
+- Package manager: npm (package-lock.json is the lockfile in use)
 
 ## Common Commands
-- `pnpm dev` — start dev server on localhost:3000
-- `pnpm build` — production build
-- `pnpm lint` — run ESLint
+- `npm run dev` — start dev server on localhost:3000
+- `npm run build` — production build
+- `npx tsc --noEmit` — type-check
 
 ## Design System
 
 ### Aesthetic Direction
-Swiss-editorial meets technical documentation. Inspired by Dieter Rams product pages, NASA mission layouts, and Swiss graphic design. Should feel like a refined printed publication — not a typical developer or student portfolio.
+Clean, modern, minimal. One sans typeface, generous whitespace, rounded surfaces, a single accent colour. No serif type, no paper grain, no grid rules, no parallax.
 
-### Colour Palette (CSS Variables)
-- `--bg: #f4f1ec` — warm off-white
-- `--fg: #1a1a1a` — near-black
-- `--accent: #d4582a` — burnt orange for metrics and highlights
-- `--muted: #8a847b` — warm grey secondary text
-- `--border: #d4cfc7` — subtle dividers
-- `--card: #edeae4` — card backgrounds
+### Colour Palette (CSS Variables in `src/app/globals.css`)
+- `--bg: #f7f7f5` page ground · `--surface: #ffffff` cards
+- `--fg: #121417` text · `--fg-soft` / `--muted` secondary text
+- `--accent: #d4582a` burnt orange for metrics, icons and highlights · `--accent-soft` tinted backgrounds
+- `--border` / `--border-strong` dividers · `--radius: 16px`
+- Dark theme overrides live under `[data-theme='dark']`; the toggle is in `Nav.tsx`.
+- Legacy aliases `--serif`, `--display`, `--mono` all resolve to `--sans`. Do not reintroduce a second typeface.
 
 ### Typography Rules
-- Display: Instrument Serif, 44-110px, letter-spacing -2px
-- Body: Cormorant Garamond, 300 weight, line-height 1.65-1.8
-- Labels: JetBrains Mono, 9-11px, uppercase, letter-spacing 1.5-3px
-- IMPORTANT: Never use Inter, Roboto, Arial, or system fonts
+- Headings: Onest 700, letter-spacing -0.02em to -0.03em
+- Body: Onest 400, 14-18px, line-height 1.6
+- Labels: Onest 600, 11-12px, uppercase, letter-spacing 0.08-0.1em
+- IMPORTANT: Never use serif fonts, Inter, Roboto, Arial, or system fonts as the primary face
 - IMPORTANT: Never use purple gradients or generic AI aesthetics
 
 ### Layout
-- Max content width: 1400px, centered
-- 100px section padding, 48px horizontal padding
-- Grid-based with intentional asymmetry
-- Section numbering (01, 02, 03) in monospace
-- Impact metrics: large accent-colour numbers with small mono labels
-- Case studies: three-column layout (meta | body | metrics)
+- Max content width: 1200px (`--max`), 40px horizontal gutter (`--gutter`, 20px on mobile)
+- Sections stack with 88px top padding; cards use `--surface`, 1px `--border`, `--radius`
+- Impact metrics: accent-colour numbers with small muted labels
 
 ### Animation
-- Intersection observer for scroll-triggered reveals
-- Easing: cubic-bezier(0.22, 1, 0.36, 1)
-- Stagger delays: 0.05-0.12s between sibling elements
-- Movement: translateY(28px) + opacity fade
-- No parallax, no excessive motion
+- `Reveal` component: intersection-observer fade and 28px rise, easing cubic-bezier(0.22, 1, 0.36, 1)
+- Hover: 3px lift on cards. Nothing else.
 
 ## Information Architecture
 
 ### Navigation
-Impact → Domains → Credentials → Contact (+ "Get in Touch" CTA button)
+Projects → Experience → Contact (+ "Get in touch" CTA, theme toggle)
 
-### Page Structure
-1. **Hero** — Name, eyebrow label ("Doctor · Technologist · Strategist"), one-line positioning statement, 4-cell metrics grid (patients, monitoring improvement, testing increase, languages)
-2. **Three Domains** — Equal-weight cards: Medicine, Technology, Strategy. Each with description and skill tags. This replaces a traditional "About" section.
-3. **Case Studies** — Filterable by domain (All / Medicine / Technology / Strategy). Each case study has: tag, title, domain pills, Problem section, Approach section, Outcome section, and 2 quantified metrics.
-4. **Credentials** — Two-column: Education stack (LSE, Sheffield, Dulwich) + Skills (languages with proficiency dots, technical, finance)
-5. **Contact** — Large CTA text + email/LinkedIn/phone links
-6. **Footer** — Copyright + tagline
+### Page Structure (`src/app/page.tsx`)
+1. **Hero** — "Now" status pill (current role), headline, one-line positioning, two CTAs, portrait (`public/profile.jpg`), 4-cell metrics row
+2. **Now** — highlighted card for the current role (Clinical AI Fellow, Synthax AI) with three outcomes
+3. **Domains** — Medicine, Technology, Strategy cards; clicking one filters the projects grid via a `filter-domain` window event
+4. **Projects** — all case studies in a filterable 3-column grid, each with a line-icon tile; links to `/projects/[slug]`
+5. **Experience** — dated timeline from `src/lib/experience.ts`, current role marked "Now"
+6. **Education and skills** — education stack + skill chips
+7. **Contact** — dark card with email and LinkedIn
+8. **Footer**
 
 ### Case Study Template (Problem → Approach → Outcome)
 Every project must follow this structure. A recruiter reads these like mini-consulting cases. Always include at least one quantified metric per case study.
@@ -93,8 +90,8 @@ Every project must follow this structure. A recruiter reads these like mini-cons
 
 ## Current Focus
 - [ ] Convert to multi-page Next.js app with shared layout
-- [ ] Add portrait photo to hero or domains section
+- [x] Add portrait photo to hero
 - [ ] Add blog/articles section for published pieces
 - [ ] Add downloadable CV (PDF) link
-- [ ] Set up Vercel deployment
+- [x] Set up Vercel deployment
 - [ ] Add page transition animations

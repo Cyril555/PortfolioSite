@@ -1,45 +1,38 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Reveal from "./Reveal";
+import ProjectIcon from "./ProjectIcon";
 import { PROJECTS, Project } from "@/lib/projects";
 import styles from "./CaseStudies.module.css";
 
-const MAIN_SLUGS = ["carepass", "reframe-ai", "taskr"];
+const FILTERS = [
+  { id: "all", label: "All" },
+  { id: "medicine", label: "Medicine" },
+  { id: "technology", label: "Technology" },
+  { id: "strategy", label: "Strategy" },
+];
 
 function ProjectCard({ project }: { project: Project }) {
-  const primaryDomain = project.domains[0];
-  const headlineMetric = project.metrics.find((m) => m.value);
-
+  const metric = project.metrics.find((m) => m.value);
   return (
-    <Link href={`/projects/${project.slug}`} className={styles.case}>
-      <div className={styles.caseThumbnail}>
-        {project.thumbnailImage ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={project.thumbnailImage} alt={project.title} />
-        ) : (
-          <div className={styles.thumbPlaceholder}>
-            <span className={styles.thumbInitial}>
-              {project.title.charAt(0)}
-            </span>
-          </div>
-        )}
+    <Link href={`/projects/${project.slug}`} className={styles.card}>
+      <div className={styles.tile}>
+        <ProjectIcon slug={project.slug} size={34} />
+        <ProjectIcon slug={project.slug} size={150} className={styles.ghost} />
       </div>
-      <div className={styles.caseContent}>
-        <div className={styles.caseTop}>
-          <span className={styles.caseDomainPill}>{primaryDomain}</span>
-          <div className={styles.caseTitle}>{project.title}</div>
-        </div>
-
-        <div className={styles.caseBottom}>
-          {headlineMetric?.value && (
-            <div className={styles.metric}>
-              <div className={styles.metricVal}>{headlineMetric.value}</div>
-              <div className={styles.metricLabel}>{headlineMetric.label}</div>
-            </div>
+      <div className={styles.body}>
+        <div className={styles.tag}>{project.tag}</div>
+        <h3 className={styles.title}>{project.title}</h3>
+        <p className={styles.summary}>{project.subtitle ?? project.problem}</p>
+        <div className={styles.foot}>
+          {metric && (
+            <span className={styles.metric}>
+              <b>{metric.value}</b> {metric.label}
+            </span>
           )}
-          <div className={styles.readMore}>Read article →</div>
+          <span className={styles.more}>Read case study →</span>
         </div>
       </div>
     </Link>
@@ -47,62 +40,49 @@ function ProjectCard({ project }: { project: Project }) {
 }
 
 export default function CaseStudies() {
-  const [auditsOpen, setAuditsOpen] = useState(false);
+  const [filter, setFilter] = useState("all");
 
-  const mainProjects = MAIN_SLUGS
-    .map((slug) => PROJECTS.find((p) => p.slug === slug))
-    .filter((p): p is Project => Boolean(p));
+  useEffect(() => {
+    const onFilter = (e: Event) => setFilter((e as CustomEvent<string>).detail);
+    window.addEventListener("filter-domain", onFilter);
+    return () => window.removeEventListener("filter-domain", onFilter);
+  }, []);
 
-  const audits = PROJECTS.filter((p) => !MAIN_SLUGS.includes(p.slug));
+  const visible = PROJECTS.filter((p) => filter === "all" || p.domains.includes(filter));
 
   return (
     <section className={styles.section} id="projects">
       <Reveal>
-        <div className={styles.sectionHead}>
-          <span className={styles.num}>02</span>
-          <div className={styles.line} />
+        <div className={styles.head}>
+          <div>
+            <h2 className={styles.heading}>Projects</h2>
+            <p className={styles.lede}>
+              Each one is written up as a case study: the problem, the approach, and what changed.
+            </p>
+          </div>
+          <div className={styles.filters} role="tablist">
+            {FILTERS.map((f) => (
+              <button
+                key={f.id}
+                role="tab"
+                aria-selected={filter === f.id}
+                className={`${styles.chip} ${filter === f.id ? styles.chipOn : ""}`}
+                onClick={() => setFilter(f.id)}
+              >
+                {f.label}
+              </button>
+            ))}
+          </div>
         </div>
-        <div className={styles.title}>Projects</div>
       </Reveal>
 
-      <div className={styles.cases}>
-        {mainProjects.map((c, i) => (
-          <Reveal key={c.slug} delay={0.05 * i}>
-            <ProjectCard project={c} />
+      <div className={styles.grid}>
+        {visible.map((p, i) => (
+          <Reveal key={p.slug} delay={0.04 * i}>
+            <ProjectCard project={p} />
           </Reveal>
         ))}
       </div>
-
-      {audits.length > 0 && (
-        <div className={styles.auditsWrapper}>
-          <button
-            type="button"
-            className={styles.auditsToggle}
-            onClick={() => setAuditsOpen((v) => !v)}
-            aria-expanded={auditsOpen}
-          >
-            <span className={styles.auditsToggleLabel}>
-              Clinical Audits &amp; Consulting Projects ({audits.length})
-            </span>
-            <span
-              className={`${styles.auditsChevron} ${auditsOpen ? styles.auditsChevronOpen : ""}`}
-              aria-hidden="true"
-            >
-              ↓
-            </span>
-          </button>
-
-          {auditsOpen && (
-            <div className={styles.cases}>
-              {audits.map((c, i) => (
-                <Reveal key={c.slug} delay={0.04 * i}>
-                  <ProjectCard project={c} />
-                </Reveal>
-              ))}
-            </div>
-          )}
-        </div>
-      )}
     </section>
   );
 }

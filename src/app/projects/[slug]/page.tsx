@@ -179,7 +179,7 @@ export default async function ProjectPage({ params }: Props) {
 
         {/* Next project hint */}
         <div className={styles.backRow}>
-          <a href="/#domains" className={styles.backLink}>← Back to all projects</a>
+          <a href="/#projects" className={styles.backLink}>← Back to all projects</a>
         </div>
       </main>
 

@@ -1,10 +1,18 @@
 import type { Metadata } from "next";
+import { Onest } from "next/font/google";
 import "./globals.css";
 
+const onest = Onest({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-sans",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
-  title: "Dr. Cyrilkumaar Vijayakumar — Doctor · Technologist · Strategist",
+  title: "Cyril Vijayakumar — Doctor developer",
   description:
-    "Personal portfolio of Dr. Cyrilkumaar Vijayakumar. NHS doctor, health-tech builder, and LSE GMiM candidate sitting at the intersection of clinical medicine, technology, and management strategy.",
+    "Dr Cyrilkumaar Vijayakumar: NHS-trained doctor building clinical software. Clinical AI Fellow at Synthax AI and LSE Global Master's in Management candidate.",
 };
 
 export default function RootLayout({
@@ -13,7 +21,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className={onest.variable} suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{
