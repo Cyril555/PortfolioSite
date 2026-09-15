@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400;1,9..144,600&family=IBM+Plex+Mono:wght@400;500&family=Inter+Tight:wght@400;500;600&display=swap');
-
 *, *::before, *::after {
   margin: 0;
   padding: 0;
@@ -8,74 +6,67 @@
 
 html {
   scroll-behavior: smooth;
-  overflow-x: hidden;
+  scroll-padding-top: 57px; /* sticky nav height incl. border */
 }
 
 :root,
 [data-theme='light'] {
-  --bg: #f6f2ea;
-  --fg: #141414;
-  --ink-soft: #3a3a3a;
-  --accent: #b4321e;
-  --accent-soft: #f3dcd3;
-  --muted: #6a6a6a;
-  --muted-light: #9a9490;
-  --border: #d9d4cc;
-  --card: #ede6d6;
-  --card2: #e4ddd0;
-  --blue: #1f3a8a;
-  --blue-soft: #dbe3f5;
-  --amber: #b8740a;
-  --amber-soft: #f5e3c4;
-  --mono: 'IBM Plex Mono', ui-monospace, monospace;
-  --serif: 'Fraunces', 'Times New Roman', serif;
-  --display: 'Fraunces', 'Times New Roman', serif;
-  --sans: 'Inter Tight', ui-sans-serif, system-ui, sans-serif;
+  /* Light body */
+  --bg: #ffffff;
+  --panel: #f4f4f4;
+  --fg: #1e2124;
+  --fg-soft: #45494e;
+  --muted: #72767b;
+  --line: #dcdddf;
+  --line-strong: #1e2124;
+
+  /* Dark bands (hero, contact, footer) */
+  --ink: #0e0f11;
+  --ink-2: #16181b;
+  --ink-fg: #eceded;
+  --ink-muted: #8d9197;
+  --ink-line: rgba(236, 237, 237, 0.14);
+  --ink-grid: rgba(236, 237, 237, 0.05);
+
+  --sans: var(--font-sans), "Helvetica Neue", Helvetica, sans-serif;
+  --mono: var(--font-mono), ui-monospace, "SF Mono", Menlo, monospace;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --max: 1240px;
+  --gutter: 40px;
+
+  /* Aliases used by the project detail page */
+  --accent: var(--fg);
+  --border: var(--line);
+  --card: var(--panel);
+  --ink-soft: var(--fg-soft);
+  --display: var(--sans);
+  --serif: var(--sans);
 }
 
 [data-theme='dark'] {
-  --bg: #1a1512;
-  --fg: #f2ede6;
-  --ink-soft: #d4cfc7;
-  --accent: #d4583a;
-  --accent-soft: #3d1a12;
-  --muted: #9a9490;
-  --muted-light: #6a6560;
-  --border: #2e2820;
-  --card: #221e18;
-  --card2: #2a2520;
-  --blue: #6b89c8;
-  --blue-soft: #1a2540;
-  --amber: #d4940a;
-  --amber-soft: #2e2008;
+  --bg: #0e0f11;
+  --panel: #17191c;
+  --fg: #eceded;
+  --fg-soft: #b9bcc0;
+  --muted: #8d9197;
+  --line: #34383d;
+  --line-strong: #eceded;
+
+  --ink: #000000;
+  --ink-2: #0b0c0e;
+  --ink-line: rgba(236, 237, 237, 0.2);
+  --ink-grid: rgba(236, 237, 237, 0.09);
 }
 
 body {
   background: var(--bg);
   color: var(--fg);
-  font-family: var(--serif);
-  font-feature-settings: "kern" 1, "liga" 1, "onum" 1;
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
-  position: relative;
-}
-
-/* Paper grain overlay — pointer-events:none so it never blocks clicks */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background-image: radial-gradient(rgba(0,0,0,0.018) 1px, transparent 1px);
-  background-size: 3px 3px;
-  z-index: 9999;
-  mix-blend-mode: multiply;
-}
-
-[data-theme='dark'] body::before {
-  background-image: radial-gradient(rgba(255,255,255,0.015) 1px, transparent 1px);
-  mix-blend-mode: screen;
+  overflow-x: clip;
 }
 
 a {
@@ -86,4 +77,113 @@ a {
 button {
   font-family: inherit;
   cursor: pointer;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+:focus-visible {
+  outline: 1px solid var(--fg);
+  outline-offset: 3px;
+}
+
+/* Full-width band that paints its own ground; sections alternate light and dark */
+.band {
+  position: relative;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+/* Dark band: re-scope the tokens so every component inside inverts automatically */
+.tone-dark {
+  --bg: #111315;
+  --panel: #1a1d20;
+  --fg: #eceded;
+  --fg-soft: #b9bcc0;
+  --muted: #8d9197;
+  --line: rgba(236, 237, 237, 0.13);
+  --line-strong: #eceded;
+}
+
+[data-theme='dark'] .tone-dark {
+  --bg: #050506;
+  --panel: #111316;
+  --line: rgba(236, 237, 237, 0.2);
+}
+
+/* Shared: a framed container whose side rules run the full height of each section */
+.frame {
+  max-width: var(--max);
+  margin: 0 auto;
+  border-left: 1px solid var(--line);
+  border-right: 1px solid var(--line);
+}
+
+/* Shared: small uppercase mono label */
+.label {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+@media (max-width: 700px) {
+  :root {
+    --gutter: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+/* Full-bleed horizontal rule under each framed section, with crosshairs where it meets the side rules */
+.frame {
+  position: relative;
+}
+
+.frame::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -1px;
+  width: 100vw;
+  height: 1px;
+  transform: translateX(-50%);
+  background: var(--line);
+  pointer-events: none;
+}
+
+.frame::before {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  left: -6px;
+  right: -6px;
+  bottom: -6.5px;
+  height: 11px;
+  pointer-events: none;
+  background:
+    linear-gradient(var(--muted), var(--muted)) 0 5px / 11px 1px no-repeat,
+    linear-gradient(var(--muted), var(--muted)) 5px 0 / 1px 11px no-repeat,
+    linear-gradient(var(--muted), var(--muted)) 100% 5px / 11px 1px no-repeat,
+    linear-gradient(var(--muted), var(--muted)) calc(100% - 5px) 0 / 1px 11px no-repeat;
+}
+
+@media (max-width: 700px) {
+  .frame {
+    border-left: 0;
+    border-right: 0;
+  }
+
+  .frame::before {
+    display: none;
+  }
 }

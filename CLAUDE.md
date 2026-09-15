@@ -7,64 +7,82 @@ Personal portfolio for a medical doctor and LSE Master's student (GMiM). The sit
 Management consulting recruiters (McKinsey, BCG, Bain), health-tech companies, and MedTech investors. The site must communicate impact-first: quantified results visible within 10 seconds, structured thinking evident throughout, and leadership signals in every project.
 
 ## Tech Stack
-- Framework: Next.js 15 (App Router)
+- Framework: Next.js 16 (App Router)
 - Styling: CSS Modules + CSS custom properties (no Tailwind)
-- Fonts: Google Fonts — Instrument Serif (display), Cormorant Garamond (body), JetBrains Mono (mono/labels)
-- Deployment: Vercel
-- Package manager: pnpm
+- Fonts: Host Grotesk (`--font-sans`, all text) and Geist Mono (`--font-mono`, small uppercase labels only), both via `next/font/google`. No serif anywhere.
+- Icons: hand-drawn line SVGs in `src/components/ProjectIcon.tsx` (one per project slug) and inline in `Domains.tsx`, square caps and mitred joins. No emojis, no screenshots as thumbnails.
+- Deployment: Vercel via GitHub integration (every push to `main` deploys to production at https://www.cyrilv.com; other branches get preview URLs). The canonical origin lives in `src/lib/site.ts`
+- Package manager: npm (package-lock.json is the lockfile in use)
 
 ## Common Commands
-- `pnpm dev` — start dev server on localhost:3000
-- `pnpm build` — production build
-- `pnpm lint` — run ESLint
+- `npm run dev` — start dev server on localhost:3000
+- `npm run build` — production build
+- `npx tsc --noEmit` — type-check
 
 ## Design System
 
 ### Aesthetic Direction
-Swiss-editorial meets technical documentation. Inspired by Dieter Rams product pages, NASA mission layouts, and Swiss graphic design. Should feel like a refined printed publication — not a typical developer or student portfolio.
+Grayscale and serious, modelled on Palantir's site: charcoal and white, large light-weight headings, tiny mono uppercase labels, and 1px rules that divide every section into cells. No colour accent (no orange), no rounded corners, no shadows, no serif type, no parallax.
 
-### Colour Palette (CSS Variables)
-- `--bg: #f4f1ec` — warm off-white
-- `--fg: #1a1a1a` — near-black
-- `--accent: #d4582a` — burnt orange for metrics and highlights
-- `--muted: #8a847b` — warm grey secondary text
-- `--border: #d4cfc7` — subtle dividers
-- `--card: #edeae4` — card backgrounds
+### Colour Palette (CSS Variables in `src/app/globals.css`)
+- Light body: `--bg #ffffff`, `--panel #f4f4f4` (hover/fill), `--fg #1e2124`, `--fg-soft`, `--muted #72767b`, `--line #dcdddf`, `--line-strong`
+- Always-dark chrome (nav, hero, footer): `--ink #0e0f11`, `--ink-fg`, `--ink-muted`, `--ink-line`, `--ink-grid` (the faint 48px background grid)
+- The site always opens in light. Dark is opt-in via the toggle in `Nav.tsx` (stored in localStorage) and never follows the system setting. Dark overrides live under `[data-theme='dark']` and must keep lines and grids clearly visible
+- Aliases `--accent`, `--border`, `--card`, `--display`, `--serif` exist only so the project detail page keeps working; they map to grayscale tokens
 
 ### Typography Rules
-- Display: Instrument Serif, 44-110px, letter-spacing -2px
-- Body: Cormorant Garamond, 300 weight, line-height 1.65-1.8
-- Labels: JetBrains Mono, 9-11px, uppercase, letter-spacing 1.5-3px
-- IMPORTANT: Never use Inter, Roboto, Arial, or system fonts
-- IMPORTANT: Never use purple gradients or generic AI aesthetics
+- Headings: Host Grotesk 300-400, letter-spacing -0.02em to -0.035em
+- Body: Host Grotesk 400, 14-18px
+- Labels, buttons, nav links: Geist Mono 10.5-12px, uppercase, letter-spacing 0.06em
+- Link markers use "↳" and "↗"
+- IMPORTANT: Never use serif fonts, Inter, Roboto or Arial; never add a colour accent or purple gradients
 
-### Layout
-- Max content width: 1400px, centered
-- 100px section padding, 48px horizontal padding
-- Grid-based with intentional asymmetry
-- Section numbering (01, 02, 03) in monospace
-- Impact metrics: large accent-colour numbers with small mono labels
-- Case studies: three-column layout (meta | body | metrics)
+### Layout and Grid
+- Max width 1240px (`--max`), 40px gutter (`--gutter`, 20px on mobile)
+- Sections alternate light and dark: `<section className="band">` or `<section className="band tone-dark">`, each wrapping a `<div className="frame">`. `.tone-dark` re-scopes the colour tokens, so components never need dark-specific styles
+- `.frame` draws side rules on the container, a full-bleed bottom rule, and crosshair marks where they meet (all in `globals.css`)
+- Sections open with `SectionHead`: small mono label stacked above a left-aligned light title, both on the section's left gutter so every heading lines up
+- Content lives in ruled cells that share 1px borders; hover fills a cell with `--panel` or inverts to `--ink`
+- Hero and contact use a fading 48px grid background; the portrait is grayscale with corner ticks
 
 ### Animation
-- Intersection observer for scroll-triggered reveals
-- Easing: cubic-bezier(0.22, 1, 0.36, 1)
-- Stagger delays: 0.05-0.12s between sibling elements
-- Movement: translateY(28px) + opacity fade
-- No parallax, no excessive motion
+- `Reveal` component: intersection-observer fade and 28px rise, easing cubic-bezier(0.22, 1, 0.36, 1)
+- Hover: background fills and inversions only. The status square in the hero blinks slowly.
 
 ## Information Architecture
 
 ### Navigation
-Impact → Domains → Credentials → Contact (+ "Get in Touch" CTA button)
+Logo (square mark + "Cyril Vijayakumar", in `Nav.tsx`) → Work → Experience → Articles (route) → Contact (+ "Get in touch" CTA, theme toggle). `Nav` takes `mode="home"` for in-page anchors or `mode="page"` to point anchors back to the homepage, and `current` to mark the active item.
 
-### Page Structure
-1. **Hero** — Name, eyebrow label ("Doctor · Technologist · Strategist"), one-line positioning statement, 4-cell metrics grid (patients, monitoring improvement, testing increase, languages)
-2. **Three Domains** — Equal-weight cards: Medicine, Technology, Strategy. Each with description and skill tags. This replaces a traditional "About" section.
-3. **Case Studies** — Filterable by domain (All / Medicine / Technology / Strategy). Each case study has: tag, title, domain pills, Problem section, Approach section, Outcome section, and 2 quantified metrics.
-4. **Credentials** — Two-column: Education stack (LSE, Sheffield, Dulwich) + Skills (languages with proficiency dots, technical, finance)
-5. **Contact** — Large CTA text + email/LinkedIn/phone links
-6. **Footer** — Copyright + tagline
+### Logo
+A small square outline with a filled inner square, followed by the name "Cyril Vijayakumar". The same mark is `src/app/icon.svg`. A CV monogram was tried and rejected; do not reintroduce it.
+
+### Homepage (`src/app/page.tsx`), tone in brackets
+1. **Hero** (dark) — headline, one-line positioning, "Projects" and "Download CV" buttons, grayscale portrait, 4-cell metrics row (labels and numbers share rows via CSS subgrid). No status line. The portrait column scales fluidly with the viewport; below 700px the portrait is hidden and never downloaded (a `<picture>` source serves a 1px placeholder).
+2. **Selected work** (light, `Highlights.tsx`) — exactly three projects, one per discipline (Medicine, Technology, Strategy), plus a quiet right-aligned "See more work →" text link to `/articles` (hover underlines the text only; no filled button). Keep it to three; quantity is not the point.
+3. **Experience** (dark) — dated timeline from `src/lib/experience.ts`; the current Synthax role lives here, marked "Now"
+4. **Education and skills** (light)
+5. **Contact** (dark) — email (Outlook address) and LinkedIn rows over a faint grid
+6. **Footer** (dark)
+
+### Articles (`src/app/articles/page.tsx`)
+A quiet list, not cards: every case study as a row (date, icon, title, one-line summary, domains), then publications from `src/lib/publications.ts`. Case study pages live at `/projects/[slug]` and link back to `/articles` and on to the next case study.
+
+### SEO and sharing
+- `src/app/sitemap.ts`, `src/app/robots.ts`, and static `opengraph-image.png` / `twitter-image.png` (1200x630, same design language) in `src/app`
+- Page metadata sets canonical URLs; titles use the "%s — Cyril Vijayakumar" template
+- `src/app/not-found.tsx` is the custom 404 in the hero style
+
+### CV download
+`public/Cyrilkumaar-Vijayakumar-CV.pdf` was generated from the site's own content (no phone number). The user may replace it with their own file at the same path. Do not publish the master CV directly: it contains [CONFIRM] notes and a phone number.
+
+### Content rules
+- The master CV is the source of truth, with the user's corrections recorded at the top of `src/lib/projects.ts`
+- Never name the client of the Castore Consulting engagement
+- TASKR is removed from the site
+- Articles are sorted newest first by each project's `sortDate`; reading time is computed by `readingTime()`, never typed by hand
+- Article bodies must not restate the Problem, Approach, Outcome or metrics shown above them
+- No citations in the Reframe article; the hackathon build is a "24-hour prototype"
 
 ### Case Study Template (Problem → Approach → Outcome)
 Every project must follow this structure. A recruiter reads these like mini-consulting cases. Always include at least one quantified metric per case study.
@@ -93,8 +111,8 @@ Every project must follow this structure. A recruiter reads these like mini-cons
 
 ## Current Focus
 - [ ] Convert to multi-page Next.js app with shared layout
-- [ ] Add portrait photo to hero or domains section
+- [x] Add portrait photo to hero
 - [ ] Add blog/articles section for published pieces
-- [ ] Add downloadable CV (PDF) link
-- [ ] Set up Vercel deployment
+- [x] Add downloadable CV (PDF) link
+- [x] Set up Vercel deployment
 - [ ] Add page transition animations

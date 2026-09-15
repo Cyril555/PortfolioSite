@@ -5,128 +5,101 @@ import Link from "next/link";
 import { Sun, Moon } from "lucide-react";
 import styles from "./Nav.module.css";
 
-const NAV_ITEMS = ["Impact", "Projects", "Credentials", "Contact"];
+/** Anchors on the homepage, or a route of their own. */
+const NAV_ITEMS = [
+  { key: "work", label: "Projects", href: "#work" },
+  { key: "experience", label: "Experience", href: "#experience" },
+  { key: "articles", label: "Articles", href: "/articles" },
+  { key: "contact", label: "Contact", href: "#contact" },
+];
 
 interface NavProps {
-  /** On the homepage we scroll to sections; on project pages we link back */
-  mode?: "home" | "project";
+  /** On the homepage anchors scroll in place; on other pages they point back to the homepage */
+  mode?: "home" | "page";
+  /** Nav item to mark as the current page */
+  current?: string;
 }
 
-export default function Nav({ mode = "home" }: NavProps) {
-  const [activeNav, setActiveNav] = useState("Impact");
+export default function Nav({ mode = "home", current }: NavProps) {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [time, setTime] = useState("");
   const [theme, setTheme] = useState("light");
 
   useEffect(() => {
-    const current = document.documentElement.getAttribute('data-theme') || 'light';
-    setTheme(current);
+    setTheme(document.documentElement.getAttribute("data-theme") || "light");
   }, []);
+
+  // Mobile menu: lock page scroll while open, close on Escape or when the viewport grows past the breakpoint
+  useEffect(() => {
+    if (!menuOpen) return;
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setMenuOpen(false);
+    const mq = window.matchMedia("(min-width: 861px)");
+    const onResize = () => mq.matches && setMenuOpen(false);
+    window.addEventListener("keydown", onKey);
+    mq.addEventListener("change", onResize);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
+      mq.removeEventListener("change", onResize);
+    };
+  }, [menuOpen]);
 
   const toggleTheme = () => {
-    const next = theme === 'light' ? 'dark' : 'light';
+    const next = theme === "light" ? "dark" : "light";
     setTheme(next);
-    document.documentElement.setAttribute('data-theme', next);
-    localStorage.setItem('theme', next);
+    document.documentElement.setAttribute("data-theme", next);
+    localStorage.setItem("theme", next);
   };
 
-  useEffect(() => {
-    const tick = () =>
-      setTime(
-        new Date().toLocaleTimeString("en-GB", {
-          hour: "2-digit",
-          minute: "2-digit",
-          timeZone: "Europe/London",
-        })
-      );
-    tick();
-    const id = setInterval(tick, 1000);
-    return () => clearInterval(id);
-  }, []);
-
-  useEffect(() => {
-    if (mode !== "home") return;
-    const handleScroll = () => {
-      const ids = ["impact", "projects", "credentials", "contact"];
-      for (let i = ids.length - 1; i >= 0; i--) {
-        const el = document.getElementById(ids[i]);
-        if (el && el.getBoundingClientRect().top <= 140) {
-          setActiveNav(NAV_ITEMS[i]);
-          break;
-        }
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [mode]);
-
-  const scrollTo = (id: string) => {
-    document.getElementById(id.toLowerCase())?.scrollIntoView({ behavior: "smooth" });
-    setMenuOpen(false);
-  };
+  const close = () => setMenuOpen(false);
+  const resolve = (href: string) => (href.startsWith("#") && mode !== "home" ? `/${href}` : href);
+  const links = NAV_ITEMS.map((n) => (
+    <li key={n.key}>
+      <a
+        href={resolve(n.href)}
+        onClick={close}
+        aria-current={current === n.key ? "page" : undefined}
+        className={current === n.key ? styles.current : undefined}
+      >
+        {n.label}
+      </a>
+    </li>
+  ));
 
   return (
     <>
       <nav className={styles.nav}>
         <div className={styles.inner}>
-          <Link href="/" className={styles.logo}>
-            Dr. Cyril<em>V</em>
+          <Link href="/" className={styles.logo} onClick={close}>
+            <span className={styles.mark} aria-hidden="true" />
+            Cyril Vijayakumar
           </Link>
 
-          {mode === "home" ? (
-            <ul className={styles.links}>
-              {NAV_ITEMS.map((n) => (
-                <li
-                  key={n}
-                  className={activeNav === n ? styles.active : ""}
-                  onClick={() => scrollTo(n)}
-                >
-                  {n}
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <ul className={styles.links}>
-              <li>
-                <Link href="/#projects">← Back to Projects</Link>
-              </li>
-            </ul>
-          )}
+          <ul className={styles.links}>{links}</ul>
 
           <div className={styles.right}>
-            <span className={styles.time}>London {time}</span>
-            <button className={styles.themeToggle} onClick={toggleTheme} aria-label="Toggle theme">
-              {theme === 'dark' ? <Sun size={15} strokeWidth={2.5} /> : <Moon size={15} strokeWidth={2.5} />}
+            <button className={styles.icon} onClick={toggleTheme} aria-label="Toggle theme">
+              {theme === "dark" ? <Sun size={14} strokeWidth={1.75} /> : <Moon size={14} strokeWidth={1.75} />}
             </button>
-            <a className={styles.cta} href="mailto:c.vijayakumar@lse.ac.uk">
-              Get in Touch
+            <a className={styles.cta} href={resolve("#contact")}>
+              Get in touch ↗
             </a>
+            <button
+              className={`${styles.icon} ${styles.hamburger} ${menuOpen ? styles.open : ""}`}
+              onClick={() => setMenuOpen(!menuOpen)}
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={menuOpen}
+              aria-controls="mobile-menu"
+            >
+              <span />
+              <span />
+            </button>
           </div>
-
-          <button
-            className={`${styles.hamburger} ${menuOpen ? styles.open : ""}`}
-            onClick={() => setMenuOpen(!menuOpen)}
-            aria-label="Toggle menu"
-          >
-            <span />
-            <span />
-            <span />
-          </button>
         </div>
       </nav>
 
-      <ul className={`${styles.mobileMenu} ${menuOpen ? styles.mobileOpen : ""}`}>
-        {mode === "home" ? (
-          NAV_ITEMS.map((n) => (
-            <li key={n} onClick={() => scrollTo(n)}>
-              {n}
-            </li>
-          ))
-        ) : (
-          <li onClick={() => setMenuOpen(false)}>
-            <Link href="/#projects">← Back to Projects</Link>
-          </li>
-        )}
+      <ul id="mobile-menu" className={`${styles.mobileMenu} ${menuOpen ? styles.mobileOpen : ""}`}>
+        {links}
       </ul>
     </>
   );
