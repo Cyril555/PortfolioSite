@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Sun, Moon } from "lucide-react";
 import styles from "./Nav.module.css";
 
 /** Anchors on the homepage, or a route of their own. */
@@ -28,12 +27,12 @@ export default function Nav({ mode = "home", current }: NavProps) {
     setTheme(document.documentElement.getAttribute("data-theme") || "light");
   }, []);
 
-  // Mobile menu: lock page scroll while open, close on Escape or when the viewport grows past the breakpoint
+  // Mobile sheet: lock page scroll while open, close on Escape or once the viewport grows past the breakpoint
   useEffect(() => {
     if (!menuOpen) return;
     document.body.style.overflow = "hidden";
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setMenuOpen(false);
-    const mq = window.matchMedia("(min-width: 861px)");
+    const mq = window.matchMedia("(min-width: 821px)");
     const onResize = () => mq.matches && setMenuOpen(false);
     window.addEventListener("keydown", onKey);
     mq.addEventListener("change", onResize);
@@ -53,54 +52,66 @@ export default function Nav({ mode = "home", current }: NavProps) {
 
   const close = () => setMenuOpen(false);
   const resolve = (href: string) => (href.startsWith("#") && mode !== "home" ? `/${href}` : href);
-  const links = NAV_ITEMS.map((n) => (
-    <li key={n.key}>
-      <a
-        href={resolve(n.href)}
-        onClick={close}
-        aria-current={current === n.key ? "page" : undefined}
-        className={current === n.key ? styles.current : undefined}
-      >
-        {n.label}
-      </a>
-    </li>
-  ));
 
   return (
     <>
-      <nav className={styles.nav}>
-        <div className={styles.inner}>
+      <header className={styles.bar}>
+        <div className={`sheet ${styles.inner}`}>
           <Link href="/" className={styles.logo} onClick={close}>
             <span className={styles.mark} aria-hidden="true" />
-            Cyril Vijayakumar
+            <span>Cyril Vijayakumar</span>
           </Link>
 
-          <ul className={styles.links}>{links}</ul>
+          <nav className={styles.desktop} aria-label="Primary">
+          <ul>
+            {NAV_ITEMS.map((n) => (
+              <li key={n.key}>
+                <a
+                  href={resolve(n.href)}
+                  aria-current={current === n.key ? "page" : undefined}
+                  className={current === n.key ? styles.current : undefined}
+                >
+                  {n.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
 
-          <div className={styles.right}>
-            <button className={styles.icon} onClick={toggleTheme} aria-label="Toggle theme">
-              {theme === "dark" ? <Sun size={14} strokeWidth={1.75} /> : <Moon size={14} strokeWidth={1.75} />}
+        <div className={styles.right}>
+            <button className={styles.theme} onClick={toggleTheme} aria-label="Switch to the other colour scheme">
+              {theme === "dark" ? "Light" : "Dark"}
             </button>
             <a className={styles.cta} href={resolve("#contact")}>
-              Get in touch ↗
+              Get in touch
             </a>
             <button
-              className={`${styles.icon} ${styles.hamburger} ${menuOpen ? styles.open : ""}`}
+              className={styles.menuButton}
               onClick={() => setMenuOpen(!menuOpen)}
               aria-label={menuOpen ? "Close menu" : "Open menu"}
               aria-expanded={menuOpen}
               aria-controls="mobile-menu"
             >
-              <span />
-              <span />
+              {menuOpen ? "Close" : "Menu"}
             </button>
           </div>
         </div>
-      </nav>
+      </header>
 
-      <ul id="mobile-menu" className={`${styles.mobileMenu} ${menuOpen ? styles.mobileOpen : ""}`}>
-        {links}
-      </ul>
+      <div id="mobile-menu" className={styles.menuSheet} hidden={!menuOpen}>
+        <ul>
+          {NAV_ITEMS.map((n) => (
+            <li key={n.key}>
+              <a href={resolve(n.href)} onClick={close} aria-current={current === n.key ? "page" : undefined}>
+                {n.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+        <button className={styles.sheetTheme} onClick={toggleTheme}>
+          {theme === "dark" ? "Switch to light" : "Switch to dark"}
+        </button>
+      </div>
     </>
   );
 }

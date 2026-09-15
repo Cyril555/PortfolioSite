@@ -1,109 +1,103 @@
+.section {
+  border-top: 1px solid var(--rule);
+  background: var(--paper);
+}
+
 .list {
   list-style: none;
+  border-top: 1px solid var(--rule-firm);
 }
 
 .row {
-  display: grid;
-  grid-template-columns: 220px 1fr 1.4fr;
-  border-bottom: 1px solid var(--line);
-  transition: background 0.2s;
+  padding-block: clamp(26px, 3.6vw, 40px);
+  border-bottom: 1px solid var(--rule);
+  position: relative;
 }
 
-.row:hover {
-  background: var(--panel);
+/* Each role is a reading on the spine: a tick where the row meets the axis */
+.row::before {
+  content: "";
+  position: absolute;
+  left: calc(var(--edge) * -1);
+  top: clamp(30px, 3.9vw, 44px);
+  width: 9px;
+  height: 1px;
+  background: var(--rule-firm);
 }
 
-.list > :last-child .row {
-  border-bottom: 0;
-}
-
-.row > * {
-  padding: 24px var(--gutter);
-}
-
-.when {
+.rail {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 10px;
-  font-family: var(--mono);
-  font-size: 11.5px;
-  letter-spacing: 0.04em;
-  color: var(--muted);
-  border-right: 1px solid var(--line);
-  font-variant-numeric: tabular-nums;
+  gap: 8px;
 }
 
+.period {
+  font-size: 13px;
+  color: var(--slate);
+  line-height: 1.45;
+  white-space: normal;
+}
+
+/* The only state marker on the page, and the only other place colour appears */
 .now {
-  font-size: 10px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  padding: 3px 7px;
-  background: var(--fg);
-  color: var(--bg);
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--flag);
+  border: 1px solid currentColor;
+  border-radius: 2px;
+  padding: 1px 7px;
 }
 
-.who {
-  border-right: 1px solid var(--line);
-}
-
-.who h3 {
-  font-size: 22px;
-  font-weight: 400;
+.role {
+  font-size: clamp(1.1875rem, 1.9vw, 1.4375rem);
+  font-weight: 500;
+  font-variation-settings: "wdth" 94;
   letter-spacing: -0.02em;
-  line-height: 1.15;
+  line-height: 1.2;
 }
 
 .org {
   margin-top: 4px;
-  font-size: 14px;
-  color: var(--muted);
+  font-size: 15px;
+  color: var(--slate);
 }
 
 .points {
+  margin-top: 16px;
   list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  display: grid;
+  gap: 9px;
+  max-width: 72ch;
 }
 
 .points li {
   position: relative;
   padding-left: 20px;
-  font-size: 14.5px;
-  color: var(--fg-soft);
+  font-size: 15.5px;
+  line-height: 1.55;
+  color: var(--ink-soft);
 }
 
 .points li::before {
-  content: "—";
+  content: "";
   position: absolute;
   left: 0;
-  color: var(--muted);
+  top: 0.68em;
+  width: 9px;
+  height: 1px;
+  background: var(--rule-firm);
 }
 
-@media (max-width: 900px) {
-  .row {
-    grid-template-columns: 1fr;
-  }
+@media (max-width: 640px) {
+  .row::before { display: none; }
 
-  .row > * {
-    padding: 0 var(--gutter);
-  }
-
-  .when {
+  .rail {
     flex-direction: row;
     align-items: center;
-    padding-top: 22px;
-    border-right: 0;
+    gap: 12px;
   }
 
-  .who {
-    padding-top: 8px;
-    border-right: 0;
-  }
-
-  .points {
-    padding-top: 12px;
-    padding-bottom: 24px;
-  }
+  .points li { font-size: 15px; padding-left: 18px; }
 }

@@ -1,7 +1,6 @@
 import Link from "next/link";
-import Reveal from "./Reveal";
 import SectionHead from "./SectionHead";
-import ProjectIcon from "./ProjectIcon";
+import Figure from "./Figure";
 import { getProject } from "@/lib/projects";
 import styles from "./Highlights.module.css";
 
@@ -14,47 +13,42 @@ const HIGHLIGHTS = [
 
 export default function Highlights() {
   return (
-    <section className="band" id="work">
-      <div className="frame">
-        <SectionHead label="Selected work" title="Three disciplines, one perspective" />
-        <div className={styles.grid}>
-          {HIGHLIGHTS.map((h, i) => {
+    <section id="work" className="section">
+      <div className="sheet">
+        <SectionHead title="Three disciplines, one perspective" note="Selected work" />
+
+        {/* A results table, not a card set: the reader scans findings down one column */}
+        <div className={styles.table}>
+          {HIGHLIGHTS.map((h) => {
             const project = getProject(h.slug);
             if (!project) return null;
             const metric = project.metrics.find((m) => m.value);
             return (
-              <Reveal key={h.slug} delay={0.06 * i} className={styles.cell}>
-                <Link href={`/projects/${project.slug}`} className={styles.card}>
-                  <div className={styles.top}>
-                    <span className={styles.discipline}>{h.discipline}</span>
-                    <span className={styles.context}>{h.context}</span>
-                  </div>
-                  <div className={styles.tile}>
-                    <span className={styles.glyph}>
-                      <ProjectIcon slug={project.slug} size={32} />
-                    </span>
-                  </div>
-                  <div className={styles.body}>
-                    <h3 className={styles.title}>{project.title}</h3>
-                    {metric && (
-                      <p className={styles.metric}>
-                        <b>{metric.value}</b>
-                        <span>{metric.label}</span>
-                      </p>
-                    )}
-                  </div>
-                  <span className={styles.more}>↳ Read case study</span>
-                </Link>
-              </Reveal>
+              <Link key={h.slug} href={`/projects/${project.slug}`} className={`split ${styles.row}`}>
+                <div className={styles.rail}>
+                  <span className={styles.discipline}>{h.discipline}</span>
+                  <span className={styles.context}>{h.context}</span>
+                </div>
+                <div className={styles.body}>
+                  <h3 className={styles.title}>{project.title}</h3>
+                  {metric && (
+                    <p className={styles.metric}>
+                      <Figure value={metric.value!} />
+                      <span className={styles.metricLabel}>{metric.label}</span>
+                    </p>
+                  )}
+                  <span className={styles.more}>Read case study</span>
+                </div>
+              </Link>
             );
           })}
         </div>
-        <div className={styles.moreBar}>
+
+        <p className={styles.moreBar}>
           <Link href="/articles" className={styles.moreLink}>
-            <span className={styles.moreText}>See more work</span>
-            <span className={styles.moreArrow} aria-hidden="true">→</span>
+            See more work
           </Link>
-        </div>
+        </p>
       </div>
     </section>
   );

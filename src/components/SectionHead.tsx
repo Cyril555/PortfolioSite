@@ -2,20 +2,24 @@ import type { ReactNode } from "react";
 import styles from "./SectionHead.module.css";
 
 interface Props {
-  label: string;
   title: string;
+  /** Short factual note shown on the rail, e.g. a count. Omit where there is nothing to say. */
+  note?: string;
   aside?: ReactNode;
 }
 
-/** Ruled header row shared by every section: small mono label stacked above a left-aligned title, optional right slot. */
-export default function SectionHead({ label, title, aside }: Props) {
+/**
+ * A section opens with a statement, not a label stack. Any note that carries real
+ * information sits on the rail in mono, where the chart keeps its figures.
+ */
+export default function SectionHead({ title, note, aside }: Props) {
   return (
-    <header className={styles.head}>
-      <div className={styles.text}>
-        <div className={styles.label}>{label}</div>
+    <header className={`split ${styles.head}`}>
+      <div className={styles.rail}>{note && <span className={styles.note}>{note}</span>}</div>
+      <div className={styles.main}>
         <h2 className={styles.title}>{title}</h2>
+        {aside}
       </div>
-      {aside}
     </header>
   );
 }

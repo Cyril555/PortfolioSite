@@ -1,4 +1,3 @@
-import Reveal from "./Reveal";
 import styles from "./Contact.module.css";
 
 const LINKS = [
@@ -8,32 +7,30 @@ const LINKS = [
 
 export default function Contact() {
   return (
-    <section className={`band tone-dark ${styles.section}`} id="contact">
-      <div className={`frame ${styles.inner}`}>
-        <Reveal className={styles.lead}>
-          <div className={styles.label}>Contact</div>
-          <h2 className={styles.big}>
-            Building clinical software? <span>Let&apos;s talk.</span>
-          </h2>
+    <section id="contact" className={`section onInk ${styles.section}`}>
+      <div className={`sheet ${styles.grid}`}>
+        <div className={styles.lead}>
+          <h2 className={styles.title}>Building clinical software? Let&apos;s talk.</h2>
           <p className={styles.sub}>
             Based in London. Open to clinical product, health-tech and strategy roles.
           </p>
-        </Reveal>
-        <div className={styles.links}>
-          {LINKS.map((c) => (
-            <a
-              key={c.label}
-              className={styles.link}
-              href={c.href}
-              target={c.label === "LinkedIn" ? "_blank" : undefined}
-              rel="noreferrer"
-            >
-              <span className={styles.linkLabel}>{c.label}</span>
-              <span className={styles.value}>{c.value}</span>
-              <span className={styles.arrow} aria-hidden="true">↗</span>
-            </a>
-          ))}
         </div>
+
+        <ul className={styles.links}>
+          {LINKS.map((c) => (
+            <li key={c.label}>
+              <a
+                className={styles.link}
+                href={c.href}
+                target={c.label === "LinkedIn" ? "_blank" : undefined}
+                rel="noreferrer"
+              >
+                <span className={styles.linkLabel}>{c.label}</span>
+                <span className={styles.value}>{c.value}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );

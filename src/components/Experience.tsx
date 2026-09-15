@@ -1,34 +1,32 @@
-import Reveal from "./Reveal";
 import SectionHead from "./SectionHead";
 import { EXPERIENCE } from "@/lib/experience";
 import styles from "./Experience.module.css";
 
 export default function Experience() {
   return (
-    <section className="band tone-dark" id="experience">
-      <div className="frame">
-        <SectionHead label="Timeline" title="Experience" />
-        <div className={styles.list}>
-          {EXPERIENCE.map((r, i) => (
-            <Reveal key={r.org} delay={0.04 * i}>
-              <div className={styles.row}>
-                <div className={styles.when}>
-                  {r.period}
-                  {r.current && <span className={styles.now}>Now</span>}
-                </div>
-                <div className={styles.who}>
-                  <h3>{r.role}</h3>
-                  <div className={styles.org}>{r.org}</div>
-                </div>
+    <section id="experience" className={`section ${styles.section}`}>
+      <div className="sheet">
+        <SectionHead title="Experience" note="Timeline" />
+
+        <ol className={styles.list}>
+          {EXPERIENCE.map((r) => (
+            <li key={r.org} className={`split ${styles.row}`}>
+              <div className={styles.rail}>
+                <span className={`figure ${styles.period}`}>{r.period}</span>
+                {r.current && <span className={styles.now}>Now</span>}
+              </div>
+              <div className={styles.body}>
+                <h3 className={styles.role}>{r.role}</h3>
+                <p className={styles.org}>{r.org}</p>
                 <ul className={styles.points}>
                   {r.points.map((p) => (
                     <li key={p}>{p}</li>
                   ))}
                 </ul>
               </div>
-            </Reveal>
+            </li>
           ))}
-        </div>
+        </ol>
       </div>
     </section>
   );

@@ -1,90 +1,84 @@
 .body {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  max-width: 680px;
+  max-width: 68ch;
 }
 
 .heading {
-  margin-top: 28px;
-  font-size: 26px;
-  font-weight: 400;
+  margin-top: clamp(38px, 4.5vw, 56px);
+  margin-bottom: 14px;
+  font-size: clamp(1.1875rem, 1.9vw, 1.4375rem);
+  font-weight: 500;
+  font-variation-settings: "wdth" 94;
   letter-spacing: -0.02em;
-  line-height: 1.2;
+  line-height: 1.22;
 }
 
-.body > .heading:first-child {
-  margin-top: 0;
-}
+.heading:first-child { margin-top: 0; }
 
 .paragraph {
-  font-size: 17px;
-  line-height: 1.7;
-  color: var(--fg-soft);
+  margin-bottom: 18px;
+  font-size: clamp(1rem, 1.2vw, 1.0625rem);
+  line-height: 1.68;
+  color: var(--ink-soft);
 }
 
 .list {
+  margin: 4px 0 24px;
   list-style: none;
-  display: flex;
-  flex-direction: column;
-  border-top: 1px solid var(--line);
+  display: grid;
+  gap: 10px;
 }
 
 .list li {
   position: relative;
-  padding: 12px 0 12px 28px;
-  border-bottom: 1px solid var(--line);
-  font-size: 16px;
-  color: var(--fg-soft);
+  padding-left: 22px;
+  font-size: clamp(0.9375rem, 1.15vw, 1.0625rem);
+  line-height: 1.6;
+  color: var(--ink-soft);
 }
 
 .list li::before {
-  content: "↳";
+  content: "";
   position: absolute;
-  left: 2px;
-  color: var(--muted);
+  left: 0;
+  top: 0.72em;
+  width: 11px;
+  height: 1px;
+  background: var(--rule-firm);
 }
 
 .quote {
-  margin: 12px 0;
-  padding: 4px 0 4px 24px;
-  border-left: 1px solid var(--line-strong);
+  margin: 30px 0;
+  padding-left: 22px;
+  border-left: 2px solid var(--rule-firm);
 }
 
 .quote p {
-  font-size: 24px;
-  font-weight: 300;
-  letter-spacing: -0.02em;
-  line-height: 1.35;
+  font-size: clamp(1.0625rem, 1.5vw, 1.25rem);
+  line-height: 1.5;
+  letter-spacing: -0.015em;
 }
 
 .quote cite {
   display: block;
-  margin-top: 12px;
-  font-family: var(--mono);
-  font-size: 11px;
+  margin-top: 10px;
   font-style: normal;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--muted);
+  font-size: 13.5px;
+  color: var(--slate);
 }
 
 .figure {
-  margin: 12px 0;
-  border: 1px solid var(--line);
+  margin: 30px 0;
 }
 
 .figure img {
   width: 100%;
-  height: auto;
+  border-radius: 2px;
 }
 
 .figure figcaption {
-  padding: 10px 14px;
-  border-top: 1px solid var(--line);
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.02em;
-  line-height: 1.5;
-  color: var(--muted);
+  margin-top: 10px;
+  padding-top: 9px;
+  border-top: 1px solid var(--rule);
+  font-size: 13px;
+  color: var(--slate);
 }

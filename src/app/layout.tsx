@@ -1,16 +1,18 @@
 import type { Metadata } from "next";
-import { Host_Grotesk, Geist_Mono } from "next/font/google";
+import { Archivo, Spline_Sans_Mono } from "next/font/google";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
-const sans = Host_Grotesk({
+/* Archivo carries both voices: the display setting narrows the width axis, body sits at 100. */
+const sans = Archivo({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
+  axes: ["wdth"],
   variable: "--font-sans",
   display: "swap",
 });
 
-const mono = Geist_Mono({
+/* Mono is reserved for figures and dates — never for labels. */
+const mono = Spline_Sans_Mono({
   subsets: ["latin"],
   weight: ["400", "500"],
   variable: "--font-mono",

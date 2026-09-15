@@ -1,257 +1,232 @@
-/* Header: fact column + title */
-.header {
-  display: grid;
-  grid-template-columns: 220px 1fr;
+.lead {
+  padding-block: clamp(44px, 6vw, 84px);
+  border-bottom: 1px solid var(--rule);
+}
+
+.leadInner {
+  align-items: start;
 }
 
 .facts {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  padding: 56px var(--gutter) 40px;
-  border-right: 1px solid var(--line);
-  background: var(--panel);
-}
-
-.glyph {
-  width: 56px;
-  height: 56px;
   display: grid;
-  place-items: center;
-  border: 1px solid var(--line-strong);
-  background: var(--bg);
-}
-
-.facts dl {
-  display: flex;
-  flex-direction: column;
   gap: 14px;
+  padding-top: 6px;
 }
 
-.facts dt,
-.eyebrow,
-.cellLabel,
-.metricLabel {
-  font-family: var(--mono);
-  font-size: 10.5px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--muted);
+.facts dt {
+  font-size: 12.5px;
+  color: var(--slate);
 }
 
 .facts dd {
   margin-top: 2px;
-  font-size: 14px;
-  text-transform: capitalize;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  line-height: 1.4;
+  color: var(--ink-soft);
 }
 
-.lead {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 20px;
-  padding: 72px var(--gutter) 56px;
+.glyph {
+  display: block;
+  color: var(--slate);
+  margin-bottom: 20px;
 }
 
 .title {
-  font-size: clamp(40px, 6vw, 80px);
-  font-weight: 300;
-  line-height: 1;
+  font-size: clamp(2.125rem, 5.4vw, 3.875rem);
+  font-weight: 500;
+  font-variation-settings: "wdth" 84;
   letter-spacing: -0.035em;
+  line-height: 1;
+  max-width: 17ch;
   text-wrap: balance;
 }
 
 .subtitle {
-  font-size: 20px;
-  font-weight: 300;
-  line-height: 1.45;
-  color: var(--fg-soft);
-  max-width: 36em;
+  margin-top: 20px;
+  max-width: 54ch;
+  font-size: clamp(1rem, 1.3vw, 1.125rem);
+  line-height: 1.55;
+  color: var(--ink-soft);
 }
 
 .demo {
-  height: 40px;
   display: inline-flex;
   align-items: center;
-  padding: 0 16px;
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  background: var(--fg);
-  color: var(--bg);
-  transition: opacity 0.2s;
+  min-height: 46px;
+  margin-top: 26px;
+  padding: 0 20px;
+  border: 1px solid var(--ink);
+  border-radius: 2px;
+  font-size: 15px;
+  font-weight: 500;
+  transition: background-color 0.2s var(--ease), color 0.2s var(--ease);
 }
 
 .demo:hover {
-  opacity: 0.85;
+  background: var(--ink);
+  color: var(--paper);
 }
 
-/* Metrics: ruled cells */
+/* ---- Figures ----------------------------------------------------------- */
+
 .metrics {
+  border-bottom: 1px solid var(--rule);
+  background: var(--paper-raised);
+}
+
+.strip {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
 }
 
 .metric {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 16px;
-  min-height: 132px;
-  padding: 22px var(--gutter);
-  border-right: 1px solid var(--line);
+  gap: 9px;
+  padding: 26px 20px 28px 0;
+  position: relative;
 }
 
-.metric:last-child {
-  border-right: 0;
+.metric::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 9px;
+  background: var(--rule-firm);
 }
 
-.metricVal {
-  font-size: 44px;
-  font-weight: 300;
-  letter-spacing: -0.03em;
+.metric:not(:first-child) { padding-left: 20px; }
+
+.metric :global(.figure) {
+  font-size: clamp(1.625rem, 3vw, 2.25rem);
   line-height: 1;
-  font-variant-numeric: tabular-nums;
+}
+
+.metricLabel,
+.metricText {
+  font-size: 13.5px;
+  line-height: 1.45;
+  color: var(--slate);
+  max-width: 26ch;
 }
 
 .metricText {
-  margin-top: auto;
-  font-size: 18px;
-  font-weight: 300;
+  color: var(--ink-soft);
+  font-size: 15px;
+}
+
+/* ---- Problem, approach, outcome ---------------------------------------- */
+
+.summary > :global(.sheet) {
+  border-top: 0;
+}
+
+.stage {
+  padding-block: clamp(22px, 3vw, 32px);
+  border-bottom: 1px solid var(--rule);
+  align-items: baseline;
+}
+
+.stage:first-child { border-top: 1px solid var(--rule-firm); }
+
+.stageLabel {
+  font-size: 15px;
+  font-weight: 500;
   letter-spacing: -0.01em;
-  line-height: 1.3;
 }
 
-/* Problem / Approach / Outcome */
-.summary {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+.stageText {
+  max-width: 68ch;
+  font-size: clamp(1rem, 1.2vw, 1.0625rem);
+  line-height: 1.62;
+  color: var(--ink-soft);
 }
 
-.summaryCell {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  padding: 32px var(--gutter) 36px;
-  border-right: 1px solid var(--line);
-}
+/* ---- Article ----------------------------------------------------------- */
 
-.summaryCell:last-child {
-  border-right: 0;
-}
-
-.summaryCell p {
-  font-size: 16px;
-  line-height: 1.6;
-  color: var(--fg-soft);
-}
-
-/* Article */
 .article {
-  display: grid;
-  grid-template-columns: 220px 1fr;
+  border-top: 1px solid var(--rule);
 }
 
-.article > .cellLabel {
-  padding: 56px var(--gutter);
-  border-right: 1px solid var(--line);
+.articleInner {
+  align-items: start;
 }
 
-.article > :last-child {
-  padding: 48px var(--gutter) 72px;
-}
+/* ---- Pager ------------------------------------------------------------- */
 
-/* Back / next */
 .pager {
+  border-top: 1px solid var(--rule);
+}
+
+.pagerInner {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .pagerLink {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding: 32px var(--gutter);
-  transition: background 0.2s;
-}
-
-.pagerLink:hover {
-  background: var(--panel);
+  gap: 7px;
+  padding: clamp(26px, 3.4vw, 40px) 24px clamp(26px, 3.4vw, 40px) 0;
+  transition: background-color 0.18s var(--ease);
 }
 
 .pagerNext {
-  align-items: flex-end;
+  padding: clamp(26px, 3.4vw, 40px) 0 clamp(26px, 3.4vw, 40px) 24px;
+  border-left: 1px solid var(--rule);
   text-align: right;
-  border-left: 1px solid var(--line);
+  align-items: flex-end;
+}
+
+.pagerLink:hover { background: var(--paper-raised); }
+
+.pagerRole {
+  font-size: 12.5px;
+  color: var(--slate);
 }
 
 .pagerTitle {
-  font-size: 24px;
-  font-weight: 300;
+  font-size: clamp(1.0625rem, 1.8vw, 1.375rem);
+  font-weight: 450;
+  font-variation-settings: "wdth" 94;
   letter-spacing: -0.02em;
+  line-height: 1.2;
 }
 
-@media (max-width: 900px) {
-  .header,
-  .article {
-    grid-template-columns: 1fr;
+/* Single column: every figure sits on the spine, none inset */
+@media (max-width: 440px) {
+  .metric:not(:first-child) {
+    padding-left: 0;
+    border-top: 1px solid var(--rule);
   }
 
+  .metric:not(:first-child)::before { display: none; }
+}
+
+@media (max-width: 640px) {
   .facts {
-    order: 2;
-    flex-direction: row;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    padding: 24px var(--gutter);
-    border-right: 0;
-    border-top: 1px solid var(--line);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px 20px;
+    padding-top: 0;
+    margin-bottom: 26px;
   }
 
-  .facts dl {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 14px 28px;
-  }
+  .title { max-width: none; }
+  .glyph { margin-bottom: 16px; }
 
-  .lead {
-    padding: 48px var(--gutter) 40px;
-  }
+  .metric { padding: 20px 14px 22px 0; }
+  .metric:not(:first-child) { padding-left: 14px; }
 
-  .metric {
-    border-bottom: 1px solid var(--line);
-  }
-
-  .summary {
-    grid-template-columns: 1fr;
-  }
-
-  .summaryCell {
-    border-right: 0;
-    border-bottom: 1px solid var(--line);
-  }
-
-  .summaryCell:last-child {
-    border-bottom: 0;
-  }
-
-  .article > .cellLabel {
-    padding: 36px var(--gutter) 0;
-    border-right: 0;
-  }
-
-  .article > :last-child {
-    padding-top: 20px;
-  }
-
-  .pager {
-    grid-template-columns: 1fr;
-  }
+  .pagerInner { grid-template-columns: minmax(0, 1fr); }
 
   .pagerNext {
-    align-items: flex-start;
-    text-align: left;
+    padding: clamp(26px, 3.4vw, 40px) 0;
     border-left: 0;
-    border-top: 1px solid var(--line);
+    border-top: 1px solid var(--rule);
+    text-align: left;
+    align-items: flex-start;
   }
 }
