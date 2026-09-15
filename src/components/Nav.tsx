@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Sun, Moon } from "lucide-react";
-import Logo from "./Logo";
 import styles from "./Nav.module.css";
 
 /** Anchors on the homepage, or a route of their own. */
@@ -71,8 +70,9 @@ export default function Nav({ mode = "home", current }: NavProps) {
     <>
       <nav className={styles.nav}>
         <div className={styles.inner}>
-          <Link href="/" className={styles.logo} onClick={close} aria-label="Cyril Vijayakumar, home">
-            <Logo size={30} />
+          <Link href="/" className={styles.logo} onClick={close}>
+            <span className={styles.mark} aria-hidden="true" />
+            Cyril Vijayakumar
           </Link>
 
           <ul className={styles.links}>{links}</ul>

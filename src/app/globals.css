@@ -45,16 +45,17 @@ html {
 
 [data-theme='dark'] {
   --bg: #0e0f11;
-  --panel: #16181b;
+  --panel: #17191c;
   --fg: #eceded;
   --fg-soft: #b9bcc0;
   --muted: #8d9197;
-  --line: #26292d;
+  --line: #34383d;
   --line-strong: #eceded;
 
   --ink: #000000;
   --ink-2: #0b0c0e;
-  --ink-line: rgba(236, 237, 237, 0.12);
+  --ink-line: rgba(236, 237, 237, 0.2);
+  --ink-grid: rgba(236, 237, 237, 0.09);
 }
 
 body {
@@ -108,7 +109,8 @@ img {
 
 [data-theme='dark'] .tone-dark {
   --bg: #050506;
-  --panel: #0e0f11;
+  --panel: #111316;
+  --line: rgba(236, 237, 237, 0.2);
 }
 
 /* Shared: a framed container whose side rules run the full height of each section */

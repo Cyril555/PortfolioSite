@@ -23,7 +23,25 @@
   display: inline-flex;
   align-items: center;
   justify-self: start;
+  gap: 10px;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
   color: var(--ink-fg);
+}
+
+.mark {
+  width: 14px;
+  height: 14px;
+  border: 1px solid var(--ink-fg);
+  position: relative;
+}
+
+.mark::after {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  background: var(--ink-fg);
 }
 
 .links {

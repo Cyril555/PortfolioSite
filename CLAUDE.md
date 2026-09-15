@@ -27,7 +27,7 @@ Grayscale and serious, modelled on Palantir's site: charcoal and white, large li
 ### Colour Palette (CSS Variables in `src/app/globals.css`)
 - Light body: `--bg #ffffff`, `--panel #f4f4f4` (hover/fill), `--fg #1e2124`, `--fg-soft`, `--muted #72767b`, `--line #dcdddf`, `--line-strong`
 - Always-dark chrome (nav, hero, footer): `--ink #0e0f11`, `--ink-fg`, `--ink-muted`, `--ink-line`, `--ink-grid` (the faint 48px background grid)
-- Dark theme overrides under `[data-theme='dark']`; toggle in `Nav.tsx`
+- The site always opens in light. Dark is opt-in via the toggle in `Nav.tsx` (stored in localStorage) and never follows the system setting. Dark overrides live under `[data-theme='dark']` and must keep lines and grids clearly visible
 - Aliases `--accent`, `--border`, `--card`, `--display`, `--serif` exist only so the project detail page keeps working; they map to grayscale tokens
 
 ### Typography Rules
@@ -41,7 +41,7 @@ Grayscale and serious, modelled on Palantir's site: charcoal and white, large li
 - Max width 1240px (`--max`), 40px gutter (`--gutter`, 20px on mobile)
 - Sections alternate light and dark: `<section className="band">` or `<section className="band tone-dark">`, each wrapping a `<div className="frame">`. `.tone-dark` re-scopes the colour tokens, so components never need dark-specific styles
 - `.frame` draws side rules on the container, a full-bleed bottom rule, and crosshair marks where they meet (all in `globals.css`)
-- Sections open with `SectionHead` (220px mono label column, light title, optional right slot such as the project filter)
+- Sections open with `SectionHead`: small mono label stacked above a left-aligned light title, both on the section's left gutter so every heading lines up
 - Content lives in ruled cells that share 1px borders; hover fills a cell with `--panel` or inverts to `--ink`
 - Hero and contact use a fading 48px grid background; the portrait is grayscale with corner ticks
 
@@ -52,14 +52,14 @@ Grayscale and serious, modelled on Palantir's site: charcoal and white, large li
 ## Information Architecture
 
 ### Navigation
-Logo (CV monogram, `src/components/Logo.tsx`) → Work → Experience → Articles (route) → Contact (+ "Get in touch" CTA, theme toggle). `Nav` takes `mode="home"` for in-page anchors or `mode="page"` to point anchors back to the homepage, and `current` to mark the active item.
+Logo (square mark + "Cyril Vijayakumar", in `Nav.tsx`) → Work → Experience → Articles (route) → Contact (+ "Get in touch" CTA, theme toggle). `Nav` takes `mode="home"` for in-page anchors or `mode="page"` to point anchors back to the homepage, and `current` to mark the active item.
 
 ### Logo
-One continuous stroke: the C's upper terminal becomes the V's left arm, with a square node at the join. It draws itself on load and on hover. The same path is used in `src/app/icon.svg`.
+A small square outline with a filled inner square, followed by the name "Cyril Vijayakumar". The same mark is `src/app/icon.svg`. A CV monogram was tried and rejected; do not reintroduce it.
 
 ### Homepage (`src/app/page.tsx`), tone in brackets
 1. **Hero** (dark) — headline, one-line positioning, two CTAs, grayscale portrait, 4-cell metrics row. No status line.
-2. **Selected work** (light, `Highlights.tsx`) — exactly three projects, one per discipline (Medicine, Technology, Strategy), plus a "See more" row linking to `/articles`. Keep it to three; quantity is not the point.
+2. **Selected work** (light, `Highlights.tsx`) — exactly three projects, one per discipline (Medicine, Technology, Strategy), plus a quiet right-aligned "See more work →" text link to `/articles` (hover underlines the text only; no filled button). Keep it to three; quantity is not the point.
 3. **Experience** (dark) — dated timeline from `src/lib/experience.ts`; the current Synthax role lives here, marked "Now"
 4. **Education and skills** (light)
 5. **Contact** (dark) — email (Outlook address) and LinkedIn rows over a faint grid

@@ -16,15 +16,7 @@ export default function Highlights() {
   return (
     <section className="band" id="work">
       <div className="frame">
-        <SectionHead
-          label="Selected work"
-          title="Three disciplines, one perspective"
-          aside={
-            <Link href="/articles" className={styles.seeAll}>
-              See all work ↗
-            </Link>
-          }
-        />
+        <SectionHead label="Selected work" title="Three disciplines, one perspective" />
         <div className={styles.grid}>
           {HIGHLIGHTS.map((h, i) => {
             const project = getProject(h.slug);
@@ -57,11 +49,12 @@ export default function Highlights() {
             );
           })}
         </div>
-        <Link href="/articles" className={styles.moreRow}>
-          <span className={styles.moreLabel}>More work</span>
-          <span className={styles.moreText}>See more case studies, audits and publications</span>
-          <span className={styles.moreArrow} aria-hidden="true">→</span>
-        </Link>
+        <div className={styles.moreBar}>
+          <Link href="/articles" className={styles.moreLink}>
+            <span className={styles.moreText}>See more work</span>
+            <span className={styles.moreArrow} aria-hidden="true">→</span>
+          </Link>
+        </div>
       </div>
     </section>
   );

@@ -7,13 +7,15 @@ interface Props {
   aside?: ReactNode;
 }
 
-/** Ruled header row shared by every light section: mono label, light title, optional right slot. */
+/** Ruled header row shared by every section: small mono label stacked above a left-aligned title, optional right slot. */
 export default function SectionHead({ label, title, aside }: Props) {
   return (
     <header className={styles.head}>
-      <div className={styles.label}>{label}</div>
-      <h2 className={styles.title}>{title}</h2>
-      {aside && <div className={styles.aside}>{aside}</div>}
+      <div className={styles.text}>
+        <div className={styles.label}>{label}</div>
+        <h2 className={styles.title}>{title}</h2>
+      </div>
+      {aside}
     </header>
   );
 }

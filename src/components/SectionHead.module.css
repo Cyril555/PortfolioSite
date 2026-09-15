@@ -1,10 +1,18 @@
 .head {
-  display: grid;
-  grid-template-columns: 220px 1fr auto;
-  align-items: end;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
   gap: 16px 24px;
+  flex-wrap: wrap;
   padding: 56px var(--gutter) 24px;
   border-bottom: 1px solid var(--line);
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
 }
 
 .label {
@@ -13,7 +21,6 @@
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--muted);
-  padding-bottom: 6px;
 }
 
 .title {
@@ -23,21 +30,8 @@
   line-height: 1.05;
 }
 
-.aside {
-  justify-self: end;
-}
-
 @media (max-width: 860px) {
   .head {
-    grid-template-columns: 1fr;
     padding-top: 44px;
-  }
-
-  .label {
-    padding-bottom: 0;
-  }
-
-  .aside {
-    justify-self: start;
   }
 }
