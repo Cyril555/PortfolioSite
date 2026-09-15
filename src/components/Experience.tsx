@@ -4,7 +4,7 @@ import styles from "./Experience.module.css";
 
 export default function Experience() {
   return (
-    <section id="experience" className={`section ${styles.section}`}>
+    <section id="experience" className={`section onInk ${styles.section}`}>
       <div className="sheet">
         <SectionHead title="Experience" note="Timeline" />
 

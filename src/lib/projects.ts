@@ -41,7 +41,7 @@ export const PROJECTS: Project[] = [
   {
     slug: "reframe-ai",
     domains: ["medicine", "technology"],
-    tag: "CLINICAL AI",
+    tag: "Clinical AI",
     title: "Reframe.ai",
     problem:
       "LLMs are trained to be agreeable. In clinical settings a sycophantic model validates a doctor's framing rather than reasoning from the evidence, amplifying anchoring bias, which contributes to up to 75% of diagnostic errors.",
@@ -130,7 +130,7 @@ export const PROJECTS: Project[] = [
   {
     slug: "reviver",
     domains: ["technology", "medicine"],
-    tag: "HACKATHON",
+    tag: "Hackathon",
     title: "Reviver",
     problem:
       "Emergency triage and dispatch decisions have to be made quickly, often with incomplete information about the patient.",
@@ -150,7 +150,7 @@ export const PROJECTS: Project[] = [
   {
     slug: "carepass",
     domains: ["technology", "medicine"],
-    tag: "HEALTH-TECH PROTOTYPE",
+    tag: "Health-tech prototype",
     title: "CarePass",
     problem:
       "Emergency staff often lack rapid access to a patient's critical medical information, such as allergies, current medications and chronic conditions.",
@@ -180,7 +180,7 @@ export const PROJECTS: Project[] = [
   {
     slug: "adhd-education-platform",
     domains: ["medicine", "technology"],
-    tag: "HEALTHTECH FELLOWSHIP",
+    tag: "Healthtech fellowship",
     title: "Cognify ADHD",
     problem:
       "Patients and families lacked accessible, structured ADHD education resources integrated with clinical pathways.",
@@ -236,7 +236,7 @@ export const PROJECTS: Project[] = [
   {
     slug: "continuous-glucose-monitoring",
     domains: ["medicine", "technology"],
-    tag: "CLINICAL AUDIT",
+    tag: "Clinical audit",
     title: "CGM in Emergency Vascular Surgery",
     problem:
       "Diabetic patients undergoing emergency vascular surgery need close perioperative glucose control, but adherence to national standards on the ward is rarely measured.",
@@ -278,7 +278,7 @@ export const PROJECTS: Project[] = [
   {
     slug: "vitamin-d-audit",
     domains: ["medicine"],
-    tag: "QUALITY IMPROVEMENT",
+    tag: "Quality improvement",
     title: "Vitamin D Testing in At-Risk Inpatients",
     problem:
       "At-risk inpatients aged 65 and over on a diabetes and endocrinology ward were not routinely being tested for vitamin D deficiency.",
@@ -311,7 +311,7 @@ export const PROJECTS: Project[] = [
   {
     slug: "day-case-surgery-audit",
     domains: ["medicine"],
-    tag: "SURGICAL AUDIT",
+    tag: "Surgical audit",
     title: "Day-Case Inguinal Hernia Repair",
     problem:
       "The British Association of Day Surgery sets an 80% day-case standard for inguinal hernia repair. The surgical team needed to know whether it was being met, and why some patients stayed overnight.",
@@ -344,7 +344,7 @@ export const PROJECTS: Project[] = [
   {
     slug: "castore-digital-strategy",
     domains: ["strategy"],
-    tag: "MANAGEMENT CONSULTING",
+    tag: "Management consulting",
     title: "Systems Roadmap for a B-Corp Brand",
     problem:
       "A fast-growing B-Corp personal-care brand (£1.7m angel-funded, 24 staff, UK and US wholesale) was running on spreadsheet workflows and disconnected warehouse, inventory and finance systems that constrained international expansion.",
@@ -365,7 +365,7 @@ export const PROJECTS: Project[] = [
   {
     slug: "us-ai-gtm-strategy",
     domains: ["strategy", "technology"],
-    tag: "AI GO-TO-MARKET",
+    tag: "AI go-to-market",
     title: "Go-to-Market for a US AI Startup",
     problem:
       "A US-based AI startup wanted to enter new sectors and needed to know which to prioritise and how to approach them.",

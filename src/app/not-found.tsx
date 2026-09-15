@@ -12,7 +12,7 @@ export default function NotFound() {
   return (
     <>
       <Nav mode="page" />
-      <main className={styles.page}>
+      <main className={`onInk gridded ${styles.page}`}>
         <div className={`sheet split ${styles.inner}`}>
           <span className={`figure ${styles.code}`}>404</span>
           <div>

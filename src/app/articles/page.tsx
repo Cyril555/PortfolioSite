@@ -22,7 +22,7 @@ export default function ArticlesPage() {
       <Nav mode="page" current="articles" />
 
       <main>
-        <header className={styles.lead}>
+        <header className={`onInk gridded ${styles.lead}`}>
           <div className="sheet">
             <h1 className={styles.title}>Case studies and published work.</h1>
             <p className={styles.sub}>
@@ -57,7 +57,7 @@ export default function ArticlesPage() {
           </div>
         </section>
 
-        <section id="publications" className={`section ${styles.pubs}`}>
+        <section id="publications" className={`section onInk ${styles.pubs}`}>
           <div className="sheet">
             <SectionHead title="Publications" note={`${PUBLICATIONS.length} papers`} />
             <ol className={styles.list}>

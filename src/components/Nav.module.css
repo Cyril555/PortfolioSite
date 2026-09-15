@@ -2,9 +2,14 @@
   position: sticky;
   top: 0;
   z-index: 60;
-  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  background: color-mix(in srgb, var(--inkGround) 90%, transparent);
   backdrop-filter: saturate(1.4) blur(10px);
   border-bottom: 1px solid var(--rule);
+}
+
+/* While the menu sheet is open the bar must match it, or the seam shows */
+.barSolid {
+  background: var(--inkGround);
 }
 
 .inner {
@@ -132,7 +137,7 @@
     position: fixed;
     inset: 64px 0 0;
     z-index: 55;
-    background: var(--paper);
+    background: var(--inkGround);
     padding: 8px var(--edge) calc(24px + env(safe-area-inset-bottom, 0px));
     overflow-y: auto;
     animation: sheetIn 0.22s var(--ease) both;

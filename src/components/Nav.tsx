@@ -55,7 +55,7 @@ export default function Nav({ mode = "home", current }: NavProps) {
 
   return (
     <>
-      <header className={styles.bar}>
+      <header className={`onInkChrome ${styles.bar} ${menuOpen ? styles.barSolid : ""}`}>
         <div className={`sheet ${styles.inner}`}>
           <Link href="/" className={styles.logo} onClick={close}>
             <span className={styles.mark} aria-hidden="true" />
@@ -98,7 +98,7 @@ export default function Nav({ mode = "home", current }: NavProps) {
         </div>
       </header>
 
-      <div id="mobile-menu" className={styles.menuSheet} hidden={!menuOpen}>
+      <div id="mobile-menu" className={`onInkChrome ${styles.menuSheet}`} hidden={!menuOpen}>
         <ul>
           {NAV_ITEMS.map((n) => (
             <li key={n.key}>

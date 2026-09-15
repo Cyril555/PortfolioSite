@@ -22,7 +22,7 @@ Management consulting recruiters (McKinsey, BCG, Bain), health-tech companies, a
 ## Design System
 
 ### Aesthetic Direction
-The observation chart. One vertical rule runs the page as a measurement spine; figures and dates sit on it in mono and prose hangs to its right. Findings are set as ruled table rows rather than cards, so a recruiter scans a column of results. Deep blue-black on warm paper, with a single oxblood accent reserved for data. No gradients, no shadows, no serif type, no parallax.
+The observation chart. One vertical rule runs the page as a measurement spine; figures and dates sit on it in mono and prose hangs to its right. Findings are set as ruled table rows rather than cards, so a recruiter scans a column of results. Deep blue-black and warm paper in alternating bands, with a single oxblood accent reserved for data. The hero, contact and every page head carry a 48px measurement grid that fades out down the band. No gradients, no shadows, no serif type, no parallax.
 
 Do not reintroduce the tells the redesign removed: an all-caps mono eyebrow above every heading, one word of a headline accented in a `<span>`, `→ ↳ ↗ ↓` appended to button and link text, component-built middle-dot meta strings (`A · B · C`), mono used for small labels, or a fade-and-rise animation on every section.
 
@@ -31,7 +31,9 @@ Do not reintroduce the tells the redesign removed: an all-caps mono eyebrow abov
 - Ink: `--ink #17212c` (blue-black), `--ink-soft`, `--slate #5c6670`
 - Rules: `--rule #d5d3cc`, `--rule-firm #b6b3aa` (the spine and every table's top rule)
 - `--flag #8e2b2b` is the only colour on the site. It marks data and nothing else: the arrow inside a changed measurement (`28.6→59.3%`, rendered by `Figure.tsx`) and the "Now" marker in the timeline. Never on buttons, links, headings or focus states.
-- Sections on ink ground use `className="onInk"`, which re-scopes the tokens so children need no dark-specific styles
+- Sections on ink ground use `className="onInk"`, which re-scopes every token — including `--paper` to the ink ground itself, so filled buttons and hover fills invert correctly — and paints the ground. `onInkChrome` rebinds the same tokens without painting a ground, for the sticky nav which paints its own translucent version. Add `gridded` for the 48px fading grid.
+- Bands alternate down the page: hero (ink + grid), selected work (paper), experience (ink), education (paper), contact (ink + grid), footer (ink). Page heads on `/articles`, `/projects/[slug]` and the 404 are ink + grid, matching the hero
+- The nav is always-dark chrome, as it sits over both grounds. It turns opaque while the mobile sheet is open, or the seam between bar and sheet shows
 - The site always opens in light. Dark is opt-in via the toggle in `Nav.tsx` (stored in localStorage) and never follows the system setting. Dark overrides live under `[data-theme='dark']` and must keep rules and the spine clearly visible
 - Aliases `--bg`, `--fg`, `--muted`, `--line` remain only so older selectors keep resolving
 
@@ -68,10 +70,10 @@ Logo (square mark + "Cyril Vijayakumar", in `Nav.tsx`) → Work → Experience �
 A small square outline with a filled inner square, followed by the name "Cyril Vijayakumar". The same mark is `src/app/icon.svg`. A CV monogram was tried and rejected; do not reintroduce it.
 
 ### Homepage (`src/app/page.tsx`), tone in brackets
-1. **Hero** (paper) — headline, one-line positioning, "Projects" and "Download CV" buttons, grayscale portrait, and a four-figure strip read like a vitals row (mono figures on a shared baseline with ticks where each column meets the rule). No status line. On mobile the portrait leads, set beside its caption.
-2. **Selected work** (`Highlights.tsx`) — exactly three projects, one per discipline (Medicine, Technology, Strategy), set as a results table: discipline on the rail, title in the middle, headline figure in its own right-hand column so the figures align down the page. A quiet "See more work" text link to `/articles` follows. Keep it to three; quantity is not the point.
-3. **Experience** — dated timeline from `src/lib/experience.ts`, dates on the spine; the current Synthax role lives here, marked "Now" in oxblood
-4. **Education and skills**
+1. **Hero** (ink + grid) — headline, one-line positioning, "Projects" and "Download CV" buttons, grayscale portrait, and a four-figure strip read like a vitals row (mono figures on a shared baseline with ticks where each column meets the rule). No status line. On mobile the portrait leads, set beside its caption.
+2. **Selected work** (paper, `Highlights.tsx`) — exactly three projects, one per discipline (Medicine, Technology, Strategy), set as a results table: discipline on the rail, title in the middle, headline figure in its own right-hand column so the figures align down the page. A quiet "See more work" text link to `/articles` follows. Keep it to three; quantity is not the point.
+3. **Experience** (ink) — dated timeline from `src/lib/experience.ts`, dates on the spine; the current Synthax role lives here, marked "Now" in oxblood
+4. **Education and skills** (paper)
 5. **Contact** (ink) — the invitation set against the email (Outlook address) and LinkedIn rows, which are mono
 6. **Footer** (ink, continuous with contact so the two read as one bookend)
 
@@ -89,6 +91,7 @@ A quiet list, not cards: every case study as a row (date on the rail, title, one
 ### Content rules
 - The master CV is the source of truth, with the user's corrections recorded at the top of `src/lib/projects.ts`
 - Never name the client of the Castore Consulting engagement
+- Project `tag` values are sentence case ("Clinical audit", "AI go-to-market"), never ALL-CAPS
 - TASKR is removed from the site
 - Articles are sorted newest first by each project's `sortDate`; reading time is computed by `readingTime()`, never typed by hand
 - Article bodies must not restate the Problem, Approach, Outcome or metrics shown above them

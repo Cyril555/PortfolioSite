@@ -7,7 +7,7 @@ const LINKS = [
 
 export default function Contact() {
   return (
-    <section id="contact" className={`section onInk ${styles.section}`}>
+    <section id="contact" className={`section onInk gridded ${styles.section}`}>
       <div className={`sheet ${styles.grid}`}>
         <div className={styles.lead}>
           <h2 className={styles.title}>Building clinical software? Let&apos;s talk.</h2>

@@ -137,21 +137,58 @@ img { display: block; max-width: 100%; }
   white-space: nowrap;
 }
 
-/* Sections on ink ground rebind the palette so children need no dark variants. */
-.onInk {
-  background: var(--inkGround, #17212c);
+/*
+ * Anything on the ink ground rebinds the whole palette, so children need no
+ * dark variants: --paper becomes the ground itself, which keeps inverted
+ * elements (a filled button, a hover fill) inverting the right way.
+ * .onInkChrome is the same rebinding for sticky chrome that paints its own
+ * translucent ground instead of taking this one.
+ */
+.onInk,
+.onInkChrome {
+  --inkGround: #17212c;
   color: var(--on-ink);
   --ink: var(--on-ink);
   --ink-soft: var(--on-ink-soft);
   --slate: var(--on-ink-soft);
+  --paper: var(--inkGround);
+  --paper-raised: #1e2936;
   --rule: var(--on-ink-rule);
   --rule-firm: rgba(237, 236, 231, 0.32);
-  --paper: transparent;
+  --grid-line: rgba(237, 236, 231, 0.055);
   --flag: #c98282;
 }
 
-[data-theme='dark'] .onInk {
+.onInk {
+  background: var(--inkGround);
+}
+
+[data-theme='dark'] .onInk,
+[data-theme='dark'] .onInkChrome {
   --inkGround: #0b1015;
+  --paper-raised: #141c24;
+  --grid-line: rgba(237, 236, 231, 0.08);
+}
+
+/* The 48px measurement grid, fading out down the band. Hero, contact and page heads. */
+.gridded {
+  position: relative;
+  isolation: isolate;
+}
+
+.gridded::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 48px 48px;
+  background-position: -1px -1px;
+  mask-image: linear-gradient(to bottom, #000 40%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 40%, transparent 100%);
 }
 
 @media (max-width: 820px) {

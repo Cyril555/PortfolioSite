@@ -12,7 +12,7 @@ const METRICS = [
 
 export default function Hero() {
   return (
-    <section className={styles.hero}>
+    <section className={`onInk gridded ${styles.hero}`}>
       <div className={`sheet ${styles.inner}`}>
         <div className={styles.top}>
           <div className={styles.text}>

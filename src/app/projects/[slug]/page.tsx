@@ -49,7 +49,7 @@ export default async function ProjectPage({ params }: Props) {
       <Nav mode="page" current="articles" />
 
       <main>
-        <header className={styles.lead}>
+        <header className={`onInk gridded ${styles.lead}`}>
           <div className={`sheet split ${styles.leadInner}`}>
             <dl className={styles.facts}>
               {facts.map(([k, v]) => (
