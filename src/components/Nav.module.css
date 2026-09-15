@@ -41,8 +41,14 @@
   transition: color 0.2s;
 }
 
-.links a:hover {
+.links a:hover,
+.links a.current {
   color: var(--ink-fg);
+}
+
+.links a.current {
+  text-decoration: underline;
+  text-underline-offset: 6px;
 }
 
 .right {

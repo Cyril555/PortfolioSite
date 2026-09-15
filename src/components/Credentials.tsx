@@ -5,7 +5,7 @@ import styles from "./Credentials.module.css";
 
 export default function Credentials() {
   return (
-    <section className="band tone-dark" id="credentials">
+    <section className="band" id="credentials">
       <div className="frame">
         <SectionHead label="Credentials" title="Education and skills" />
         <div className={styles.grid}>

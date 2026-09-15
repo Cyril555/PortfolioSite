@@ -21,8 +21,8 @@ export default function Hero() {
               completing a management master&apos;s at LSE.
             </p>
             <div className={styles.actions}>
-              <a className={styles.primary} href="#projects">
-                View projects <span aria-hidden="true">→</span>
+              <a className={styles.primary} href="#work">
+                Selected work <span aria-hidden="true">→</span>
               </a>
               <a className={styles.secondary} href="#experience">
                 Experience

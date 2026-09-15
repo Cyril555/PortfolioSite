@@ -6,18 +6,22 @@ import { Sun, Moon } from "lucide-react";
 import Logo from "./Logo";
 import styles from "./Nav.module.css";
 
+/** Anchors on the homepage, or a route of their own. */
 const NAV_ITEMS = [
-  { label: "Projects", id: "projects" },
-  { label: "Experience", id: "experience" },
-  { label: "Contact", id: "contact" },
+  { key: "work", label: "Work", href: "#work" },
+  { key: "experience", label: "Experience", href: "#experience" },
+  { key: "articles", label: "Articles", href: "/articles" },
+  { key: "contact", label: "Contact", href: "#contact" },
 ];
 
 interface NavProps {
-  /** On the homepage we scroll to sections; on project pages we link back */
-  mode?: "home" | "project";
+  /** On the homepage anchors scroll in place; on other pages they point back to the homepage */
+  mode?: "home" | "page";
+  /** Nav item to mark as the current page */
+  current?: string;
 }
 
-export default function Nav({ mode = "home" }: NavProps) {
+export default function Nav({ mode = "home", current }: NavProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [theme, setTheme] = useState("light");
 
@@ -49,10 +53,15 @@ export default function Nav({ mode = "home" }: NavProps) {
   };
 
   const close = () => setMenuOpen(false);
-  const prefix = mode === "home" ? "" : "/";
+  const resolve = (href: string) => (href.startsWith("#") && mode !== "home" ? `/${href}` : href);
   const links = NAV_ITEMS.map((n) => (
-    <li key={n.id}>
-      <a href={`${prefix}#${n.id}`} onClick={close}>
+    <li key={n.key}>
+      <a
+        href={resolve(n.href)}
+        onClick={close}
+        aria-current={current === n.key ? "page" : undefined}
+        className={current === n.key ? styles.current : undefined}
+      >
         {n.label}
       </a>
     </li>
@@ -72,7 +81,7 @@ export default function Nav({ mode = "home" }: NavProps) {
             <button className={styles.icon} onClick={toggleTheme} aria-label="Toggle theme">
               {theme === "dark" ? <Sun size={14} strokeWidth={1.75} /> : <Moon size={14} strokeWidth={1.75} />}
             </button>
-            <a className={styles.cta} href={`${prefix}#contact`}>
+            <a className={styles.cta} href={resolve("#contact")}>
               Get in touch ↗
             </a>
             <button

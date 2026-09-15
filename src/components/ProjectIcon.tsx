@@ -9,6 +9,7 @@ const ICONS: Record<string, ReactNode> = {
       <circle cx="12" cy="12" r="1.6" />
     </>
   ),
+  reviver: <path d="M3 12h4l2-5 3 10 2-5h7" />,
   carepass: (
     <>
       <rect x="4" y="4" width="6" height="6" rx="1" />
@@ -54,12 +55,6 @@ const ICONS: Record<string, ReactNode> = {
       <circle cx="11" cy="12" r="7" />
       <path d="M11 8v4l3 2" />
       <path d="M18 13l3 3-3 3" />
-    </>
-  ),
-  taskr: (
-    <>
-      <path d="M4 7l2 2 4-4M4 15l2 2 4-4" />
-      <path d="M13 7h7M13 15h7" />
     </>
   ),
 };

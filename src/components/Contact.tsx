@@ -8,7 +8,7 @@ const LINKS = [
 
 export default function Contact() {
   return (
-    <section className={`band ${styles.section}`} id="contact">
+    <section className={`band tone-dark ${styles.section}`} id="contact">
       <div className={`frame ${styles.inner}`}>
         <Reveal className={styles.lead}>
           <div className={styles.label}>Contact</div>

@@ -33,14 +33,14 @@ export default async function ProjectPage({ params }: Props) {
   const next = PROJECTS[(index + 1) % PROJECTS.length];
   const facts = [
     ["Type", project.tag],
-    ["Year", project.date],
+    ["Date", project.date],
     ["Reading time", project.readTime],
     ["Domains", project.domains.join(", ")],
   ].filter(([, v]) => v);
 
   return (
     <>
-      <Nav mode="project" />
+      <Nav mode="page" current="articles" />
 
       <main>
         <header className={`frame ${styles.header}`}>
@@ -105,9 +105,9 @@ export default async function ProjectPage({ params }: Props) {
         )}
 
         <nav className={`frame ${styles.pager}`} aria-label="Project navigation">
-          <Link href="/#projects" className={styles.pagerLink}>
+          <Link href="/articles" className={styles.pagerLink}>
             <span className={styles.cellLabel}>Back</span>
-            <span className={styles.pagerTitle}>← All projects</span>
+            <span className={styles.pagerTitle}>← All articles</span>
           </Link>
           <Link href={`/projects/${next.slug}`} className={`${styles.pagerLink} ${styles.pagerNext}`}>
             <span className={styles.cellLabel}>Next case study</span>

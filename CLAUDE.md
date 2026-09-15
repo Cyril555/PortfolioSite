@@ -52,21 +52,26 @@ Grayscale and serious, modelled on Palantir's site: charcoal and white, large li
 ## Information Architecture
 
 ### Navigation
-Logo (CV monogram, `src/components/Logo.tsx`) → Projects → Experience → Contact (+ "Get in touch" CTA, theme toggle)
+Logo (CV monogram, `src/components/Logo.tsx`) → Work → Experience → Articles (route) → Contact (+ "Get in touch" CTA, theme toggle). `Nav` takes `mode="home"` for in-page anchors or `mode="page"` to point anchors back to the homepage, and `current` to mark the active item.
 
 ### Logo
 One continuous stroke: the C's upper terminal becomes the V's left arm, with a square node at the join. It draws itself on load and on hover. The same path is used in `src/app/icon.svg`.
 
-### Page Structure (`src/app/page.tsx`), tone in brackets
+### Homepage (`src/app/page.tsx`), tone in brackets
 1. **Hero** (dark) — headline, one-line positioning, two CTAs, grayscale portrait, 4-cell metrics row. No status line.
-2. **Domains** (light) — Medicine, Technology, Strategy cells; clicking one selects the matching featured project via a `filter-domain` window event
-3. **Featured projects** (dark, `CaseStudies.tsx`) — exactly four projects (`FEATURED` list): titles on the left, active project panel on the right, auto-advancing every 6s with a progress line, paused on hover or focus
-4. **Experience** (light) — dated timeline from `src/lib/experience.ts`; the current Synthax role lives here, marked "Now" (there is no separate current-role section)
-5. **Education and skills** (dark)
-6. **Contact** (light) — email and LinkedIn rows over a faint grid
-7. **Footer** (dark)
+2. **Selected work** (light, `Highlights.tsx`) — exactly three projects, one per discipline (Medicine, Technology, Strategy), plus a "See more" row linking to `/articles`. Keep it to three; quantity is not the point.
+3. **Experience** (dark) — dated timeline from `src/lib/experience.ts`; the current Synthax role lives here, marked "Now"
+4. **Education and skills** (light)
+5. **Contact** (dark) — email (Outlook address) and LinkedIn rows over a faint grid
+6. **Footer** (dark)
 
-All nine case studies still have pages at `/projects/[slug]`, linked in sequence by "Next case study".
+### Articles (`src/app/articles/page.tsx`)
+A quiet list, not cards: every case study as a row (date, icon, title, one-line summary, domains), then publications from `src/lib/publications.ts`. Case study pages live at `/projects/[slug]` and link back to `/articles` and on to the next case study.
+
+### Content rules
+- The master CV is the source of truth, with the user's corrections recorded at the top of `src/lib/projects.ts`
+- Never name the client of the Castore Consulting engagement
+- TASKR is removed from the site
 
 ### Case Study Template (Problem → Approach → Outcome)
 Every project must follow this structure. A recruiter reads these like mini-consulting cases. Always include at least one quantified metric per case study.

@@ -5,7 +5,7 @@ import styles from "./Experience.module.css";
 
 export default function Experience() {
   return (
-    <section className="band" id="experience">
+    <section className="band tone-dark" id="experience">
       <div className="frame">
         <SectionHead label="Timeline" title="Experience" />
         <div className={styles.list}>

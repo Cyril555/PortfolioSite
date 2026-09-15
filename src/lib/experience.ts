@@ -37,12 +37,31 @@ export const EXPERIENCE: Role[] = [
     ],
   },
   {
-    org: "NHS Foundation Training, East Yorkshire",
-    role: "Resident Doctor, FY1 and FY2",
-    period: "Aug 2023 → Aug 2025",
+    org: "Bitelabs",
+    role: "Healthtech & Innovation Fellow",
+    period: "Sep → Nov 2024",
     points: [
-      "Led three clinical audits with quantified outcomes, presented at the Vascular Society AGM and regional audit meetings.",
-      "Teaching Coordinator for c. 150 FY2 doctors across Yorkshire; care for 100+ patients across six specialties.",
+      "Selected for a competitive eight-week fellowship to design and pitch solutions to current healthcare needs.",
+      "Produced two Figma prototypes, including Cognify ADHD, and two pitch decks presented to venture capitalists.",
+    ],
+  },
+  {
+    org: "Scunthorpe General Hospital, NLaG NHS Foundation Trust",
+    role: "Resident Doctor, FY2",
+    period: "Aug 2024 → Aug 2025",
+    points: [
+      "Audited 51 consecutive hernia repairs against the 80% day-case standard; presented at the NLaG Surgical Audit Meeting.",
+      "Led a vitamin D testing quality-improvement audit that raised testing from 28.6% to 59.3% (p = 0.022).",
+      "Teaching Coordinator: organised 15 seminars for c. 150 FY2 doctors across Yorkshire.",
+    ],
+  },
+  {
+    org: "Hull Royal Infirmary, Hull University Teaching Hospitals",
+    role: "Resident Doctor, FY1",
+    period: "Aug 2023 → Aug 2024",
+    points: [
+      "First author on a two-cycle audit of 90 perioperative diabetic patients with CGM introduced between cycles; poster at the Vascular Society AGM 2024.",
+      "Delivered ward-based teaching for final-year medical students.",
     ],
   },
 ];

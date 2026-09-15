@@ -1,13 +1,7 @@
 export interface ProjectMetric {
+  /** Headline figure. Omit for a text-only metric. */
   value?: string;
-  icon?: string;
   label: string;
-}
-
-export interface ProjectImage {
-  src: string;
-  alt: string;
-  caption?: string;
 }
 
 export interface Project {
@@ -23,8 +17,6 @@ export interface Project {
   date?: string;
   readTime?: string;
   articleBody?: ArticleSection[];
-  images?: ProjectImage[];
-  thumbnailImage?: string;
   demoUrl?: string;
 }
 
@@ -35,21 +27,29 @@ export type ArticleSection =
   | { type: "quote"; text: string; attribution?: string }
   | { type: "image"; src: string; caption?: string };
 
+/*
+ * Facts follow the master CV (Sep 2026) plus the user's corrections:
+ * - Castore Consulting is the student consultancy. The client must NOT be named.
+ * - CGM audit: FY1, poster at the Vascular Society AGM 2024.
+ * - Vitamin D audit: FY2 rotation.
+ * - Reviver: four-person team, Cyril was the lead.
+ * - Cognify ADHD: one of the two Bitelabs fellowship prototypes, Sep to Nov 2024.
+ * - TASKR removed from the site.
+ */
 export const PROJECTS: Project[] = [
   {
     slug: "reframe-ai",
     domains: ["medicine", "technology"],
     tag: "CLINICAL AI",
     title: "Reframe.ai",
-    thumbnailImage: "/reframe-debate.png",
     problem:
       "LLMs are trained to be agreeable. In clinical settings a sycophantic model validates a doctor's framing rather than reasoning from the evidence, amplifying anchoring bias, which contributes to up to 75% of diagnostic errors.",
     approach:
       "Built a five-agent system with a blinded adjudicator. A sycophancy monitor scores each turn 0 to 100 across five behavioural signals. Above 70 it triggers a structured debate between two hypothesis agents, adjudicated by a judge that never sees the clinician's original framing.",
     outcome:
-      "Won first place at the Claude x LSE Hackathon 2026. Live demo caught a missed Type A Aortic Dissection (scored 84/100) that a standard LLM missed by agreeing with an incorrect STEMI framing.",
+      "Won first place at the Anthropic × LSE Hackathon on 25 March 2026. Live demo caught a missed Type A Aortic Dissection (scored 84/100) that a standard LLM missed by agreeing with an incorrect STEMI framing.",
     metrics: [
-      { value: "1st", label: "Claude x LSE Hackathon 2026" },
+      { value: "1st", label: "Anthropic × LSE Hackathon 2026" },
       { value: "5", label: "Claude agents in parallel" },
       { value: "84", label: "Sycophancy score on demo case" },
     ],
@@ -122,7 +122,7 @@ export const PROJECTS: Project[] = [
       },
       {
         type: "paragraph",
-        text: "Reframe won first place at the Claude x LSE Hackathon in March. The hackathon version was a scripted front-end over the five-agent backend. Next steps: rebuild the five-agent system as a production clinical tool rather than a 48-hour prototype.",
+        text: "Reframe won first place at the Anthropic × LSE Hackathon in March. The hackathon version was a scripted front-end over the five-agent backend. Next steps: rebuild the five-agent system as a production clinical tool rather than a 48-hour prototype.",
       },
       {
         type: "paragraph",
@@ -131,184 +131,105 @@ export const PROJECTS: Project[] = [
     ],
   },
   {
-    slug: "carepass",
-    domains: ["technology", "strategy"],
-    tag: "HEALTH-TECH VENTURE",
-    title: "CarePass",
-    thumbnailImage: "/carepass-passport.png",
+    slug: "reviver",
+    domains: ["technology", "medicine"],
+    tag: "HACKATHON",
+    title: "Reviver",
     problem:
-      "Emergency responders lack instant access to patient medical history, allergies, and medications during critical moments.",
+      "Emergency triage and dispatch decisions have to be made quickly, often with incomplete information about the patient.",
     approach:
-      "Co-founded a wearable-linked health passport platform. Led stakeholder engagement, authored a technical development article, and built the software architecture with user input.",
-    outcome:
-      "Functional prototype enabling rapid access to emergency data via wearable devices.",
+      "Led a four-person team at the Harvard Innovation Labs Hackathon (5 to 6 April 2024) to design Reviver, an AI-powered emergency triage and dispatch concept.",
+    outcome: "Placed in the global top six and won the UK national round.",
     metrics: [
-      { value: "01", label: "Co-Founded" },
-      { icon: "PenTool", label: "Published Article" },
+      { value: "Top 6", label: "Global, Harvard Innovation Labs Hackathon" },
+      { value: "UK", label: "National winner" },
+      { value: "4", label: "Person team, as lead" },
     ],
     subtitle:
-      "A wearable-linked health passport giving emergency responders instant patient context.",
+      "An AI-powered emergency triage and dispatch concept. Global top six and UK national winner at the Harvard Innovation Labs Hackathon.",
+    date: "April 2024",
+    readTime: "1 min read",
+  },
+  {
+    slug: "carepass",
+    domains: ["technology", "medicine"],
+    tag: "HEALTH-TECH PROTOTYPE",
+    title: "CarePass",
+    problem:
+      "Emergency staff often lack rapid access to a patient's critical medical information, such as allergies, current medications and chronic conditions.",
+    approach:
+      "Built a prototype QR-code health passport in HTML, CSS and JavaScript using AI-assisted development. Scanning the code opens a structured summary of the patient's critical data.",
+    outcome: "A working prototype demonstrating the core scan-to-summary flow. Prototype only; not deployed.",
+    metrics: [
+      { value: "QR", label: "Scan-to-summary health passport" },
+      { label: "Prototype, not deployed" },
+    ],
+    subtitle:
+      "A QR-code health passport prototype that gives emergency staff rapid access to critical patient data.",
     date: "2024",
-    readTime: "4 min read",
+    readTime: "2 min read",
     articleBody: [
       {
         type: "paragraph",
-        text: "Emergency clinicians regularly encounter patients who arrive unconscious with no identification, no family present, and no accessible medical history. Allergies, anticoagulants, implanted devices: these are the questions that determine treatment in the first minutes.",
+        text: "Emergency clinicians regularly see patients who cannot tell them their history: unconscious, confused, or without family present. Allergies, anticoagulants and chronic conditions are the questions that shape treatment in the first minutes.",
       },
-      {
-        type: "heading",
-        text: "The insight",
-      },
+      { type: "heading", text: "The insight" },
       {
         type: "paragraph",
-        text: "The information exists in GP records, hospital systems, and pharmacy databases. The problem is access at the point of crisis. CarePass links a patient's critical medical data to a wearable they always carry.",
+        text: "The information usually exists in GP records, hospital systems and pharmacy databases. The problem is access at the point of crisis. CarePass puts a patient's critical data one scan away.",
       },
-      {
-        type: "paragraph",
-        text: "The core concept: a QR or NFC wearable that emergency responders scan to retrieve a structured medical summary, including allergies, current medications, chronic conditions, blood type, and emergency contacts.",
-      },
-      {
-        type: "heading",
-        text: "Architecture",
-      },
-      {
-        type: "paragraph",
-        text: "As co-founder, I led software architecture and stakeholder engagement. The stack was designed around three constraints: low-latency access in offline environments, GDPR-compliant data storage, and a patient-controlled update mechanism.",
-      },
+      { type: "heading", text: "The concept" },
       {
         type: "list",
         items: [
-          "Encrypted QR or NFC link to a hosted patient profile",
-          "Tiered access: public emergency summary vs full record for verified clinicians",
-          "Patient-facing mobile interface for updating records",
-          "Integration pathway for NHS-compatible systems",
+          "A QR code the patient carries",
+          "Scanning it opens a structured emergency summary",
+          "Allergies, current medications, chronic conditions and emergency contacts in one view",
         ],
       },
-      {
-        type: "heading",
-        text: "Stakeholder strategy",
-      },
+      { type: "heading", text: "What I built" },
       {
         type: "paragraph",
-        text: "I led engagement across three stakeholder groups: NHS emergency departments as end users, patient advocacy groups as adoption gatekeepers, and angel investors as a funding pathway. This shaped the product roadmap and go-to-market sequencing.",
-      },
-      {
-        type: "heading",
-        text: "What we built",
-      },
-      {
-        type: "paragraph",
-        text: "A functional prototype demonstrating the core flow: a paramedic scans the wearable, retrieves a structured medical summary in under three seconds, and escalates to a full verified record with NHS credential authentication. I authored a technical development article documenting the build process and design rationale.",
+        text: "A working prototype in HTML, CSS and JavaScript, built with AI-assisted development, that demonstrates the scan-to-summary flow end to end. It is a prototype only and has not been deployed.",
       },
     ],
-    images: [],
-  },
-  {
-    slug: "continuous-glucose-monitoring",
-    domains: ["medicine", "technology"],
-    tag: "CLINICAL AUDIT",
-    title: "CGM in Surgery",
-    problem:
-      "Post-surgical patients lacked real-time glucose visibility, delaying interventions and increasing complication risk.",
-    approach:
-      "Implemented continuous glucose sensors across a surgical cohort, designed a monitoring protocol, and trained nursing staff on data interpretation.",
-    outcome:
-      "25% improvement in glucose monitoring accuracy. Findings presented at the 2025 Vascular Society AGM.",
-    metrics: [
-      { value: "9/11", label: "Domains at good compliance" },
-      { value: "45", label: "Patients analysed" },
-      { icon: "Presentation", label: "2024 Presented at national conference" },
-    ],
-    thumbnailImage: "/audit-charts.png",
-    subtitle:
-      "A two-cycle clinical audit measuring perioperative insulin management compliance, with CGM introduced between cycles.",
-    date: "2024",
-    readTime: "3 min read",
-    articleBody: [
-      {
-        type: "heading",
-        text: "Context",
-      },
-      {
-        type: "paragraph",
-        text: "Approximately 15% of patients undergoing vascular surgery are diabetic. These patients face longer hospital stays, higher complication rates, and significant variability in perioperative insulin management. National guidelines set clear standards, but ward-level adherence is rarely measured.",
-      },
-      {
-        type: "heading",
-        text: "Method",
-      },
-      {
-        type: "paragraph",
-        text: "I co-led a two-cycle audit measuring adherence to 11 national guideline standards for perioperative insulin management. Cycle one ran for six months as a baseline. Compliance was good in most areas, with clear gaps around glucose monitoring frequency.",
-      },
-      {
-        type: "paragraph",
-        text: "Between cycles, we introduced five changes: adjusted medication timings, added routine checks at handover, extended insulin overlap windows, and introduced continuous glucose monitoring sensors for eligible patients. CGM is standard in outpatient diabetic care but not in surgical inpatient settings.",
-      },
-      {
-        type: "heading",
-        text: "Results",
-      },
-      {
-        type: "paragraph",
-        text: "Cycle two covered 45 consecutive patients over six months. Compliance rose from 8 to 9 out of 11 domains at the good threshold. CGM users showed meaningfully higher monitoring compliance than non-CGM users.",
-      },
-      {
-        type: "paragraph",
-        text: "The behavioural shift was more significant than the percentage. Nurses started reading trend arrows rather than waiting for threshold breaches. Consultants reviewed glucose trajectories on ward rounds rather than reacting to isolated spikes. The team moved from reactive to anticipatory.",
-      },
-      {
-        type: "heading",
-        text: "Takeaway",
-      },
-      {
-        type: "paragraph",
-        text: "The sensor technology was not new. The guidelines were not new. What was new was applying an existing tool in a context where it had not been tried, measuring the result, and showing that the value lay in the workflow change rather than the device. The same pattern runs through CarePass, TASKR, and most of the health tech work I build.",
-      },
-    ],
-    images: [],
   },
   {
     slug: "adhd-education-platform",
     domains: ["medicine", "technology"],
-    tag: "DIGITAL HEALTH PRODUCT",
+    tag: "HEALTHTECH FELLOWSHIP",
     title: "Cognify ADHD",
-    thumbnailImage: "/cognify-adhd.png",
     problem:
       "Patients and families lacked accessible, structured ADHD education resources integrated with clinical pathways.",
     approach:
-      "Directed a team of 5 doctors. Ran market research, designed the UI in Figma, and devised a go-to-market strategy for the prototype.",
+      "Designed during the Bitelabs Healthtech & Innovation Fellowship. Directed a team of 5 doctors, ran market research, designed the UI in Figma, and devised a go-to-market strategy.",
     outcome:
-      "Working prototype with validated clinical utility and clear market positioning.",
+      "A Figma prototype and pitch deck presented to venture capitalists, covering market sizing, business strategy and commercialisation.",
     metrics: [
-      { value: "5", label: "Doctors Led" },
-      { value: "UI/UX", label: "Figma Design" },
+      { value: "5", label: "Doctors led" },
+      { value: "VC", label: "Pitched to venture capitalists" },
     ],
     subtitle:
-      "Directing a clinical team to design and validate a structured ADHD education platform.",
-    date: "2024",
+      "A structured ADHD education platform, designed and pitched to venture capitalists during the Bitelabs Healthtech & Innovation Fellowship.",
+    date: "Sep–Nov 2024",
     readTime: "3 min read",
     articleBody: [
-      {
-        type: "heading",
-        text: "The gap",
-      },
+      { type: "heading", text: "The gap" },
       {
         type: "paragraph",
         text: "Post-diagnosis, NHS ADHD patients are typically discharged with a leaflet and a signpost to external resources. There is no structured, clinically validated education journey integrated into the care pathway.",
       },
-      {
-        type: "heading",
-        text: "The team",
-      },
+      { type: "heading", text: "The fellowship" },
       {
         type: "paragraph",
-        text: "I assembled and directed a team of five doctors across psychiatry, paediatrics, and general practice. Each contributed domain expertise to the content architecture: what a newly diagnosed adult needs in week one versus month three, and what parents of a diagnosed child need differently from the child.",
+        text: "Cognify was one of two solutions I designed during the eight-week Bitelabs Healthtech & Innovation Fellowship, a competitive programme to design and pitch an answer to a current healthcare need. Each came with a Figma prototype and a pitch deck presented to venture capitalists.",
       },
+      { type: "heading", text: "The team" },
       {
-        type: "heading",
-        text: "Design",
+        type: "paragraph",
+        text: "I directed a team of five doctors across psychiatry, paediatrics and general practice. Each contributed domain expertise to the content architecture: what a newly diagnosed adult needs in week one versus month three, and what parents of a diagnosed child need differently from the child.",
       },
+      { type: "heading", text: "Design" },
       {
         type: "paragraph",
         text: "I led UI and UX in Figma, translating the content architecture into a user journey anchored on three states: newly diagnosed, in active treatment, and long-term management. Each state has distinct information needs.",
@@ -319,373 +240,263 @@ export const PROJECTS: Project[] = [
           "Modular content library: condition overview, medication guides, behavioural strategies, family resources",
           "Progress tracking: patients mark modules complete, clinicians see engagement data",
           "Clinician dashboard: assign specific modules to patients at point of care",
-          "Mobile-first, WCAG 2.1 AA compliant",
+          "Mobile-first design",
         ],
       },
-      {
-        type: "heading",
-        text: "Validation and GTM",
-      },
+      { type: "heading", text: "Go-to-market" },
       {
         type: "paragraph",
-        text: "The prototype was validated through structured user testing with patients and clinicians. Primary go-to-market: NHS ADHD services and private psychiatry practices as B2B accounts, with direct-to-patient as a secondary channel.",
+        text: "The pitch covered market sizing, business strategy and commercialisation. Primary go-to-market: NHS ADHD services and private psychiatry practices as B2B accounts, with direct-to-patient as a secondary channel.",
       },
     ],
-    images: [],
   },
   {
-    slug: "castore-digital-strategy",
-    domains: ["strategy"],
-    tag: "MANAGEMENT CONSULTING",
-    title: "Castore Digital Growth",
-    thumbnailImage: "/castore-logo.png",
+    slug: "continuous-glucose-monitoring",
+    domains: ["medicine", "technology"],
+    tag: "CLINICAL AUDIT",
+    title: "CGM in Emergency Vascular Surgery",
     problem:
-      "A fast-growing consumer startup brand needed digital solution recommendations aligned with its growth trajectory.",
+      "Diabetic patients undergoing emergency vascular surgery need close perioperative glucose control, but adherence to national standards on the ward is rarely measured.",
     approach:
-      "Led a team of 5 consultants and 4 analysts as Project Manager. Ran competitive analysis, developed strategic frameworks, and delivered actionable recommendations.",
-    outcome: "Comprehensive digital solution roadmap presented to client leadership.",
+      "Led, as first author, a two-cycle audit of 90 consecutive perioperative diabetic patients (45 per cycle) against 11 Joint British Diabetes Societies standards, introducing continuous glucose monitoring between cycles.",
+    outcome:
+      "Standards met at over 80% compliance rose from 8 to 9 of 11. Hourly glucose monitoring, the weakest domain, improved to over 75% among CGM users, and hypoglycaemia was avoided in over 80% of patients. Poster presented at the Vascular Society AGM 2024.",
     metrics: [
-      { value: "9", label: "Team Members" },
-      { value: "PM", label: "Project Lead" },
+      { value: "8→9", label: "Of 11 standards above 80% compliance" },
+      { value: "90", label: "Consecutive patients, two cycles" },
+      { value: ">80%", label: "Patients with hypoglycaemia avoided" },
     ],
     subtitle:
-      "Leading a nine-person consulting team to define Castore's digital growth roadmap.",
+      "A first-author, two-cycle audit of perioperative diabetes care, with continuous glucose monitoring introduced between cycles.",
     date: "2024",
     readTime: "3 min read",
     articleBody: [
+      { type: "heading", text: "Context" },
       {
         type: "paragraph",
-        text: "Castore is a premium British sportswear brand that scaled rapidly through kit partnerships. The challenge was not growth. It was ensuring digital infrastructure could sustain and accelerate it.",
+        text: "Diabetic patients undergoing emergency vascular surgery face higher complication rates and wide variability in perioperative insulin management. National guidelines from the Joint British Diabetes Societies set clear standards, but ward-level adherence is rarely measured. I ran this audit as an FY1 doctor at Hull Royal Infirmary.",
       },
-      {
-        type: "heading",
-        text: "Scope",
-      },
+      { type: "heading", text: "Method" },
       {
         type: "paragraph",
-        text: "As Project Manager, I led a team of five consultants and four analysts. The eight-week engagement covered competitive landscape analysis, digital capability assessment, and strategic option development across three horizons: immediate optimisation, 12-month capability build, and 3-year platform transformation.",
-      },
-      {
-        type: "heading",
-        text: "Framework",
+        text: "A two-cycle audit of 90 consecutive perioperative diabetic patients, 45 per cycle, measured against 11 JBDS standards. Cycle one set the baseline: compliance was good in most areas, with a clear gap in hourly glucose monitoring.",
       },
       {
         type: "paragraph",
-        text: "We structured the analysis around four digital vectors: customer acquisition (paid and organic), retention and loyalty architecture, data and personalisation maturity, and international digital expansion readiness. Each was benchmarked against direct competitors and best-in-class analogues from adjacent categories.",
+        text: "Between cycles we introduced continuous glucose monitoring sensors for eligible patients. CGM is standard in outpatient diabetic care but rarely used for surgical inpatients.",
       },
+      { type: "heading", text: "Results" },
       {
         type: "list",
         items: [
-          "Competitive benchmarking across 12 sportswear and DTC brands",
-          "Digital maturity assessment across 6 capability dimensions",
-          "Customer journey mapping for three core personas",
-          "Financial modelling for recommended investment scenarios",
+          "Standards met at over 80% compliance rose from 8 to 9 of 11",
+          "Hourly glucose monitoring, the weakest domain, improved to over 75% among CGM users",
+          "Hypoglycaemia was avoided in over 80% of patients",
         ],
       },
       {
-        type: "heading",
-        text: "Recommendations",
+        type: "paragraph",
+        text: "I presented the findings as a poster at the Vascular Society AGM 2024.",
       },
+      { type: "heading", text: "Takeaway" },
       {
         type: "paragraph",
-        text: "The final roadmap centred on three priorities: consolidating the customer data platform for personalisation at scale, restructuring the loyalty proposition to convert kit partnership audiences into direct relationships, and building the technical foundation for international market localisation. Two of the three were adopted for immediate planning.",
+        text: "The sensor technology was not new. The guidelines were not new. What was new was applying an existing tool in a setting where it had not been tried, measuring the result, and showing that the value lay in the workflow change rather than the device.",
       },
     ],
-    images: [],
-  },
-  {
-    slug: "us-ai-gtm-strategy",
-    domains: ["technology", "strategy"],
-    tag: "AI GO-TO-MARKET",
-    title: "GTM Strategy for AI Startup",
-    thumbnailImage: "/lsc-logo.png",
-    problem:
-      "A US-based AI startup needed a structured go-to-market strategy for a new market segment.",
-    approach:
-      "Served as Project Lead at London Strategic Consulting. Defined target segments, competitive positioning, pricing strategy, and channel approach.",
-    outcome: "Delivered actionable GTM playbook with clear execution milestones.",
-    metrics: [
-      { value: "GTM", label: "Strategy Delivered" },
-      { value: "US", label: "Market Focus" },
-    ],
-    subtitle:
-      "Structuring a go-to-market playbook for an AI startup entering a new segment.",
-    date: "2024",
-    readTime: "3 min read",
-    articleBody: [
-      {
-        type: "paragraph",
-        text: "AI companies face a distinctive GTM challenge: technology often outpaces market readiness. The task is not selling a product. It is managing the gap between what the technology can do and what buyers are prepared to pay for today.",
-      },
-      {
-        type: "heading",
-        text: "Engagement",
-      },
-      {
-        type: "paragraph",
-        text: "As Project Lead at London Strategic Consulting, I led the GTM engagement for a US-based AI startup entering a new vertical. The client had strong product-market fit in their existing segment and wanted to replicate it in an adjacent market without diluting the core motion.",
-      },
-      {
-        type: "heading",
-        text: "Segment definition",
-      },
-      {
-        type: "paragraph",
-        text: "We mapped the addressable universe of buyers, applied an ICT framework to prioritise by propensity to buy and deal economics, and stress-tested hypotheses through primary research with seven potential buyers.",
-      },
-      {
-        type: "list",
-        items: [
-          "Addressable market sizing across five candidate segments",
-          "ICT scoring: propensity to buy, deal economics, competitive intensity",
-          "Primary research: 7 buyer interviews across target segments",
-          "Competitive positioning matrix against 9 established and emerging players",
-        ],
-      },
-      {
-        type: "heading",
-        text: "Playbook",
-      },
-      {
-        type: "paragraph",
-        text: "The final playbook covered: primary target segment with entry account list, positioning narrative and differentiation story, pricing architecture with a land-and-expand structure, channel sequencing (direct outbound first, then partnership), and a 90-day execution milestone plan. The client adopted the playbook, with the 90-day milestones incorporated into their board-level OKR framework.",
-      },
-    ],
-    images: [],
   },
   {
     slug: "vitamin-d-audit",
     domains: ["medicine"],
-    tag: "CLINICAL AUDIT",
-    title: "Vitamin D Testing Compliance",
-    thumbnailImage: "/vitamin-d-charts.png",
+    tag: "QUALITY IMPROVEMENT",
+    title: "Vitamin D Testing in At-Risk Inpatients",
     problem:
-      "Low vitamin D testing rates in at-risk patients led to missed diagnoses and preventable complications.",
+      "At-risk inpatients aged 65 and over on a diabetes and endocrinology ward were not routinely being tested for vitamin D deficiency.",
     approach:
-      "Ran a two-cycle audit across 55 patients. Identified root causes, raised awareness among clinical staff, and implemented behavioural change interventions.",
-    outcome: "100% increase in vitamin D testing compliance across the department.",
+      "Led a quality-improvement audit of 55 at-risk inpatients during my FY2 rotation. Delivered a teaching session, put up guideline posters and added reminders at ward meetings.",
+    outcome:
+      "Testing rates rose from 28.6% to 59.3% (χ² = 5.27, p = 0.022). Between 50% and 71% of those tested were deficient. Recommended electronic prescribing prompts and a re-audit.",
     metrics: [
-      { value: "100%", label: "Testing Increase" },
-      { value: "55", label: "Patients Audited" },
+      { value: "28.6→59.3%", label: "Testing rate after intervention" },
+      { value: "p = 0.022", label: "χ² = 5.27" },
+      { value: "55", label: "At-risk inpatients" },
     ],
     subtitle:
-      "A two-cycle clinical audit that doubled vitamin D testing compliance through behavioural intervention.",
-    date: "2023",
+      "A quality-improvement audit that doubled vitamin D testing among at-risk inpatients aged 65 and over.",
+    date: "2024–25",
     readTime: "2 min read",
     articleBody: [
+      { type: "heading", text: "Standard" },
       {
         type: "paragraph",
-        text: "This audit was designed as a two-cycle study with a behavioural intervention between cycles, built to produce measurable compliance change rather than a snapshot of current practice.",
+        text: "Older inpatients are at high risk of vitamin D deficiency, and guidelines recommend testing and supplementation where indicated. On a diabetes and endocrinology ward, that testing was not happening consistently.",
       },
-      {
-        type: "heading",
-        text: "Standard",
-      },
+      { type: "heading", text: "Baseline" },
       {
         type: "paragraph",
-        text: "NICE guidelines specify that at-risk patients (limited sun exposure, darker skin tones, obesity, malabsorption conditions) should be tested for vitamin D deficiency and offered supplementation where indicated.",
+        text: "I audited testing rates across 55 at-risk inpatients aged 65 and over during my FY2 rotation. At baseline, 28.6% were tested.",
       },
-      {
-        type: "heading",
-        text: "Cycle 1: baseline",
-      },
-      {
-        type: "paragraph",
-        text: "Across 55 at-risk patients, I audited testing rates against the NICE standard. Baseline compliance was significantly below target. Root cause analysis identified three factors: limited clinical awareness of the full at-risk criteria, no systematic prompt in the clerking proforma, and inconsistent senior review of blood panel selection.",
-      },
-      {
-        type: "heading",
-        text: "Intervention",
-      },
+      { type: "heading", text: "Intervention" },
       {
         type: "list",
         items: [
-          "Grand round presentation: 15-minute session on vitamin D deficiency and NICE criteria",
-          "Clerking proforma update: added vitamin D testing prompt for at-risk patients",
-          "Pocket card: laminated at-risk criteria reference for junior doctors",
-          "Consultant buy-in: senior sign-off on at-risk patient blood panel selection",
+          "A teaching session for the ward team",
+          "Guideline posters on the ward",
+          "Reminders at ward meetings",
         ],
       },
-      {
-        type: "heading",
-        text: "Cycle 2: outcome",
-      },
+      { type: "heading", text: "Outcome" },
       {
         type: "paragraph",
-        text: "The re-audit showed a 100% increase in vitamin D testing compliance. The department moved from significantly below to meeting the NICE standard. The change was sustained by systemic interventions rather than individual effort.",
+        text: "Testing rose to 59.3% (χ² = 5.27, p = 0.022). Between 50% and 71% of the patients tested were deficient, which confirmed the clinical value of testing.",
+      },
+      { type: "heading", text: "Recommendations" },
+      {
+        type: "paragraph",
+        text: "Low-cost prompts roughly doubled testing, but they depend on people remembering. I recommended electronic prescribing prompts to make the change systemic, and a re-audit to confirm it holds.",
       },
     ],
-    images: [],
   },
   {
     slug: "day-case-surgery-audit",
     domains: ["medicine"],
     tag: "SURGICAL AUDIT",
-    title: "Day Case Surgery Compliance",
-    thumbnailImage: "/day-case-recommendations.png",
+    title: "Day-Case Inguinal Hernia Repair",
     problem:
-      "Day case surgical rates were falling below the 80% national benchmark, increasing bed occupancy and costs.",
+      "The British Association of Day Surgery sets an 80% day-case standard for inguinal hernia repair. The surgical team needed to know whether it was being met, and why some patients stayed overnight.",
     approach:
-      "Ran a structured surgical audit, identified process bottlenecks, and presented improvement strategies to the surgical team.",
-    outcome: "Strategies implemented to drive compliance beyond the 80% threshold.",
+      "Collected and analysed data on 51 consecutive inguinal hernia repairs from December 2024 to March 2025, recording discharge outcome, the reason for each failed same-day discharge, and whether day-case planning was documented.",
+    outcome:
+      "80% achieved same-day discharge. Six of the ten failed discharges were driven by routine overnight observation rather than clinical need, and only 65% of cases had day-case planning documented by the surgeon (75% by the anaesthetist). Presented at the NLaG Surgical Audit Meeting, Grimsby.",
     metrics: [
-      { value: ">80%", label: "Target Compliance" },
-      { icon: "Presentation", label: "Presented to Team" },
+      { value: "80%", label: "Same-day discharge" },
+      { value: "6 of 10", label: "Failed discharges due to routine observation" },
+      { value: "65%", label: "Surgeon-documented day-case planning" },
     ],
     subtitle:
-      "Auditing day case surgery rates and delivering a bottleneck analysis to the surgical team.",
-    date: "2023",
+      "Auditing 51 hernia repairs against the 80% day-case standard, and finding that most overnight stays were routine rather than clinical.",
+    date: "Dec 2024–Mar 2025",
     readTime: "2 min read",
     articleBody: [
+      { type: "heading", text: "Standard" },
       {
         type: "paragraph",
-        text: "Day case surgery is procedures completed within a single day without overnight admission. The NHS target of 80% for eligible procedures reflects evidence that patients recover comparably well at home while bed occupancy and infection risk drop for the system.",
+        text: "Day-case surgery means the patient goes home the same day. The British Association of Day Surgery sets an 80% standard for inguinal hernia repair, reflecting evidence that patients recover as well at home while bed pressure and infection risk fall.",
       },
-      {
-        type: "heading",
-        text: "Problem",
-      },
+      { type: "heading", text: "Method" },
       {
         type: "paragraph",
-        text: "The department's day case rate had drifted below 80%. The first assumption was patient complexity. The audit was designed to test that and surface the real drivers.",
+        text: "I collected and analysed data on 51 consecutive inguinal hernia repairs between December 2024 and March 2025. For each case I recorded whether the patient was discharged the same day, the documented reason if not, and whether the surgeon and anaesthetist had documented day-case planning.",
       },
-      {
-        type: "heading",
-        text: "Method",
-      },
-      {
-        type: "paragraph",
-        text: "I conducted a structured review of eligible surgical cases over a defined period, categorising each as day case, overnight, or extended, and recording the documented reason for non-day-case outcomes.",
-      },
-      {
-        type: "heading",
-        text: "Findings",
-      },
-      {
-        type: "paragraph",
-        text: "Patient complexity was a minority driver. The majority of overnight stays in eligible cases were attributable to process factors:",
-      },
+      { type: "heading", text: "Findings" },
       {
         type: "list",
         items: [
-          "Late theatre start times: cases not completing before safe discharge window",
-          "Pre-operative gaps: issues flagged on the day that should have been addressed at listing",
-          "Inconsistent criteria application: eligible patients listed as inpatients unnecessarily",
-          "Post-operative protocol: inconsistent criteria for same-day discharge sign-off",
+          "80% of patients achieved same-day discharge, meeting the standard",
+          "Six of the ten failed discharges were driven by routine overnight observation rather than clinical need",
+          "Only 65% of cases had day-case planning documented by the surgeon, and 75% by the anaesthetist",
         ],
       },
-      {
-        type: "heading",
-        text: "Recommendations",
-      },
+      { type: "heading", text: "Why it matters" },
       {
         type: "paragraph",
-        text: "I presented the findings and a structured set of recommendations to the surgical team. The key interventions targeted the three major bottlenecks: pre-operative optimisation standardisation, a revised theatre scheduling protocol, and a day case selection checklist embedded in the listing process.",
+        text: "The unit met the standard, but most of the remaining overnight stays were a matter of process rather than patient complexity. I presented the findings and recommendations at the NLaG Surgical Audit Meeting in Grimsby.",
       },
     ],
-    images: [],
   },
   {
-    slug: "taskr",
-    domains: ["medicine", "technology"],
-    tag: "DIGITAL HEALTH TOOL",
-    title: "TASKR — Ward Round Dashboard",
-    thumbnailImage: "/taskr-dashboard.png",
-    demoUrl: "https://taskr-five-rho.vercel.app",
+    slug: "castore-digital-strategy",
+    domains: ["strategy"],
+    tag: "MANAGEMENT CONSULTING",
+    title: "Systems Roadmap for a B-Corp Brand",
     problem:
-      "Doctors lacked a structured system to prioritise and track ward round tasks, leading to missed actions and inefficiency.",
+      "A fast-growing B-Corp personal-care brand (£1.7m angel-funded, 24 staff, UK and US wholesale) was running on spreadsheet workflows and disconnected warehouse, inventory and finance systems that constrained international expansion.",
     approach:
-      "Developed a digital dashboard prototype. Conducted user research through interviews with 6 doctors, iterated on feedback, and authored a development article.",
+      "As Project Manager at Castore Consulting, the LSE student consultancy, led a team of 9 through an 8-week engagement: stakeholder interviews, end-to-end supply-chain process mapping, and a structured technology scan comparing full-scale ERP with modular options.",
     outcome:
-      "Validated clinical utility confirmed through user testing. Published development journey.",
+      "Recommended a modular architecture for near-term time-to-value, automated revenue reconciliation via A2X, and deferring full ERP until £75m+ revenue. Delivered as a phased technology roadmap and a case-study deck.",
     metrics: [
-      { value: "6", label: "Doctor Interviews" },
-      { icon: "PenTool", label: "Published Article" },
+      { value: "9", label: "Team members led" },
+      { value: "8 wks", label: "Engagement" },
+      { value: "£75m+", label: "Revenue before full ERP" },
     ],
     subtitle:
-      "Building a ward round task management dashboard through iterative clinical user research.",
-    date: "2024",
-    readTime: "8 min read",
+      "Leading a nine-person student consulting team to a phased systems roadmap for a fast-growing personal-care brand.",
+    date: "Oct–Dec 2025",
+    readTime: "3 min read",
     articleBody: [
+      { type: "heading", text: "The situation" },
       {
         type: "paragraph",
-        text: "The ward round is one of medicine's most information-dense rituals. In 60–90 minutes, a team reviews every patient on the ward, generates a list of actions — blood tests, imaging, medication changes, referrals, discharge planning — and then disperses to execute. The problem: that list lives in someone's head, or scrawled on a paper handover sheet, or split across three different doctors' bleeps.",
+        text: "The client, a fast-growing B-Corp personal-care brand, had raised £1.7m from angel investors, employed 24 people and sold wholesale in the UK and US. Its operations ran on spreadsheets and disconnected warehouse, inventory and finance systems, and that was starting to constrain international expansion.",
       },
-      {
-        type: "heading",
-        text: "The Frustration That Started It",
-      },
+      { type: "heading", text: "Scope" },
       {
         type: "paragraph",
-        text: "As an NHS doctor, I experienced this daily. Tasks would be generated on the ward round and fall through the gaps — not from negligence, but from the structural absence of a shared, prioritised task list that persisted through shift handover. I wanted to build something to fix it.",
-      },
-      {
-        type: "heading",
-        text: "User Research First",
-      },
-      {
-        type: "paragraph",
-        text: "Before writing a line of code, I conducted structured interviews with six doctors — two foundation year doctors, two core medical trainees, and two registrars — to map the actual task management workflow and identify the highest-friction points.",
+        text: "As Project Manager at Castore Consulting, the LSE student consultancy, I led a team of nine through an eight-week engagement.",
       },
       {
         type: "list",
         items: [
-          "How do you currently track tasks generated on ward rounds?",
-          "What happens to tasks that aren't completed by the end of your shift?",
-          "What information do you need attached to a task to action it without clarification?",
-          "Where do tasks most commonly fall through the gaps?",
+          "Stakeholder interviews across the business",
+          "End-to-end supply-chain process mapping to locate bottlenecks",
+          "A structured technology scan comparing full-scale ERP with modular options",
         ],
       },
-      {
-        type: "heading",
-        text: "What the Research Revealed",
-      },
-      {
-        type: "paragraph",
-        text: "Three consistent themes emerged: tasks need to be patient-anchored (not free-floating), urgency and time-sensitivity need to be explicitly visible rather than implied, and handover is the highest-risk moment — the point where task context most often degrades or disappears.",
-      },
-      {
-        type: "heading",
-        text: "Designing TASKR",
-      },
-      {
-        type: "paragraph",
-        text: "TASKR was designed around these insights. The dashboard centres on a patient-anchored task list with three urgency tiers, a structured handover mode that surfaces incomplete tasks with their context intact, and a team view that distributes tasks across the on-call team by workload.",
-      },
+      { type: "heading", text: "Recommendation" },
       {
         type: "list",
         items: [
-          "Patient-anchored task cards with clinical context attached",
-          "Three-tier urgency system: routine, urgent, critical",
-          "Handover mode: generates a structured summary of outstanding tasks with status",
-          "Team distribution: assign tasks to specific doctors, view team workload at a glance",
-          "Audit trail: completed tasks remain visible with timestamp and completing clinician",
+          "A modular systems architecture for near-term time-to-value",
+          "Automated revenue reconciliation via A2X",
+          "Deferring full ERP adoption until revenue passes £75m",
         ],
       },
       {
-        type: "image",
-        src: "/taskr-dashboard.png",
-        caption: "The TASKR dashboard — patient-anchored task cards across a ward, with urgency tiers, task tags, and real-time status visible at a glance. Built for Cardiology Ward 25.",
-      },
-      {
-        type: "heading",
-        text: "Validation",
-      },
-      {
         type: "paragraph",
-        text: "After building the prototype, I returned to the same six doctors for usability testing. All six confirmed the core utility of the product. The primary feedback loop led to three iterations: simplifying the task creation flow, adding a 'bleep-free' context field to reduce clarification calls, and building the handover export as a printable format for wards without tablet access.",
-      },
-      {
-        type: "quote",
-        text: "TASKR doesn't replace clinical judgement — it just means nothing falls through the gaps because of a broken system.",
-        attribution: "Registrar, user testing session",
-      },
-      {
-        type: "paragraph",
-        text: "I documented the full development journey — from initial frustration to validated prototype — in a published article, with the intent of contributing to the growing body of evidence for clinician-led digital health product development.",
+        text: "We delivered the recommendation as a phased technology roadmap and a case-study deck.",
       },
     ],
-    images: [],
+  },
+  {
+    slug: "us-ai-gtm-strategy",
+    domains: ["strategy", "technology"],
+    tag: "AI GO-TO-MARKET",
+    title: "Go-to-Market for a US AI Startup",
+    problem:
+      "A US-based AI startup wanted to enter new sectors and needed to know which to prioritise and how to approach them.",
+    approach:
+      "As Project Lead at London Strategic Consulting, the LSE student consultancy, led the engagement and built a sector-comparison matrix scoring each target sector on attractiveness for AI entry, alongside GTM strategy and lead data.",
+    outcome:
+      "Delivered a 40-page interim report, presented it to the client and incorporated their feedback. The engagement concluded at the interim stage.",
+    metrics: [
+      { value: "40", label: "Page interim report" },
+      { label: "Sector-comparison matrix for AI entry" },
+    ],
+    subtitle: "Scoring target sectors for a US AI startup's expansion and turning the result into a go-to-market plan.",
+    date: "Mar–May 2026",
+    readTime: "2 min read",
+    articleBody: [
+      { type: "heading", text: "The brief" },
+      {
+        type: "paragraph",
+        text: "A US-based AI startup wanted to expand into new sectors. The question was which sectors to prioritise, and how to approach them.",
+      },
+      { type: "heading", text: "What we delivered" },
+      {
+        type: "list",
+        items: [
+          "Go-to-market strategy for the priority sectors",
+          "Lead data for each target sector",
+          "A sector-comparison matrix scoring each sector on attractiveness for AI entry",
+        ],
+      },
+      { type: "heading", text: "Outcome" },
+      {
+        type: "paragraph",
+        text: "We delivered a 40-page interim report, presented it to the client and incorporated their feedback. The engagement concluded at the interim stage.",
+      },
+    ],
   },
 ];
 
