@@ -1,9 +1,12 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { getProject, PROJECTS, ArticleSection } from "@/lib/projects";
+import { getProject, PROJECTS } from "@/lib/projects";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
+import ProjectIcon from "@/components/ProjectIcon";
+import ArticleBody from "@/components/ArticleBody";
 import styles from "./project.module.css";
 
 interface Props {
@@ -18,46 +21,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const project = getProject(slug);
   if (!project) return {};
-  return {
-    title: `${project.title} — Dr. Cyrilkumaar Vijayakumar`,
-    description: project.subtitle,
-  };
-}
-
-function renderSection(section: ArticleSection, i: number) {
-  switch (section.type) {
-    case "heading":
-      return <h2 key={i} className={styles.articleHeading}>{section.text}</h2>;
-    case "paragraph":
-      return <p key={i} className={styles.articleParagraph}>{section.text}</p>;
-    case "list":
-      return (
-        <ul key={i} className={styles.articleList}>
-          {section.items.map((item, j) => (
-            <li key={j} className={styles.articleListItem}>{item}</li>
-          ))}
-        </ul>
-      );
-    case "quote":
-      return (
-        <blockquote key={i} className={styles.articleQuote}>
-          <p>&ldquo;{section.text}&rdquo;</p>
-          {section.attribution && (
-            <cite className={styles.quoteCite}>— {section.attribution}</cite>
-          )}
-        </blockquote>
-      );
-    case "image":
-      return (
-        <figure key={i} className={styles.articleImageFigure}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={section.src} alt={section.caption || ""} className={styles.articleImage} />
-          {section.caption && (
-            <figcaption className={styles.articleImageCaption}>{section.caption}</figcaption>
-          )}
-        </figure>
-      );
-  }
+  return { title: project.title, description: project.subtitle };
 }
 
 export default async function ProjectPage({ params }: Props) {
@@ -65,122 +29,91 @@ export default async function ProjectPage({ params }: Props) {
   const project = getProject(slug);
   if (!project) notFound();
 
+  const index = PROJECTS.indexOf(project);
+  const next = PROJECTS[(index + 1) % PROJECTS.length];
+  const facts = [
+    ["Type", project.tag],
+    ["Year", project.date],
+    ["Reading time", project.readTime],
+    ["Domains", project.domains.join(", ")],
+  ].filter(([, v]) => v);
+
   return (
     <>
       <Nav mode="project" />
 
-      <main className={styles.main}>
-        {/* Header */}
-        <header className={styles.header}>
-          <Reveal>
-            <div className={styles.meta}>
-              <span className={styles.tag}>{project.tag}</span>
-              {project.date && <span className={styles.date}>{project.date}</span>}
-              {project.readTime && <span className={styles.readTime}>{project.readTime}</span>}
-            </div>
-            <h1 className={styles.title}>{project.title}</h1>
-            {project.subtitle && (
-              <p className={styles.subtitle}>{project.subtitle}</p>
-            )}
-            <div className={styles.domains}>
-              {project.domains.map((d) => (
-                <span key={d} className={styles.domainPill}>{d}</span>
-              ))}
-            </div>
-          </Reveal>
-
-          {/* Metrics strip */}
-          <Reveal delay={0.1}>
-            <div className={styles.metricsStrip}>
-              {project.metrics.map((m, i) => (
-                <div key={i} className={styles.metric}>
-                  <div className={styles.metricVal}>{m.value}</div>
-                  <div className={styles.metricLabel}>{m.label}</div>
+      <main>
+        <header className={`frame ${styles.header}`}>
+          <aside className={styles.facts}>
+            <span className={styles.glyph}>
+              <ProjectIcon slug={project.slug} size={26} />
+            </span>
+            <dl>
+              {facts.map(([k, v]) => (
+                <div key={k}>
+                  <dt>{k}</dt>
+                  <dd>{v}</dd>
                 </div>
               ))}
-            </div>
+            </dl>
+          </aside>
+          <Reveal className={styles.lead}>
+            <div className={styles.eyebrow}>Case study {String(index + 1).padStart(2, "0")}</div>
+            <h1 className={styles.title}>{project.title}</h1>
+            {project.subtitle && <p className={styles.subtitle}>{project.subtitle}</p>}
+            {project.demoUrl && (
+              <a href={project.demoUrl} target="_blank" rel="noopener noreferrer" className={styles.demo}>
+                View live demo ↗
+              </a>
+            )}
           </Reveal>
-
-          {/* Demo link */}
-          {project.demoUrl && (
-            <Reveal delay={0.15}>
-              <div className={styles.demoRow}>
-                <a href={project.demoUrl} target="_blank" rel="noopener noreferrer" className={styles.demoLink}>
-                  View live demo →
-                </a>
-              </div>
-            </Reveal>
-          )}
         </header>
 
-        {/* Problem / Approach / Outcome — always shown */}
-        <section className={styles.caseSummary}>
-          <Reveal>
-            <div className={styles.caseGrid}>
-              <div className={styles.caseBlock}>
-                <div className={styles.caseBlockLabel}>Problem</div>
-                <p className={styles.caseBlockText}>{project.problem}</p>
-              </div>
-              <div className={styles.caseBlock}>
-                <div className={styles.caseBlockLabel}>Approach</div>
-                <p className={styles.caseBlockText}>{project.approach}</p>
-              </div>
-              <div className={styles.caseBlock}>
-                <div className={styles.caseBlockLabel}>Outcome</div>
-                <p className={styles.caseBlockText}>{project.outcome}</p>
-              </div>
+        <section className={`frame ${styles.metrics}`} aria-label="Key figures">
+          {project.metrics.map((m) => (
+            <div key={m.label} className={styles.metric}>
+              {m.value ? (
+                <>
+                  <div className={styles.metricVal}>{m.value}</div>
+                  <div className={styles.metricLabel}>{m.label}</div>
+                </>
+              ) : (
+                <div className={styles.metricText}>{m.label}</div>
+              )}
             </div>
-          </Reveal>
+          ))}
         </section>
 
-        {/* Article body */}
-        {project.articleBody && project.articleBody.length > 0 && (
-          <article className={styles.article}>
-            <Reveal>
-              <div className={styles.articleDivider}>
-                <span className={styles.dividerLabel}>Full Article</span>
-                <div className={styles.dividerLine} />
-              </div>
-            </Reveal>
-            <div className={styles.articleContent}>
-              {project.articleBody.map((section, i) => (
-                <Reveal key={i} delay={0.04 * Math.min(i, 5)}>
-                  {renderSection(section, i)}
-                </Reveal>
-              ))}
+        <section className={`frame ${styles.summary}`} aria-label="Summary">
+          {[
+            ["Problem", project.problem],
+            ["Approach", project.approach],
+            ["Outcome", project.outcome],
+          ].map(([label, text]) => (
+            <div key={label} className={styles.summaryCell}>
+              <div className={styles.cellLabel}>{label}</div>
+              <p>{text}</p>
             </div>
+          ))}
+        </section>
+
+        {project.articleBody && project.articleBody.length > 0 && (
+          <article className={`frame ${styles.article}`}>
+            <div className={styles.cellLabel}>Full article</div>
+            <ArticleBody sections={project.articleBody} />
           </article>
         )}
 
-        {/* Image gallery */}
-        {project.images && project.images.length > 0 && (
-          <section className={styles.gallery}>
-            <Reveal>
-              <div className={styles.articleDivider}>
-                <span className={styles.dividerLabel}>UI & Process</span>
-                <div className={styles.dividerLine} />
-              </div>
-            </Reveal>
-            <div className={styles.galleryGrid}>
-              {project.images.map((img, i) => (
-                <Reveal key={i} delay={0.06 * i}>
-                  <figure className={styles.galleryFigure}>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={img.src} alt={img.alt} className={styles.galleryImg} />
-                    {img.caption && (
-                      <figcaption className={styles.galleryCaption}>{img.caption}</figcaption>
-                    )}
-                  </figure>
-                </Reveal>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {/* Next project hint */}
-        <div className={styles.backRow}>
-          <a href="/#projects" className={styles.backLink}>← Back to all projects</a>
-        </div>
+        <nav className={`frame ${styles.pager}`} aria-label="Project navigation">
+          <Link href="/#projects" className={styles.pagerLink}>
+            <span className={styles.cellLabel}>Back</span>
+            <span className={styles.pagerTitle}>← All projects</span>
+          </Link>
+          <Link href={`/projects/${next.slug}`} className={`${styles.pagerLink} ${styles.pagerNext}`}>
+            <span className={styles.cellLabel}>Next case study</span>
+            <span className={styles.pagerTitle}>{next.title} →</span>
+          </Link>
+        </nav>
       </main>
 
       <Footer />

@@ -58,14 +58,13 @@ export default function CaseStudies() {
   const visible = PROJECTS.filter((p) => filter === "all" || p.domains.includes(filter));
 
   const tabs = (
-    <div className={styles.filters} role="tablist" aria-label="Filter projects by domain">
+    <div className={styles.filters} role="group" aria-label="Filter projects by domain">
       {FILTERS.map((f) => {
         const count = PROJECTS.filter((p) => f.id === "all" || p.domains.includes(f.id)).length;
         return (
           <button
             key={f.id}
-            role="tab"
-            aria-selected={filter === f.id}
+            aria-pressed={filter === f.id}
             className={`${styles.tab} ${filter === f.id ? styles.tabOn : ""}`}
             onClick={() => setFilter(f.id)}
           >

@@ -1,9 +1,10 @@
+import { PROJECTS } from "@/lib/projects";
 import styles from "./Hero.module.css";
 
 const METRICS = [
   { value: "1st", label: "Anthropic × LSE Hackathon, 2026" },
   { value: "2 yrs", label: "NHS foundation training" },
-  { value: "9", label: "Case studies" },
+  { value: String(PROJECTS.length), label: "Case studies" },
   { value: "3", label: "Languages, full professional" },
 ];
 

@@ -17,7 +17,10 @@ const mono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Cyril Vijayakumar — Doctor developer",
+  title: {
+    default: "Cyril Vijayakumar — Doctor building clinical software",
+    template: "%s — Cyril Vijayakumar",
+  },
   description:
     "Dr Cyrilkumaar Vijayakumar: NHS-trained doctor building clinical software. Clinical AI Fellow at Synthax AI and LSE Global Master's in Management candidate.",
 };
@@ -36,7 +39,7 @@ export default function RootLayout({
               (function() {
                 try {
                   var storedTheme = localStorage.getItem('theme');
-                  var theme = storedTheme || 'light';
+                  var theme = storedTheme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
                   document.documentElement.setAttribute('data-theme', theme);
                 } catch (e) {}
               })();

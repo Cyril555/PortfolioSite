@@ -41,7 +41,7 @@ export default function Now() {
           </dl>
           <p className={styles.status}>
             <span className={styles.square} aria-hidden="true" />
-            Product live on synthax.ai
+            Product live on the Synthax site
           </p>
         </Reveal>
         <div className={styles.points}>

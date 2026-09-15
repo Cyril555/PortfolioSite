@@ -1,0 +1,90 @@
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 680px;
+}
+
+.heading {
+  margin-top: 28px;
+  font-size: 26px;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.body > .heading:first-child {
+  margin-top: 0;
+}
+
+.paragraph {
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--fg-soft);
+}
+
+.list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--line);
+}
+
+.list li {
+  position: relative;
+  padding: 12px 0 12px 28px;
+  border-bottom: 1px solid var(--line);
+  font-size: 16px;
+  color: var(--fg-soft);
+}
+
+.list li::before {
+  content: "↳";
+  position: absolute;
+  left: 2px;
+  color: var(--muted);
+}
+
+.quote {
+  margin: 12px 0;
+  padding: 4px 0 4px 24px;
+  border-left: 1px solid var(--line-strong);
+}
+
+.quote p {
+  font-size: 24px;
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  line-height: 1.35;
+}
+
+.quote cite {
+  display: block;
+  margin-top: 12px;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-style: normal;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.figure {
+  margin: 12px 0;
+  border: 1px solid var(--line);
+}
+
+.figure img {
+  width: 100%;
+  height: auto;
+}
+
+.figure figcaption {
+  padding: 10px 14px;
+  border-top: 1px solid var(--line);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+  color: var(--muted);
+}

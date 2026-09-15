@@ -6,7 +6,7 @@ import { Sun, Moon } from "lucide-react";
 import styles from "./Nav.module.css";
 
 const NAV_ITEMS = [
-  { label: "Work", id: "now" },
+  { label: "Now", id: "now" },
   { label: "Projects", id: "projects" },
   { label: "Experience", id: "experience" },
   { label: "Contact", id: "contact" },
@@ -25,6 +25,22 @@ export default function Nav({ mode = "home" }: NavProps) {
     setTheme(document.documentElement.getAttribute("data-theme") || "light");
   }, []);
 
+  // Mobile menu: lock page scroll while open, close on Escape or when the viewport grows past the breakpoint
+  useEffect(() => {
+    if (!menuOpen) return;
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setMenuOpen(false);
+    const mq = window.matchMedia("(min-width: 861px)");
+    const onResize = () => mq.matches && setMenuOpen(false);
+    window.addEventListener("keydown", onKey);
+    mq.addEventListener("change", onResize);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
+      mq.removeEventListener("change", onResize);
+    };
+  }, [menuOpen]);
+
   const toggleTheme = () => {
     const next = theme === "light" ? "dark" : "light";
     setTheme(next);
@@ -32,26 +48,21 @@ export default function Nav({ mode = "home" }: NavProps) {
     localStorage.setItem("theme", next);
   };
 
-  const links =
-    mode === "home" ? (
-      NAV_ITEMS.map((n) => (
-        <li key={n.id}>
-          <a href={`#${n.id}`} onClick={() => setMenuOpen(false)}>
-            {n.label}
-          </a>
-        </li>
-      ))
-    ) : (
-      <li>
-        <Link href="/#projects">← All projects</Link>
-      </li>
-    );
+  const close = () => setMenuOpen(false);
+  const prefix = mode === "home" ? "" : "/";
+  const links = NAV_ITEMS.map((n) => (
+    <li key={n.id}>
+      <a href={`${prefix}#${n.id}`} onClick={close}>
+        {n.label}
+      </a>
+    </li>
+  ));
 
   return (
     <>
       <nav className={styles.nav}>
         <div className={styles.inner}>
-          <Link href="/" className={styles.logo}>
+          <Link href="/" className={styles.logo} onClick={close}>
             <span className={styles.mark} aria-hidden="true" />
             Cyril Vijayakumar
           </Link>
@@ -62,14 +73,15 @@ export default function Nav({ mode = "home" }: NavProps) {
             <button className={styles.icon} onClick={toggleTheme} aria-label="Toggle theme">
               {theme === "dark" ? <Sun size={14} strokeWidth={1.75} /> : <Moon size={14} strokeWidth={1.75} />}
             </button>
-            <a className={styles.cta} href={mode === "home" ? "#contact" : "/#contact"}>
+            <a className={styles.cta} href={`${prefix}#contact`}>
               Get in touch ↗
             </a>
             <button
               className={`${styles.icon} ${styles.hamburger} ${menuOpen ? styles.open : ""}`}
               onClick={() => setMenuOpen(!menuOpen)}
-              aria-label="Toggle menu"
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
               aria-expanded={menuOpen}
+              aria-controls="mobile-menu"
             >
               <span />
               <span />
@@ -78,7 +90,9 @@ export default function Nav({ mode = "home" }: NavProps) {
         </div>
       </nav>
 
-      <ul className={`${styles.mobileMenu} ${menuOpen ? styles.mobileOpen : ""}`}>{links}</ul>
+      <ul id="mobile-menu" className={`${styles.mobileMenu} ${menuOpen ? styles.mobileOpen : ""}`}>
+        {links}
+      </ul>
     </>
   );
 }
