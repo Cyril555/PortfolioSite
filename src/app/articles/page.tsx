@@ -4,7 +4,7 @@ import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import SectionHead from "@/components/SectionHead";
 import ProjectIcon from "@/components/ProjectIcon";
-import { PROJECTS } from "@/lib/projects";
+import { PROJECTS_BY_DATE } from "@/lib/projects";
 import { PUBLICATIONS } from "@/lib/publications";
 import styles from "./articles.module.css";
 
@@ -12,6 +12,8 @@ export const metadata: Metadata = {
   title: "Articles",
   description:
     "Case studies and published papers by Dr Cyrilkumaar Vijayakumar across clinical medicine, health technology and strategy.",
+  alternates: { canonical: "/articles" },
+  openGraph: { title: "Articles", url: "/articles" },
 };
 
 export default function ArticlesPage() {
@@ -34,9 +36,9 @@ export default function ArticlesPage() {
 
         <section className="band" id="case-studies">
           <div className="frame">
-            <SectionHead label={`${PROJECTS.length} write-ups`} title="Case studies" />
+            <SectionHead label={`${PROJECTS_BY_DATE.length} case studies · newest first`} title="Case studies" />
             <ol className={styles.list}>
-              {PROJECTS.map((p) => (
+              {PROJECTS_BY_DATE.map((p) => (
                 <li key={p.slug}>
                   <Link href={`/projects/${p.slug}`} className={styles.row}>
                     <span className={styles.date}>{p.date}</span>

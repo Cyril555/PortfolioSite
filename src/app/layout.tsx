@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Host_Grotesk, Geist_Mono } from "next/font/google";
+import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 const sans = Host_Grotesk({
@@ -17,12 +18,26 @@ const mono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Cyril Vijayakumar — Doctor building clinical software",
     template: "%s — Cyril Vijayakumar",
   },
-  description:
-    "Dr Cyrilkumaar Vijayakumar: NHS-trained doctor building clinical software. Clinical AI Fellow at Synthax AI and LSE Global Master's in Management candidate.",
+  description: SITE_DESCRIPTION,
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    url: "/",
+    siteName: SITE_NAME,
+    title: "Cyril Vijayakumar — Doctor building clinical software",
+    description: SITE_DESCRIPTION,
+    locale: "en_GB",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Cyril Vijayakumar — Doctor building clinical software",
+    description: SITE_DESCRIPTION,
+  },
 };
 
 export default function RootLayout({

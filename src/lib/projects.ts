@@ -15,7 +15,8 @@ export interface Project {
   metrics: ProjectMetric[];
   subtitle?: string;
   date?: string;
-  readTime?: string;
+  /** ISO start date used to order the Articles page and the next-case-study links, newest first. */
+  sortDate: string;
   articleBody?: ArticleSection[];
   demoUrl?: string;
 }
@@ -47,7 +48,7 @@ export const PROJECTS: Project[] = [
     approach:
       "Built a five-agent system with a blinded adjudicator. A sycophancy monitor scores each turn 0 to 100 across five behavioural signals. Above 70 it triggers a structured debate between two hypothesis agents, adjudicated by a judge that never sees the clinician's original framing.",
     outcome:
-      "Won first place at the Anthropic × LSE Hackathon on 25 March 2026. Live demo caught a missed Type A Aortic Dissection (scored 84/100) that a standard LLM missed by agreeing with an incorrect STEMI framing.",
+      "Won first place at the Anthropic × LSE Hackathon on 25 March 2026. On the demo case, a Type A aortic dissection framed as a STEMI, the monitor scored the turn 84/100 and triggered the blinded debate.",
     metrics: [
       { value: "1st", label: "Anthropic × LSE Hackathon 2026" },
       { value: "5", label: "Claude agents in parallel" },
@@ -55,24 +56,20 @@ export const PROJECTS: Project[] = [
     ],
     subtitle:
       "A clinical decision support tool designed to catch one failure mode of LLMs: being too agreeable to disagree.",
-    date: "April 2026",
-    readTime: "3 min read",
+    date: "Mar 2026",
+    sortDate: "2026-03-25",
     articleBody: [
       {
         type: "paragraph",
-        text: "LLMs are trained to be agreeable. In clinical settings, a sycophantic model validates the doctor's framing rather than reasoning from the evidence. Sharma et al. (ICLR 2024) documented this. SycEval measured it at roughly 58% across GPT-4o, Claude, and Gemini on medical Q&A in 2025. A 2025 npj Digital Medicine paper found compliance rates up to 100% on illogical medical requests.",
-      },
-      {
-        type: "paragraph",
-        text: "Anchoring bias already contributes to up to 75% of diagnostic errors in internal medicine. A sycophantic AI does not introduce a new failure mode. It amplifies one that clinicians already train to avoid.",
+        text: "A sycophantic AI does not introduce a new failure mode. It amplifies one that clinicians already train to avoid.",
       },
       {
         type: "heading",
-        text: "01 / Architecture",
+        text: "Architecture",
       },
       {
         type: "paragraph",
-        text: "System prompts alone do not fix this. Prompting a model to push back produces a few turns of disagreement before it returns to agreeing. Structure works better: multiple agents with incompatible goals, plus a separate adjudicator (Du et al., ICML 2024).",
+        text: "System prompts alone do not fix this. Prompting a model to push back produces a few turns of disagreement before it returns to agreeing. Structure works better: multiple agents with incompatible goals, plus a separate adjudicator.",
       },
       {
         type: "paragraph",
@@ -80,11 +77,11 @@ export const PROJECTS: Project[] = [
       },
       {
         type: "paragraph",
-        text: "The key move is blinding. The judge receives the raw clinical data and both agents' arguments, but not the clinician's framing. Mamede et al. (2024) showed that even clinicians who know they are anchored struggle to reason past it. Withholding the framing removes the anchor from the decision step.",
+        text: "The key move is blinding. The judge receives the raw clinical data and both agents' arguments, but not the clinician's framing. Even clinicians who know they are anchored struggle to reason past it. Withholding the framing removes the anchor from the decision step.",
       },
       {
         type: "heading",
-        text: "02 / Detection",
+        text: "Detection",
       },
       {
         type: "paragraph",
@@ -102,11 +99,11 @@ export const PROJECTS: Project[] = [
       },
       {
         type: "paragraph",
-        text: "The monitor returns a 0 to 100 score. Above 40 it surfaces an amber flag. Above 70, debate agents and the blinded judge activate automatically.",
+        text: "A score above 40 surfaces an amber flag before the debate threshold is reached.",
       },
       {
         type: "heading",
-        text: "03 / Live demo",
+        text: "Demo case",
       },
       {
         type: "paragraph",
@@ -118,11 +115,11 @@ export const PROJECTS: Project[] = [
       },
       {
         type: "heading",
-        text: "04 / What is next",
+        text: "What is next",
       },
       {
         type: "paragraph",
-        text: "Reframe won first place at the Anthropic × LSE Hackathon in March. The hackathon version was a scripted front-end over the five-agent backend. Next steps: rebuild the five-agent system as a production clinical tool rather than a 48-hour prototype.",
+        text: "The hackathon version was a scripted front-end over the five-agent backend. Next step: rebuild the five-agent system as a production clinical tool rather than a 24-hour prototype.",
       },
       {
         type: "paragraph",
@@ -147,8 +144,8 @@ export const PROJECTS: Project[] = [
     ],
     subtitle:
       "An AI-powered emergency triage and dispatch concept. Global top six and UK national winner at the Harvard Innovation Labs Hackathon.",
-    date: "April 2024",
-    readTime: "1 min read",
+    date: "Apr 2024",
+    sortDate: "2024-04-05",
   },
   {
     slug: "carepass",
@@ -167,7 +164,7 @@ export const PROJECTS: Project[] = [
     subtitle:
       "A QR-code health passport prototype that gives emergency staff rapid access to critical patient data.",
     date: "2024",
-    readTime: "2 min read",
+    sortDate: "2024-01-01",
     articleBody: [
       {
         type: "paragraph",
@@ -176,21 +173,7 @@ export const PROJECTS: Project[] = [
       { type: "heading", text: "The insight" },
       {
         type: "paragraph",
-        text: "The information usually exists in GP records, hospital systems and pharmacy databases. The problem is access at the point of crisis. CarePass puts a patient's critical data one scan away.",
-      },
-      { type: "heading", text: "The concept" },
-      {
-        type: "list",
-        items: [
-          "A QR code the patient carries",
-          "Scanning it opens a structured emergency summary",
-          "Allergies, current medications, chronic conditions and emergency contacts in one view",
-        ],
-      },
-      { type: "heading", text: "What I built" },
-      {
-        type: "paragraph",
-        text: "A working prototype in HTML, CSS and JavaScript, built with AI-assisted development, that demonstrates the scan-to-summary flow end to end. It is a prototype only and has not been deployed.",
+        text: "The information usually exists in GP records, hospital systems and pharmacy databases. The problem is access at the point of crisis.",
       },
     ],
   },
@@ -212,27 +195,27 @@ export const PROJECTS: Project[] = [
     subtitle:
       "A structured ADHD education platform, designed and pitched to venture capitalists during the Bitelabs Healthtech & Innovation Fellowship.",
     date: "Sep–Nov 2024",
-    readTime: "3 min read",
+    sortDate: "2024-09-01",
     articleBody: [
       { type: "heading", text: "The gap" },
       {
         type: "paragraph",
-        text: "Post-diagnosis, NHS ADHD patients are typically discharged with a leaflet and a signpost to external resources. There is no structured, clinically validated education journey integrated into the care pathway.",
+        text: "Post-diagnosis, NHS ADHD patients are typically discharged with a leaflet and a signpost to external resources.",
       },
       { type: "heading", text: "The fellowship" },
       {
         type: "paragraph",
-        text: "Cognify was one of two solutions I designed during the eight-week Bitelabs Healthtech & Innovation Fellowship, a competitive programme to design and pitch an answer to a current healthcare need. Each came with a Figma prototype and a pitch deck presented to venture capitalists.",
+        text: "Cognify was one of two solutions I designed during the eight-week fellowship, a competitive programme built around a current healthcare need.",
       },
       { type: "heading", text: "The team" },
       {
         type: "paragraph",
-        text: "I directed a team of five doctors across psychiatry, paediatrics and general practice. Each contributed domain expertise to the content architecture: what a newly diagnosed adult needs in week one versus month three, and what parents of a diagnosed child need differently from the child.",
+        text: "The team spanned psychiatry, paediatrics and general practice. Each doctor contributed domain expertise to the content architecture: what a newly diagnosed adult needs in week one versus month three, and what parents of a diagnosed child need differently from the child.",
       },
       { type: "heading", text: "Design" },
       {
         type: "paragraph",
-        text: "I led UI and UX in Figma, translating the content architecture into a user journey anchored on three states: newly diagnosed, in active treatment, and long-term management. Each state has distinct information needs.",
+        text: "The user journey is anchored on three states: newly diagnosed, in active treatment, and long-term management. Each state has distinct information needs.",
       },
       {
         type: "list",
@@ -246,7 +229,7 @@ export const PROJECTS: Project[] = [
       { type: "heading", text: "Go-to-market" },
       {
         type: "paragraph",
-        text: "The pitch covered market sizing, business strategy and commercialisation. Primary go-to-market: NHS ADHD services and private psychiatry practices as B2B accounts, with direct-to-patient as a secondary channel.",
+        text: "Primary go-to-market: NHS ADHD services and private psychiatry practices as B2B accounts, with direct-to-patient as a secondary channel.",
       },
     ],
   },
@@ -269,34 +252,21 @@ export const PROJECTS: Project[] = [
     subtitle:
       "A first-author, two-cycle audit of perioperative diabetes care, with continuous glucose monitoring introduced between cycles.",
     date: "2024",
-    readTime: "3 min read",
+    sortDate: "2023-08-01",
     articleBody: [
       { type: "heading", text: "Context" },
       {
         type: "paragraph",
-        text: "Diabetic patients undergoing emergency vascular surgery face higher complication rates and wide variability in perioperative insulin management. National guidelines from the Joint British Diabetes Societies set clear standards, but ward-level adherence is rarely measured. I ran this audit as an FY1 doctor at Hull Royal Infirmary.",
+        text: "These patients face higher complication rates and wide variability in perioperative insulin management. I ran this audit as an FY1 doctor at Hull Royal Infirmary.",
       },
       { type: "heading", text: "Method" },
       {
         type: "paragraph",
-        text: "A two-cycle audit of 90 consecutive perioperative diabetic patients, 45 per cycle, measured against 11 JBDS standards. Cycle one set the baseline: compliance was good in most areas, with a clear gap in hourly glucose monitoring.",
+        text: "Cycle one set the baseline: compliance was good in most areas, with a clear gap in hourly glucose monitoring.",
       },
       {
         type: "paragraph",
-        text: "Between cycles we introduced continuous glucose monitoring sensors for eligible patients. CGM is standard in outpatient diabetic care but rarely used for surgical inpatients.",
-      },
-      { type: "heading", text: "Results" },
-      {
-        type: "list",
-        items: [
-          "Standards met at over 80% compliance rose from 8 to 9 of 11",
-          "Hourly glucose monitoring, the weakest domain, improved to over 75% among CGM users",
-          "Hypoglycaemia was avoided in over 80% of patients",
-        ],
-      },
-      {
-        type: "paragraph",
-        text: "I presented the findings as a poster at the Vascular Society AGM 2024.",
+        text: "CGM is standard in outpatient diabetic care but rarely used for surgical inpatients.",
       },
       { type: "heading", text: "Takeaway" },
       {
@@ -324,36 +294,17 @@ export const PROJECTS: Project[] = [
     subtitle:
       "A quality-improvement audit that doubled vitamin D testing among at-risk inpatients aged 65 and over.",
     date: "2024–25",
-    readTime: "2 min read",
+    sortDate: "2024-08-01",
     articleBody: [
       { type: "heading", text: "Standard" },
       {
         type: "paragraph",
-        text: "Older inpatients are at high risk of vitamin D deficiency, and guidelines recommend testing and supplementation where indicated. On a diabetes and endocrinology ward, that testing was not happening consistently.",
+        text: "Older inpatients are at high risk of vitamin D deficiency, and guidelines recommend testing and supplementation where indicated.",
       },
-      { type: "heading", text: "Baseline" },
+      { type: "heading", text: "Why it mattered" },
       {
         type: "paragraph",
-        text: "I audited testing rates across 55 at-risk inpatients aged 65 and over during my FY2 rotation. At baseline, 28.6% were tested.",
-      },
-      { type: "heading", text: "Intervention" },
-      {
-        type: "list",
-        items: [
-          "A teaching session for the ward team",
-          "Guideline posters on the ward",
-          "Reminders at ward meetings",
-        ],
-      },
-      { type: "heading", text: "Outcome" },
-      {
-        type: "paragraph",
-        text: "Testing rose to 59.3% (χ² = 5.27, p = 0.022). Between 50% and 71% of the patients tested were deficient, which confirmed the clinical value of testing.",
-      },
-      { type: "heading", text: "Recommendations" },
-      {
-        type: "paragraph",
-        text: "Low-cost prompts roughly doubled testing, but they depend on people remembering. I recommended electronic prescribing prompts to make the change systemic, and a re-audit to confirm it holds.",
+        text: "The deficiency rate among the patients tested confirmed the clinical value of testing. Low-cost prompts depend on people remembering, which is why the recommendations focus on making the change systemic.",
       },
     ],
   },
@@ -376,31 +327,17 @@ export const PROJECTS: Project[] = [
     subtitle:
       "Auditing 51 hernia repairs against the 80% day-case standard, and finding that most overnight stays were routine rather than clinical.",
     date: "Dec 2024–Mar 2025",
-    readTime: "2 min read",
+    sortDate: "2024-12-01",
     articleBody: [
       { type: "heading", text: "Standard" },
       {
         type: "paragraph",
-        text: "Day-case surgery means the patient goes home the same day. The British Association of Day Surgery sets an 80% standard for inguinal hernia repair, reflecting evidence that patients recover as well at home while bed pressure and infection risk fall.",
-      },
-      { type: "heading", text: "Method" },
-      {
-        type: "paragraph",
-        text: "I collected and analysed data on 51 consecutive inguinal hernia repairs between December 2024 and March 2025. For each case I recorded whether the patient was discharged the same day, the documented reason if not, and whether the surgeon and anaesthetist had documented day-case planning.",
-      },
-      { type: "heading", text: "Findings" },
-      {
-        type: "list",
-        items: [
-          "80% of patients achieved same-day discharge, meeting the standard",
-          "Six of the ten failed discharges were driven by routine overnight observation rather than clinical need",
-          "Only 65% of cases had day-case planning documented by the surgeon, and 75% by the anaesthetist",
-        ],
+        text: "Day-case surgery means the patient goes home the same day. The standard reflects evidence that patients recover as well at home, while bed pressure and infection risk fall.",
       },
       { type: "heading", text: "Why it matters" },
       {
         type: "paragraph",
-        text: "The unit met the standard, but most of the remaining overnight stays were a matter of process rather than patient complexity. I presented the findings and recommendations at the NLaG Surgical Audit Meeting in Grimsby.",
+        text: "The unit met the standard, but most of the remaining overnight stays were a matter of process rather than patient complexity.",
       },
     ],
   },
@@ -423,40 +360,7 @@ export const PROJECTS: Project[] = [
     subtitle:
       "Leading a nine-person student consulting team to a phased systems roadmap for a fast-growing personal-care brand.",
     date: "Oct–Dec 2025",
-    readTime: "3 min read",
-    articleBody: [
-      { type: "heading", text: "The situation" },
-      {
-        type: "paragraph",
-        text: "The client, a fast-growing B-Corp personal-care brand, had raised £1.7m from angel investors, employed 24 people and sold wholesale in the UK and US. Its operations ran on spreadsheets and disconnected warehouse, inventory and finance systems, and that was starting to constrain international expansion.",
-      },
-      { type: "heading", text: "Scope" },
-      {
-        type: "paragraph",
-        text: "As Project Manager at Castore Consulting, the LSE student consultancy, I led a team of nine through an eight-week engagement.",
-      },
-      {
-        type: "list",
-        items: [
-          "Stakeholder interviews across the business",
-          "End-to-end supply-chain process mapping to locate bottlenecks",
-          "A structured technology scan comparing full-scale ERP with modular options",
-        ],
-      },
-      { type: "heading", text: "Recommendation" },
-      {
-        type: "list",
-        items: [
-          "A modular systems architecture for near-term time-to-value",
-          "Automated revenue reconciliation via A2X",
-          "Deferring full ERP adoption until revenue passes £75m",
-        ],
-      },
-      {
-        type: "paragraph",
-        text: "We delivered the recommendation as a phased technology roadmap and a case-study deck.",
-      },
-    ],
+    sortDate: "2025-10-01",
   },
   {
     slug: "us-ai-gtm-strategy",
@@ -475,31 +379,24 @@ export const PROJECTS: Project[] = [
     ],
     subtitle: "Scoring target sectors for a US AI startup's expansion and turning the result into a go-to-market plan.",
     date: "Mar–May 2026",
-    readTime: "2 min read",
-    articleBody: [
-      { type: "heading", text: "The brief" },
-      {
-        type: "paragraph",
-        text: "A US-based AI startup wanted to expand into new sectors. The question was which sectors to prioritise, and how to approach them.",
-      },
-      { type: "heading", text: "What we delivered" },
-      {
-        type: "list",
-        items: [
-          "Go-to-market strategy for the priority sectors",
-          "Lead data for each target sector",
-          "A sector-comparison matrix scoring each sector on attractiveness for AI entry",
-        ],
-      },
-      { type: "heading", text: "Outcome" },
-      {
-        type: "paragraph",
-        text: "We delivered a 40-page interim report, presented it to the client and incorporated their feedback. The engagement concluded at the interim stage.",
-      },
-    ],
+    sortDate: "2026-03-01",
   },
 ];
 
 export function getProject(slug: string): Project | undefined {
   return PROJECTS.find((p) => p.slug === slug);
+}
+
+/** Every case study, newest first. */
+export const PROJECTS_BY_DATE = [...PROJECTS].sort((a, b) => b.sortDate.localeCompare(a.sortDate));
+
+/** Reading time from the actual word count of the summary and article, at ~220 words a minute. */
+export function readingTime(project: Project): string {
+  const parts: string[] = [project.problem, project.approach, project.outcome];
+  for (const section of project.articleBody ?? []) {
+    if (section.type === "list") parts.push(...section.items);
+    else if (section.type !== "image") parts.push(section.text);
+  }
+  const words = parts.join(" ").split(/\s+/).filter(Boolean).length;
+  return `${Math.max(1, Math.round(words / 220))} min read`;
 }

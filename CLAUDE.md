@@ -11,7 +11,7 @@ Management consulting recruiters (McKinsey, BCG, Bain), health-tech companies, a
 - Styling: CSS Modules + CSS custom properties (no Tailwind)
 - Fonts: Host Grotesk (`--font-sans`, all text) and Geist Mono (`--font-mono`, small uppercase labels only), both via `next/font/google`. No serif anywhere.
 - Icons: hand-drawn line SVGs in `src/components/ProjectIcon.tsx` (one per project slug) and inline in `Domains.tsx`, square caps and mitred joins. No emojis, no screenshots as thumbnails.
-- Deployment: Vercel via GitHub integration (every push to `main` deploys to production; other branches get preview URLs)
+- Deployment: Vercel via GitHub integration (every push to `main` deploys to production at https://www.cyrilv.com; other branches get preview URLs). The canonical origin lives in `src/lib/site.ts`
 - Package manager: npm (package-lock.json is the lockfile in use)
 
 ## Common Commands
@@ -58,7 +58,7 @@ Logo (square mark + "Cyril Vijayakumar", in `Nav.tsx`) → Work → Experience �
 A small square outline with a filled inner square, followed by the name "Cyril Vijayakumar". The same mark is `src/app/icon.svg`. A CV monogram was tried and rejected; do not reintroduce it.
 
 ### Homepage (`src/app/page.tsx`), tone in brackets
-1. **Hero** (dark) — headline, one-line positioning, two CTAs, grayscale portrait, 4-cell metrics row. No status line.
+1. **Hero** (dark) — headline, one-line positioning, "Projects" and "Download CV" buttons, grayscale portrait, 4-cell metrics row (labels and numbers share rows via CSS subgrid). No status line. The portrait column scales fluidly with the viewport; below 700px the portrait is hidden and never downloaded (a `<picture>` source serves a 1px placeholder).
 2. **Selected work** (light, `Highlights.tsx`) — exactly three projects, one per discipline (Medicine, Technology, Strategy), plus a quiet right-aligned "See more work →" text link to `/articles` (hover underlines the text only; no filled button). Keep it to three; quantity is not the point.
 3. **Experience** (dark) — dated timeline from `src/lib/experience.ts`; the current Synthax role lives here, marked "Now"
 4. **Education and skills** (light)
@@ -68,10 +68,21 @@ A small square outline with a filled inner square, followed by the name "Cyril V
 ### Articles (`src/app/articles/page.tsx`)
 A quiet list, not cards: every case study as a row (date, icon, title, one-line summary, domains), then publications from `src/lib/publications.ts`. Case study pages live at `/projects/[slug]` and link back to `/articles` and on to the next case study.
 
+### SEO and sharing
+- `src/app/sitemap.ts`, `src/app/robots.ts`, and static `opengraph-image.png` / `twitter-image.png` (1200x630, same design language) in `src/app`
+- Page metadata sets canonical URLs; titles use the "%s — Cyril Vijayakumar" template
+- `src/app/not-found.tsx` is the custom 404 in the hero style
+
+### CV download
+`public/Cyrilkumaar-Vijayakumar-CV.pdf` was generated from the site's own content (no phone number). The user may replace it with their own file at the same path. Do not publish the master CV directly: it contains [CONFIRM] notes and a phone number.
+
 ### Content rules
 - The master CV is the source of truth, with the user's corrections recorded at the top of `src/lib/projects.ts`
 - Never name the client of the Castore Consulting engagement
 - TASKR is removed from the site
+- Articles are sorted newest first by each project's `sortDate`; reading time is computed by `readingTime()`, never typed by hand
+- Article bodies must not restate the Problem, Approach, Outcome or metrics shown above them
+- No citations in the Reframe article; the hackathon build is a "24-hour prototype"
 
 ### Case Study Template (Problem → Approach → Outcome)
 Every project must follow this structure. A recruiter reads these like mini-consulting cases. Always include at least one quantified metric per case study.
@@ -102,6 +113,6 @@ Every project must follow this structure. A recruiter reads these like mini-cons
 - [ ] Convert to multi-page Next.js app with shared layout
 - [x] Add portrait photo to hero
 - [ ] Add blog/articles section for published pieces
-- [ ] Add downloadable CV (PDF) link
+- [x] Add downloadable CV (PDF) link
 - [x] Set up Vercel deployment
 - [ ] Add page transition animations

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { getProject, PROJECTS } from "@/lib/projects";
+import { getProject, PROJECTS, PROJECTS_BY_DATE, readingTime } from "@/lib/projects";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
@@ -21,7 +21,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const project = getProject(slug);
   if (!project) return {};
-  return { title: project.title, description: project.subtitle };
+  return {
+    title: project.title,
+    description: project.subtitle,
+    alternates: { canonical: `/projects/${project.slug}` },
+    openGraph: { title: project.title, description: project.subtitle, url: `/projects/${project.slug}` },
+  };
 }
 
 export default async function ProjectPage({ params }: Props) {
@@ -29,12 +34,13 @@ export default async function ProjectPage({ params }: Props) {
   const project = getProject(slug);
   if (!project) notFound();
 
-  const index = PROJECTS.indexOf(project);
-  const next = PROJECTS[(index + 1) % PROJECTS.length];
+  // Follow the same newest-first order as the Articles page
+  const index = PROJECTS_BY_DATE.indexOf(project);
+  const next = PROJECTS_BY_DATE[(index + 1) % PROJECTS_BY_DATE.length];
   const facts = [
     ["Type", project.tag],
     ["Date", project.date],
-    ["Reading time", project.readTime],
+    ["Reading time", readingTime(project)],
     ["Domains", project.domains.join(", ")],
   ].filter(([, v]) => v);
 
@@ -58,7 +64,7 @@ export default async function ProjectPage({ params }: Props) {
             </dl>
           </aside>
           <Reveal className={styles.lead}>
-            <div className={styles.eyebrow}>Case study {String(index + 1).padStart(2, "0")}</div>
+            <div className={styles.eyebrow}>Case study</div>
             <h1 className={styles.title}>{project.title}</h1>
             {project.subtitle && <p className={styles.subtitle}>{project.subtitle}</p>}
             {project.demoUrl && (

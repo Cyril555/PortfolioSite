@@ -7,7 +7,7 @@ import styles from "./Nav.module.css";
 
 /** Anchors on the homepage, or a route of their own. */
 const NAV_ITEMS = [
-  { key: "work", label: "Work", href: "#work" },
+  { key: "work", label: "Projects", href: "#work" },
   { key: "experience", label: "Experience", href: "#experience" },
   { key: "articles", label: "Articles", href: "/articles" },
   { key: "contact", label: "Contact", href: "#contact" },

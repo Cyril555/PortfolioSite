@@ -90,5 +90,5 @@ export const EDUCATION = [
 export const SKILLS = {
   Technical: ["TypeScript", "Python", "Claude API and Claude Code", "ElevenLabs Conversational AI", "Figma", "SQL (basics)"],
   Languages: ["English (native)", "Mandarin", "Tamil", "Spanish (intermediate)"],
-  Finance: ["Financial modelling", "Accounting (CFI)", "AmplifyME Sales and Trading"],
+  Finance: ["Accounting (CFI)", "AmplifyME Sales and Trading"],
 };

@@ -1,5 +1,8 @@
 import styles from "./Hero.module.css";
 
+export const CV_PATH = "/Cyrilkumaar-Vijayakumar-CV.pdf";
+const BLANK_PIXEL = "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==";
+
 const METRICS = [
   { value: "1st", label: "Anthropic × LSE Hackathon, 2026" },
   { value: "2 yrs", label: "NHS foundation training" },
@@ -22,10 +25,10 @@ export default function Hero() {
             </p>
             <div className={styles.actions}>
               <a className={styles.primary} href="#work">
-                Selected work <span aria-hidden="true">→</span>
+                Projects <span aria-hidden="true">→</span>
               </a>
-              <a className={styles.secondary} href="#experience">
-                Experience
+              <a className={styles.secondary} href={CV_PATH} download>
+                Download CV <span aria-hidden="true">↓</span>
               </a>
             </div>
           </div>
@@ -36,7 +39,18 @@ export default function Hero() {
             <span className={`${styles.tick} ${styles.bl}`} aria-hidden="true" />
             <span className={`${styles.tick} ${styles.br}`} aria-hidden="true" />
             <div className={styles.photoWrap}>
-              <img src="/profile.jpg" alt="Dr Cyrilkumaar Vijayakumar" className={styles.photo} />
+              <picture>
+                {/* Phones get a 1px placeholder, so the portrait is never downloaded there */}
+                <source media="(max-width: 700px)" srcSet={BLANK_PIXEL} />
+                <img
+                  src="/profile.jpg"
+                  alt="Dr Cyrilkumaar Vijayakumar"
+                  className={styles.photo}
+                  width={1024}
+                  height={1024}
+                  decoding="async"
+                />
+              </picture>
             </div>
             <figcaption className={styles.caption}>
               <span>Dr Cyrilkumaar Vijayakumar</span>
