@@ -1,10 +1,9 @@
-import { PROJECTS } from "@/lib/projects";
 import styles from "./Hero.module.css";
 
 const METRICS = [
   { value: "1st", label: "Anthropic × LSE Hackathon, 2026" },
   { value: "2 yrs", label: "NHS foundation training" },
-  { value: String(PROJECTS.length), label: "Case studies" },
+  { value: "5", label: "Publications and conference papers" },
   { value: "3", label: "Languages, full professional" },
 ];
 
@@ -14,10 +13,6 @@ export default function Hero() {
       <div className={styles.inner}>
         <div className={styles.grid}>
           <div className={styles.text}>
-            <a className={styles.status} href="#now">
-              <span className={styles.square} aria-hidden="true" />
-              Now — Clinical AI Fellow, Synthax AI
-            </a>
             <h1 className={styles.title}>
               Doctor building <span>clinical software.</span>
             </h1>

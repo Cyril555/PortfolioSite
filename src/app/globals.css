@@ -88,6 +88,29 @@ img {
   outline-offset: 3px;
 }
 
+/* Full-width band that paints its own ground; sections alternate light and dark */
+.band {
+  position: relative;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+/* Dark band: re-scope the tokens so every component inside inverts automatically */
+.tone-dark {
+  --bg: #111315;
+  --panel: #1a1d20;
+  --fg: #eceded;
+  --fg-soft: #b9bcc0;
+  --muted: #8d9197;
+  --line: rgba(236, 237, 237, 0.13);
+  --line-strong: #eceded;
+}
+
+[data-theme='dark'] .tone-dark {
+  --bg: #050506;
+  --panel: #0e0f11;
+}
+
 /* Shared: a framed container whose side rules run the full height of each section */
 .frame {
   max-width: var(--max);

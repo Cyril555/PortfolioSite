@@ -1,89 +1,110 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
-import Reveal from "./Reveal";
 import SectionHead from "./SectionHead";
 import ProjectIcon from "./ProjectIcon";
-import { PROJECTS, Project } from "@/lib/projects";
+import { getProject, Project } from "@/lib/projects";
 import styles from "./CaseStudies.module.css";
 
-const FILTERS = [
-  { id: "all", label: "All" },
-  { id: "medicine", label: "Medicine" },
-  { id: "technology", label: "Technology" },
-  { id: "strategy", label: "Strategy" },
-];
+/** The four projects highlighted on the homepage, one per angle of the work. */
+const FEATURED = ["reframe-ai", "taskr", "continuous-glucose-monitoring", "castore-digital-strategy"]
+  .map(getProject)
+  .filter((p): p is Project => Boolean(p));
 
-function ProjectCard({ project, index }: { project: Project; index: number }) {
-  const metric = project.metrics.find((m) => m.value);
-  return (
-    <Link href={`/projects/${project.slug}`} className={styles.card}>
-      <div className={styles.tile}>
-        <span className={styles.idx}>{String(index + 1).padStart(2, "0")}</span>
-        <span className={styles.year}>{project.date}</span>
-        <span className={styles.glyph}>
-          <ProjectIcon slug={project.slug} size={30} />
-        </span>
-      </div>
-      <div className={styles.body}>
-        <div className={styles.tag}>{project.tag}</div>
-        <h3 className={styles.title}>{project.title}</h3>
-        <p className={styles.summary}>{project.subtitle ?? project.problem}</p>
-      </div>
-      <div className={styles.foot}>
-        {metric ? (
-          <span className={styles.metric}>
-            <b>{metric.value}</b>
-            <span>{metric.label}</span>
-          </span>
-        ) : (
-          <span />
-        )}
-        <span className={styles.more}>↳ Case study</span>
-      </div>
-    </Link>
-  );
-}
+const INTERVAL_MS = 6000;
+
+/** Which featured project a domain card on the page should jump to. */
+const DOMAIN_PICK: Record<string, string> = {
+  medicine: "continuous-glucose-monitoring",
+  technology: "reframe-ai",
+  strategy: "castore-digital-strategy",
+};
 
 export default function CaseStudies() {
-  const [filter, setFilter] = useState("all");
+  const [active, setActive] = useState(0);
+  const [paused, setPaused] = useState(false);
 
+  const select = useCallback((i: number) => setActive((i + FEATURED.length) % FEATURED.length), []);
+
+  // Auto-advance, unless paused by hover/focus or the visitor prefers reduced motion
   useEffect(() => {
-    const onFilter = (e: Event) => setFilter((e as CustomEvent<string>).detail);
-    window.addEventListener("filter-domain", onFilter);
-    return () => window.removeEventListener("filter-domain", onFilter);
-  }, []);
+    if (paused || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const id = window.setTimeout(() => select(active + 1), INTERVAL_MS);
+    return () => window.clearTimeout(id);
+  }, [active, paused, select]);
 
-  const visible = PROJECTS.filter((p) => filter === "all" || p.domains.includes(filter));
+  // Domain cards elsewhere on the page jump to the first featured project in that domain
+  useEffect(() => {
+    const onDomain = (e: Event) => {
+      const i = FEATURED.findIndex((p) => p.slug === DOMAIN_PICK[(e as CustomEvent<string>).detail]);
+      if (i >= 0) select(i);
+    };
+    window.addEventListener("filter-domain", onDomain);
+    return () => window.removeEventListener("filter-domain", onDomain);
+  }, [select]);
 
-  const tabs = (
-    <div className={styles.filters} role="group" aria-label="Filter projects by domain">
-      {FILTERS.map((f) => {
-        const count = PROJECTS.filter((p) => f.id === "all" || p.domains.includes(f.id)).length;
-        return (
-          <button
-            key={f.id}
-            aria-pressed={filter === f.id}
-            className={`${styles.tab} ${filter === f.id ? styles.tabOn : ""}`}
-            onClick={() => setFilter(f.id)}
-          >
-            {f.label} <span>{count}</span>
-          </button>
-        );
-      })}
-    </div>
-  );
+  const project = FEATURED[active];
+  const metric = project.metrics.find((m) => m.value);
 
   return (
-    <section className="frame" id="projects">
-      <SectionHead label="Selected work" title="Projects" aside={tabs} />
-      <div className={styles.grid}>
-        {visible.map((p, i) => (
-          <Reveal key={p.slug} delay={0.03 * i} className={styles.cell}>
-            <ProjectCard project={p} index={PROJECTS.indexOf(p)} />
-          </Reveal>
-        ))}
+    <section
+      id="projects"
+      className="band tone-dark"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocus={() => setPaused(true)}
+      onBlur={() => setPaused(false)}
+    >
+      <div className="frame">
+        <SectionHead label="Selected work" title="Featured projects" />
+        <div className={styles.stage}>
+          <ol className={styles.list}>
+            {FEATURED.map((p, i) => (
+              <li key={p.slug}>
+                <button
+                  className={`${styles.item} ${i === active ? styles.itemOn : ""}`}
+                  onClick={() => select(i)}
+                  onMouseEnter={() => select(i)}
+                  aria-current={i === active}
+                >
+                  <span className={styles.num}>{String(i + 1).padStart(2, "0")}</span>
+                  <span className={styles.name}>{p.title}</span>
+                  <span className={styles.kind}>{p.tag}</span>
+                  {i === active && (
+                    <span
+                      key={`${active}-${paused}`}
+                      className={`${styles.progress} ${paused ? styles.progressPaused : ""}`}
+                      style={{ animationDuration: `${INTERVAL_MS}ms` }}
+                      aria-hidden="true"
+                    />
+                  )}
+                </button>
+              </li>
+            ))}
+          </ol>
+
+          <Link href={`/projects/${project.slug}`} className={styles.panel} aria-live="polite">
+            <div key={project.slug} className={styles.panelInner}>
+              <div className={styles.tile}>
+                <span className={styles.glyph}>
+                  <ProjectIcon slug={project.slug} size={44} />
+                </span>
+              </div>
+              <div className={styles.caption}>
+                <p className={styles.summary}>{project.subtitle}</p>
+                <div className={styles.captionFoot}>
+                  {metric && (
+                    <span className={styles.metric}>
+                      <b>{metric.value}</b> {metric.label}
+                    </span>
+                  )}
+                  <span className={styles.more}>↳ Read case study</span>
+                </div>
+              </div>
+            </div>
+          </Link>
+        </div>
       </div>
     </section>
   );

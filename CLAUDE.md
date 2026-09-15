@@ -26,7 +26,7 @@ Grayscale and serious, modelled on Palantir's site: charcoal and white, large li
 
 ### Colour Palette (CSS Variables in `src/app/globals.css`)
 - Light body: `--bg #ffffff`, `--panel #f4f4f4` (hover/fill), `--fg #1e2124`, `--fg-soft`, `--muted #72767b`, `--line #dcdddf`, `--line-strong`
-- Dark bands (nav, hero, contact, footer): `--ink #0e0f11`, `--ink-fg`, `--ink-muted`, `--ink-line`, `--ink-grid` (the faint 48px background grid)
+- Always-dark chrome (nav, hero, footer): `--ink #0e0f11`, `--ink-fg`, `--ink-muted`, `--ink-line`, `--ink-grid` (the faint 48px background grid)
 - Dark theme overrides under `[data-theme='dark']`; toggle in `Nav.tsx`
 - Aliases `--accent`, `--border`, `--card`, `--display`, `--serif` exist only so the project detail page keeps working; they map to grayscale tokens
 
@@ -39,7 +39,8 @@ Grayscale and serious, modelled on Palantir's site: charcoal and white, large li
 
 ### Layout and Grid
 - Max width 1240px (`--max`), 40px gutter (`--gutter`, 20px on mobile)
-- Every light section is a `<section className="frame">`: side rules on the container, a full-bleed bottom rule, and crosshair marks where they meet (all in `globals.css`)
+- Sections alternate light and dark: `<section className="band">` or `<section className="band tone-dark">`, each wrapping a `<div className="frame">`. `.tone-dark` re-scopes the colour tokens, so components never need dark-specific styles
+- `.frame` draws side rules on the container, a full-bleed bottom rule, and crosshair marks where they meet (all in `globals.css`)
 - Sections open with `SectionHead` (220px mono label column, light title, optional right slot such as the project filter)
 - Content lives in ruled cells that share 1px borders; hover fills a cell with `--panel` or inverts to `--ink`
 - Hero and contact use a fading 48px grid background; the portrait is grayscale with corner ticks
@@ -51,17 +52,21 @@ Grayscale and serious, modelled on Palantir's site: charcoal and white, large li
 ## Information Architecture
 
 ### Navigation
-Work → Projects → Experience → Contact (+ "Get in touch" CTA, theme toggle)
+Logo (CV monogram, `src/components/Logo.tsx`) → Projects → Experience → Contact (+ "Get in touch" CTA, theme toggle)
 
-### Page Structure (`src/app/page.tsx`)
-1. **Hero** — "Now" status pill (current role), headline, one-line positioning, two CTAs, portrait (`public/profile.jpg`), 4-cell metrics row
-2. **Now** — current role (Clinical AI Fellow, Synthax AI): fact column plus three outcomes
-3. **Domains** — Medicine, Technology, Strategy ruled cells; clicking one filters the projects grid via a `filter-domain` window event
-4. **Projects** — all case studies in a filterable 3-column ruled grid, each with a line icon on a grid-paper tile; links to `/projects/[slug]`
-5. **Experience** — dated timeline from `src/lib/experience.ts`, current role marked "Now"
-6. **Education and skills** — education stack + skill chips
-7. **Contact** — dark band with email and LinkedIn rows
-8. **Footer**
+### Logo
+One continuous stroke: the C's upper terminal becomes the V's left arm, with a square node at the join. It draws itself on load and on hover. The same path is used in `src/app/icon.svg`.
+
+### Page Structure (`src/app/page.tsx`), tone in brackets
+1. **Hero** (dark) — headline, one-line positioning, two CTAs, grayscale portrait, 4-cell metrics row. No status line.
+2. **Domains** (light) — Medicine, Technology, Strategy cells; clicking one selects the matching featured project via a `filter-domain` window event
+3. **Featured projects** (dark, `CaseStudies.tsx`) — exactly four projects (`FEATURED` list): titles on the left, active project panel on the right, auto-advancing every 6s with a progress line, paused on hover or focus
+4. **Experience** (light) — dated timeline from `src/lib/experience.ts`; the current Synthax role lives here, marked "Now" (there is no separate current-role section)
+5. **Education and skills** (dark)
+6. **Contact** (light) — email and LinkedIn rows over a faint grid
+7. **Footer** (dark)
+
+All nine case studies still have pages at `/projects/[slug]`, linked in sequence by "Next case study".
 
 ### Case Study Template (Problem → Approach → Outcome)
 Every project must follow this structure. A recruiter reads these like mini-consulting cases. Always include at least one quantified metric per case study.

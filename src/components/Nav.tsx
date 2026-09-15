@@ -3,10 +3,10 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Sun, Moon } from "lucide-react";
+import Logo from "./Logo";
 import styles from "./Nav.module.css";
 
 const NAV_ITEMS = [
-  { label: "Now", id: "now" },
   { label: "Projects", id: "projects" },
   { label: "Experience", id: "experience" },
   { label: "Contact", id: "contact" },
@@ -62,9 +62,8 @@ export default function Nav({ mode = "home" }: NavProps) {
     <>
       <nav className={styles.nav}>
         <div className={styles.inner}>
-          <Link href="/" className={styles.logo} onClick={close}>
-            <span className={styles.mark} aria-hidden="true" />
-            Cyril Vijayakumar
+          <Link href="/" className={styles.logo} onClick={close} aria-label="Cyril Vijayakumar, home">
+            <Logo size={30} />
           </Link>
 
           <ul className={styles.links}>{links}</ul>

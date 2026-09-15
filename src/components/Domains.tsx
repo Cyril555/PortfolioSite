@@ -35,26 +35,28 @@ export function filterProjects(domain: string) {
 
 export default function Domains() {
   return (
-    <section className="frame" id="domains">
-      <SectionHead label="Domains" title="Three disciplines, one perspective" />
-      <div className={styles.grid}>
-        {DOMAINS.map((d, i) => (
-          <Reveal key={d.id} delay={0.06 * i} className={styles.cell}>
-            <button className={styles.card} onClick={() => filterProjects(d.id)}>
-              <span className={styles.top}>
-                <span className={styles.label}>{d.meta}</span>
-                <span className={styles.icon}>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.4} strokeLinecap="square" strokeLinejoin="miter" aria-hidden="true">
-                    {d.icon}
-                  </svg>
+    <section className="band" id="domains">
+      <div className="frame">
+        <SectionHead label="Domains" title="Three disciplines, one perspective" />
+        <div className={styles.grid}>
+          {DOMAINS.map((d, i) => (
+            <Reveal key={d.id} delay={0.06 * i} className={styles.cell}>
+              <button className={styles.card} onClick={() => filterProjects(d.id)}>
+                <span className={styles.top}>
+                  <span className={styles.label}>{d.meta}</span>
+                  <span className={styles.icon}>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.4} strokeLinecap="square" strokeLinejoin="miter" aria-hidden="true">
+                      {d.icon}
+                    </svg>
+                  </span>
                 </span>
-              </span>
-              <span className={styles.name}>{d.name}</span>
-              <span className={styles.desc}>{d.desc}</span>
-              <span className={styles.link}>↳ View projects</span>
-            </button>
-          </Reveal>
-        ))}
+                <span className={styles.name}>{d.name}</span>
+                <span className={styles.desc}>{d.desc}</span>
+                <span className={styles.link}>↳ See featured work</span>
+              </button>
+            </Reveal>
+          ))}
+        </div>
       </div>
     </section>
   );

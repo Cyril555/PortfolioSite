@@ -1,38 +1,31 @@
 .section {
-  position: relative;
-  margin-top: 0;
-  background: var(--ink);
-  color: var(--ink-fg);
-  border-top: 1px solid var(--line);
   overflow: hidden;
 }
 
+/* Faint grid rising from the bottom edge */
 .section::before {
   content: "";
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(var(--ink-grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--ink-grid) 1px, transparent 1px);
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
   background-size: 48px 48px;
-  mask-image: linear-gradient(to top, #000 30%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to top, #000 30%, transparent 100%);
+  opacity: 0.55;
+  mask-image: linear-gradient(to top, #000 10%, transparent 90%);
+  -webkit-mask-image: linear-gradient(to top, #000 10%, transparent 90%);
   pointer-events: none;
 }
 
 .inner {
   position: relative;
-  max-width: var(--max);
-  margin: 0 auto;
   display: grid;
   grid-template-columns: 1.4fr 1fr;
-  border-left: 1px solid var(--ink-line);
-  border-right: 1px solid var(--ink-line);
 }
 
 .lead {
   padding: 88px var(--gutter);
-  border-right: 1px solid var(--ink-line);
+  border-right: 1px solid var(--line);
 }
 
 .label {
@@ -40,7 +33,7 @@
   font-size: 11px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--ink-muted);
+  color: var(--muted);
   margin-bottom: 24px;
 }
 
@@ -53,14 +46,14 @@
 }
 
 .big span {
-  color: var(--ink-muted);
+  color: var(--muted);
 }
 
 .sub {
   margin-top: 20px;
   font-size: 16px;
   font-weight: 300;
-  color: var(--ink-muted);
+  color: var(--fg-soft);
   max-width: 34em;
 }
 
@@ -75,12 +68,14 @@
   grid-template-columns: 1fr auto;
   gap: 4px 16px;
   padding: 24px var(--gutter);
-  border-top: 1px solid var(--ink-line);
-  transition: background 0.2s;
+  border-top: 1px solid var(--line);
+  background: var(--bg);
+  transition: background 0.2s, color 0.2s;
 }
 
 .link:hover {
-  background: var(--ink-2);
+  background: var(--fg);
+  color: var(--bg);
 }
 
 .linkLabel {
@@ -89,7 +84,7 @@
   font-size: 10.5px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--ink-muted);
+  color: var(--muted);
 }
 
 .value {
@@ -115,7 +110,6 @@
 @media (max-width: 900px) {
   .inner {
     grid-template-columns: 1fr;
-    border: 0;
   }
 
   .lead {
