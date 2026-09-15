@@ -9,8 +9,8 @@ Management consulting recruiters (McKinsey, BCG, Bain), health-tech companies, a
 ## Tech Stack
 - Framework: Next.js 16 (App Router)
 - Styling: CSS Modules + CSS custom properties (no Tailwind)
-- Fonts: Onest via `next/font/google` (the only typeface; exposed as `--font-sans`). No serif anywhere on the site.
-- Icons: hand-drawn line SVGs in `src/components/ProjectIcon.tsx` (one per project slug) and inline in `Domains.tsx`. No emojis, no screenshots as thumbnails.
+- Fonts: Host Grotesk (`--font-sans`, all text) and Geist Mono (`--font-mono`, small uppercase labels only), both via `next/font/google`. No serif anywhere.
+- Icons: hand-drawn line SVGs in `src/components/ProjectIcon.tsx` (one per project slug) and inline in `Domains.tsx`, square caps and mitred joins. No emojis, no screenshots as thumbnails.
 - Deployment: Vercel via GitHub integration (every push to `main` deploys to production; other branches get preview URLs)
 - Package manager: npm (package-lock.json is the lockfile in use)
 
@@ -22,45 +22,45 @@ Management consulting recruiters (McKinsey, BCG, Bain), health-tech companies, a
 ## Design System
 
 ### Aesthetic Direction
-Clean, modern, minimal. One sans typeface, generous whitespace, rounded surfaces, a single accent colour. No serif type, no paper grain, no grid rules, no parallax.
+Grayscale and serious, modelled on Palantir's site: charcoal and white, large light-weight headings, tiny mono uppercase labels, and 1px rules that divide every section into cells. No colour accent (no orange), no rounded corners, no shadows, no serif type, no parallax.
 
 ### Colour Palette (CSS Variables in `src/app/globals.css`)
-- `--bg: #f7f7f5` page ground · `--surface: #ffffff` cards
-- `--fg: #121417` text · `--fg-soft` / `--muted` secondary text
-- `--accent: #d4582a` burnt orange for metrics, icons and highlights · `--accent-soft` tinted backgrounds
-- `--border` / `--border-strong` dividers · `--radius: 16px`
-- Dark theme overrides live under `[data-theme='dark']`; the toggle is in `Nav.tsx`.
-- Legacy aliases `--serif`, `--display`, `--mono` all resolve to `--sans`. Do not reintroduce a second typeface.
+- Light body: `--bg #ffffff`, `--panel #f4f4f4` (hover/fill), `--fg #1e2124`, `--fg-soft`, `--muted #72767b`, `--line #dcdddf`, `--line-strong`
+- Dark bands (nav, hero, contact, footer): `--ink #0e0f11`, `--ink-fg`, `--ink-muted`, `--ink-line`, `--ink-grid` (the faint 48px background grid)
+- Dark theme overrides under `[data-theme='dark']`; toggle in `Nav.tsx`
+- Aliases `--accent`, `--border`, `--card`, `--display`, `--serif` exist only so the project detail page keeps working; they map to grayscale tokens
 
 ### Typography Rules
-- Headings: Onest 700, letter-spacing -0.02em to -0.03em
-- Body: Onest 400, 14-18px, line-height 1.6
-- Labels: Onest 600, 11-12px, uppercase, letter-spacing 0.08-0.1em
-- IMPORTANT: Never use serif fonts, Inter, Roboto, Arial, or system fonts as the primary face
-- IMPORTANT: Never use purple gradients or generic AI aesthetics
+- Headings: Host Grotesk 300-400, letter-spacing -0.02em to -0.035em
+- Body: Host Grotesk 400, 14-18px
+- Labels, buttons, nav links: Geist Mono 10.5-12px, uppercase, letter-spacing 0.06em
+- Link markers use "↳" and "↗"
+- IMPORTANT: Never use serif fonts, Inter, Roboto or Arial; never add a colour accent or purple gradients
 
-### Layout
-- Max content width: 1200px (`--max`), 40px horizontal gutter (`--gutter`, 20px on mobile)
-- Sections stack with 88px top padding; cards use `--surface`, 1px `--border`, `--radius`
-- Impact metrics: accent-colour numbers with small muted labels
+### Layout and Grid
+- Max width 1240px (`--max`), 40px gutter (`--gutter`, 20px on mobile)
+- Every light section is a `<section className="frame">`: side rules on the container, a full-bleed bottom rule, and crosshair marks where they meet (all in `globals.css`)
+- Sections open with `SectionHead` (220px mono label column, light title, optional right slot such as the project filter)
+- Content lives in ruled cells that share 1px borders; hover fills a cell with `--panel` or inverts to `--ink`
+- Hero and contact use a fading 48px grid background; the portrait is grayscale with corner ticks
 
 ### Animation
 - `Reveal` component: intersection-observer fade and 28px rise, easing cubic-bezier(0.22, 1, 0.36, 1)
-- Hover: 3px lift on cards. Nothing else.
+- Hover: background fills and inversions only. The status square in the hero blinks slowly.
 
 ## Information Architecture
 
 ### Navigation
-Projects → Experience → Contact (+ "Get in touch" CTA, theme toggle)
+Work → Projects → Experience → Contact (+ "Get in touch" CTA, theme toggle)
 
 ### Page Structure (`src/app/page.tsx`)
 1. **Hero** — "Now" status pill (current role), headline, one-line positioning, two CTAs, portrait (`public/profile.jpg`), 4-cell metrics row
-2. **Now** — highlighted card for the current role (Clinical AI Fellow, Synthax AI) with three outcomes
-3. **Domains** — Medicine, Technology, Strategy cards; clicking one filters the projects grid via a `filter-domain` window event
-4. **Projects** — all case studies in a filterable 3-column grid, each with a line-icon tile; links to `/projects/[slug]`
+2. **Now** — current role (Clinical AI Fellow, Synthax AI): fact column plus three outcomes
+3. **Domains** — Medicine, Technology, Strategy ruled cells; clicking one filters the projects grid via a `filter-domain` window event
+4. **Projects** — all case studies in a filterable 3-column ruled grid, each with a line icon on a grid-paper tile; links to `/projects/[slug]`
 5. **Experience** — dated timeline from `src/lib/experience.ts`, current role marked "Now"
 6. **Education and skills** — education stack + skill chips
-7. **Contact** — dark card with email and LinkedIn
+7. **Contact** — dark band with email and LinkedIn rows
 8. **Footer**
 
 ### Case Study Template (Problem → Approach → Outcome)

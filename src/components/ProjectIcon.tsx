@@ -79,9 +79,9 @@ export default function ProjectIcon({ slug, size = 28, className }: Props) {
       height={size}
       fill="none"
       stroke="currentColor"
-      strokeWidth={1.6}
-      strokeLinecap="round"
-      strokeLinejoin="round"
+      strokeWidth={1.4}
+      strokeLinecap="square"
+      strokeLinejoin="miter"
       aria-hidden="true"
     >
       {ICONS[slug] ?? <circle cx="12" cy="12" r="8" />}

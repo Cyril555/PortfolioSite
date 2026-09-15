@@ -1,4 +1,5 @@
 import Reveal from "./Reveal";
+import SectionHead from "./SectionHead";
 import styles from "./Now.module.css";
 
 const POINTS = [
@@ -11,37 +12,52 @@ const POINTS = [
     body: "Confirm-before-commit actions, abstain over guess, and reversibility-tiered gating for the agentic system. Under review with the founders.",
   },
   {
-    title: "Built the demo now used with prospective clinics",
-    body: "Reporting directly to the CEO in a four-person team, twenty hours a week alongside LSE.",
+    title: "Built the demo used with prospective clinics",
+    body: "Reporting directly to the CEO in a four-person team, part-time alongside LSE.",
   },
+];
+
+const FACTS = [
+  ["Role", "Clinical AI Fellow"],
+  ["Company", "Synthax AI"],
+  ["Stage", "Seed"],
+  ["Focus", "US outpatient clinics"],
+  ["Since", "Aug 2026"],
 ];
 
 export default function Now() {
   return (
-    <section className={styles.section} id="now">
-      <Reveal>
-        <div className={styles.card}>
-          <div className={styles.head}>
-            <div className={styles.eyebrow}>Current role · Aug 2026 → present</div>
-            <h2 className={styles.title}>Clinical AI Fellow, Synthax AI</h2>
-            <p className={styles.desc}>
-              A seed-stage AI operating layer for US outpatient clinics, based in London.
-            </p>
-            <span className={styles.live}>
-              <span className={styles.liveDot} />
-              Product live on the Synthax site
-            </span>
-          </div>
-          <ul className={styles.points}>
-            {POINTS.map((p) => (
-              <li key={p.title}>
-                <strong>{p.title}</strong>
-                <span>{p.body}</span>
-              </li>
+    <section className="frame" id="now">
+      <SectionHead label="Current role" title="Synthax AI" />
+      <div className={styles.grid}>
+        <Reveal className={styles.factsCell}>
+          <dl className={styles.facts}>
+            {FACTS.map(([k, v]) => (
+              <div key={k} className={styles.fact}>
+                <dt>{k}</dt>
+                <dd>{v}</dd>
+              </div>
             ))}
-          </ul>
+          </dl>
+          <p className={styles.status}>
+            <span className={styles.square} aria-hidden="true" />
+            Product live on synthax.ai
+          </p>
+        </Reveal>
+        <div className={styles.points}>
+          {POINTS.map((p, i) => (
+            <Reveal key={p.title} delay={0.05 * i}>
+              <div className={styles.point}>
+                <span className={styles.arrow} aria-hidden="true">↳</span>
+                <div>
+                  <h3>{p.title}</h3>
+                  <p>{p.body}</p>
+                </div>
+              </div>
+            </Reveal>
+          ))}
         </div>
-      </Reveal>
+      </div>
     </section>
   );
 }

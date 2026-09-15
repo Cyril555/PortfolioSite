@@ -1,13 +1,12 @@
 import Reveal from "./Reveal";
+import SectionHead from "./SectionHead";
 import { EDUCATION, SKILLS } from "@/lib/experience";
 import styles from "./Credentials.module.css";
 
 export default function Credentials() {
   return (
-    <section className={styles.section} id="credentials">
-      <Reveal>
-        <h2 className={styles.heading}>Education and skills</h2>
-      </Reveal>
+    <section className="frame" id="credentials">
+      <SectionHead label="Credentials" title="Education and skills" />
       <div className={styles.grid}>
         <div className={styles.edu}>
           {EDUCATION.map((e, i) => (
@@ -29,13 +28,11 @@ export default function Credentials() {
             <Reveal key={group} delay={0.08 + 0.05 * i}>
               <div className={styles.group}>
                 <div className={styles.groupLabel}>{group}</div>
-                <div className={styles.chips}>
+                <ul className={styles.items}>
                   {items.map((s) => (
-                    <span className={styles.chip} key={s}>
-                      {s}
-                    </span>
+                    <li key={s}>{s}</li>
                   ))}
-                </div>
+                </ul>
               </div>
             </Reveal>
           ))}

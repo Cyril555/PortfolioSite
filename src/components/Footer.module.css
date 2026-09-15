@@ -1,14 +1,27 @@
 .footer {
+  background: var(--ink);
+  color: var(--ink-muted);
+  border-top: 1px solid var(--ink-line);
+}
+
+.inner {
   max-width: var(--max);
   margin: 0 auto;
-  padding: 24px var(--gutter) 40px;
+  padding: 18px var(--gutter);
   display: flex;
   justify-content: space-between;
   gap: 12px;
   flex-wrap: wrap;
+  border-left: 1px solid var(--ink-line);
+  border-right: 1px solid var(--ink-line);
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
-.footer span {
-  font-size: 13px;
-  color: var(--muted);
+@media (max-width: 700px) {
+  .inner {
+    border: 0;
+  }
 }
