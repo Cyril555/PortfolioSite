@@ -4,7 +4,7 @@ const METRICS = [
   { value: "1st", label: "Anthropic × LSE Hackathon, 2026" },
   { value: "2 yrs", label: "NHS foundation training" },
   { value: "5", label: "Publications and conference papers" },
-  { value: "3", label: "Languages, full professional" },
+  { value: "4", label: "Fluent in four languages" },
 ];
 
 export default function Hero() {

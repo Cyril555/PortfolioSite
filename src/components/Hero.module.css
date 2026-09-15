@@ -161,11 +161,13 @@
   border-top: 1px solid var(--ink-line);
 }
 
+/* Each metric spans two shared rows (label, number) so every label and every
+   number sits on the same line across columns, however the labels wrap. */
 .metric {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 20px;
+  grid-row: span 2;
+  display: grid;
+  grid-template-rows: subgrid;
+  row-gap: 20px;
   padding: 20px var(--gutter) 24px;
   border-right: 1px solid var(--ink-line);
 }
@@ -175,6 +177,7 @@
 }
 
 .metric dt {
+  align-self: start;
   font-family: var(--mono);
   font-size: 10.5px;
   letter-spacing: 0.06em;
@@ -183,6 +186,7 @@
 }
 
 .metric dd {
+  align-self: end;
   font-size: 40px;
   font-weight: 300;
   letter-spacing: -0.03em;
