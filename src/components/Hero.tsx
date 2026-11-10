@@ -16,7 +16,7 @@ export default function Hero() {
         <div className={styles.grid}>
           <div className={styles.text}>
             <h1 className={styles.title}>
-              Doctor turned operator: <span>clinical AI, product and life-sciences strategy.</span>
+              Doctor turned technology consultant: <span>clinical AI, product and life-sciences strategy.</span>
             </h1>
             <p className={styles.sub}>
               2 years on NHS wards · Clinical AI Fellow at Synthax · LSE Global Master&apos;s in Management.
