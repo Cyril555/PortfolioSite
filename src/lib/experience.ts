@@ -13,8 +13,8 @@ export const EXPERIENCE: Role[] = [
     period: "Aug 2026 → present",
     current: true,
     points: [
-      "Designed and shipped a live voice-driven client onboarding platform, built end to end with Claude Code.",
-      "Proposed the trust-and-safety architecture for the company's agentic system.",
+      "Built and shipped a live voice-driven client onboarding platform, end to end with Claude Code.",
+      "Proposed the trust-and-safety architecture for the company's agentic clinical AI system.",
       "Report to the CEO in a four-person team, part-time alongside LSE.",
     ],
   },
@@ -52,7 +52,7 @@ export const EXPERIENCE: Role[] = [
     points: [
       "Audited 51 consecutive hernia repairs against the 80% day-case standard; presented at the NLaG Surgical Audit Meeting.",
       "Led a vitamin D testing quality-improvement audit that raised testing from 28.6% to 59.3% (p = 0.022).",
-      "Teaching Coordinator: organised 15 seminars for c. 150 FY2 doctors across Yorkshire.",
+      "Teaching Coordinator: co-organised, with a team of resident doctors, 15 seminars for c. 150 FY2 doctors across Yorkshire.",
     ],
   },
   {
@@ -90,5 +90,4 @@ export const EDUCATION = [
 export const SKILLS = {
   Technical: ["TypeScript", "Python", "Claude API and Claude Code", "ElevenLabs Conversational AI", "Figma", "SQL (basics)"],
   Languages: ["English (native)", "Mandarin", "Tamil", "Spanish (intermediate)"],
-  Finance: ["Accounting (CFI)", "AmplifyME Sales and Trading"],
 };

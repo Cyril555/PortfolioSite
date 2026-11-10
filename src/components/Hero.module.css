@@ -152,7 +152,7 @@
   border: 1px solid var(--ink-line);
   border-top: 0;
   font-family: var(--mono);
-  font-size: 10.5px;
+  font-size: 11px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--ink-muted);
@@ -182,7 +182,7 @@
 .metric dt {
   align-self: start;
   font-family: var(--mono);
-  font-size: 10.5px;
+  font-size: 11px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--ink-muted);
@@ -224,9 +224,10 @@
     border-right: 0;
   }
 
-  /* No portrait on phones (and the image itself is not requested, see Hero.tsx) */
   .figure {
-    display: none;
+    margin: 0 var(--gutter) 24px;
+    max-width: 280px;
+    align-self: flex-start;
   }
 
   .sub {

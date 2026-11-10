@@ -15,7 +15,7 @@ export interface Project {
   metrics: ProjectMetric[];
   subtitle?: string;
   date?: string;
-  /** ISO start date used to order the Articles page and the next-case-study links, newest first. */
+  /** ISO start date used to order the Work page and the next-case-study links, newest first. */
   sortDate: string;
   articleBody?: ArticleSection[];
   demoUrl?: string;
@@ -27,6 +27,14 @@ export type ArticleSection =
   | { type: "list"; items: string[] }
   | { type: "quote"; text: string; attribution?: string }
   | { type: "image"; src: string; caption?: string };
+
+/** Full case-study cards on /work; everything else appears under Other projects. */
+export const FEATURED_PROJECT_SLUGS = [
+  "reframe-ai",
+  "vitamin-d-audit",
+  "day-case-surgery-audit",
+  "continuous-glucose-monitoring",
+] as const;
 
 /*
  * Facts follow the master CV (Sep 2026) plus the user's corrections:
@@ -44,15 +52,15 @@ export const PROJECTS: Project[] = [
     tag: "CLINICAL AI",
     title: "Reframe.ai",
     problem:
-      "LLMs are trained to be agreeable. In clinical settings a sycophantic model validates a doctor's framing rather than reasoning from the evidence, amplifying anchoring bias, which contributes to up to 75% of diagnostic errors.",
+      "LLMs are trained to be agreeable. In clinical settings a sycophantic model validates a doctor's framing rather than reasoning from the evidence, amplifying cognitive biases. Cognitive factors contribute to roughly three-quarters of diagnostic errors (Graber et al., 2005).",
     approach:
-      "Built a five-agent system with a blinded adjudicator. A sycophancy monitor scores each turn 0 to 100 across five behavioural signals. Above 70 it triggers a structured debate between two hypothesis agents, adjudicated by a judge that never sees the clinician's original framing.",
+      "Built a five-agent system with a blinded adjudicator. All five agents run on every clinical turn; when the sycophancy monitor scores above 70, it triggers a structured debate between two hypothesis agents, adjudicated by a judge that never sees the clinician's original framing.",
     outcome:
-      "Won first place at the Anthropic × LSE Hackathon on 25 March 2026. On the demo case, a Type A aortic dissection framed as a STEMI, the monitor scored the turn 84/100 and triggered the blinded debate.",
+      "Won first place at the Anthropic × LSE Hackathon on 25 March 2026. On the demo case, a Type A aortic dissection framed as a STEMI, the monitor triggered the blinded debate.",
     metrics: [
       { value: "1st", label: "Anthropic × LSE Hackathon 2026" },
       { value: "5", label: "Claude agents in parallel" },
-      { value: "84", label: "Sycophancy score on demo case" },
+      { value: "24h", label: "Hackathon prototype build" },
     ],
     subtitle:
       "A clinical decision support tool designed to catch one failure mode of LLMs: being too agreeable to disagree.",
@@ -73,7 +81,7 @@ export const PROJECTS: Project[] = [
       },
       {
         type: "paragraph",
-        text: "Reframe runs five Claude agents in parallel on every clinical turn: a Clinical Assistant for the primary response, a Sycophancy Monitor scoring the turn 0 to 100, two Debate Agents generating competing hypotheses, and a Blinded Judge that adjudicates on evidence alone.",
+        text: "Reframe runs five Claude agents in parallel on every clinical turn: a Clinical Assistant for the primary response, a Sycophancy Monitor scoring the turn 0 to 100, two Debate Agents generating competing hypotheses, and a Blinded Judge that adjudicates on evidence alone. The structured debate runs when the monitor score exceeds 70.",
       },
       {
         type: "paragraph",
@@ -135,15 +143,15 @@ export const PROJECTS: Project[] = [
     problem:
       "Emergency triage and dispatch decisions have to be made quickly, often with incomplete information about the patient.",
     approach:
-      "Led a four-person team at the Harvard Innovation Labs Hackathon (5 to 6 April 2024) to design Reviver, an AI-powered emergency triage and dispatch concept.",
-    outcome: "Placed in the global top six and won the UK national round.",
+      "Led a four-person team at the Harvard Health Systems Innovation Lab (HSIL) Hackathon (5 to 6 April 2024; London hub hosted by King's College London) to design Reviver, an AI-powered emergency triage and dispatch concept.",
+    outcome: "London hub winner, Harvard Health Systems Innovation Lab (HSIL) Hackathon 2024.",
     metrics: [
-      { value: "Top 6", label: "Global, Harvard Innovation Labs Hackathon" },
-      { value: "UK", label: "National winner" },
+      { value: "HSIL", label: "Harvard Health Systems Innovation Lab Hackathon 2024" },
+      { value: "London", label: "Hub winner" },
       { value: "4", label: "Person team, as lead" },
     ],
     subtitle:
-      "An AI-powered emergency triage and dispatch concept. Global top six and UK national winner at the Harvard Innovation Labs Hackathon.",
+      "An AI-powered emergency triage and dispatch concept. London hub winner at the Harvard Health Systems Innovation Lab (HSIL) Hackathon 2024.",
     date: "Apr 2024",
     sortDate: "2024-04-05",
   },
@@ -189,7 +197,7 @@ export const PROJECTS: Project[] = [
     outcome:
       "A Figma prototype and pitch deck presented to venture capitalists, covering market sizing, business strategy and commercialisation.",
     metrics: [
-      { value: "5", label: "Doctors led" },
+      { value: "5", label: "Doctors on the project team" },
       { value: "VC", label: "Pitched to venture capitalists" },
     ],
     subtitle:
@@ -200,7 +208,7 @@ export const PROJECTS: Project[] = [
       { type: "heading", text: "The gap" },
       {
         type: "paragraph",
-        text: "Post-diagnosis, NHS ADHD patients are typically discharged with a leaflet and a signpost to external resources.",
+        text: "Post-diagnosis, many ADHD patients and families still need structured, ongoing education beyond what a single clinic visit typically provides.",
       },
       { type: "heading", text: "The fellowship" },
       {
@@ -243,11 +251,11 @@ export const PROJECTS: Project[] = [
     approach:
       "Led, as first author, a two-cycle audit of 90 consecutive perioperative diabetic patients (45 per cycle) against 11 Joint British Diabetes Societies standards, introducing continuous glucose monitoring between cycles.",
     outcome:
-      "Standards met at over 80% compliance rose from 8 to 9 of 11. Hourly glucose monitoring, the weakest domain, improved to over 75% among CGM users, and hypoglycaemia was avoided in over 80% of patients. Poster presented at the Vascular Society AGM 2024.",
+      "Standards met at over 80% compliance rose from 8 to 9 of 11. Hourly glucose monitoring, the weakest domain, improved to over 75% among CGM users. Poster presented at the Vascular Society AGM 2024.",
     metrics: [
       { value: "8→9", label: "Of 11 standards above 80% compliance" },
       { value: "90", label: "Consecutive patients, two cycles" },
-      { value: ">80%", label: "Patients with hypoglycaemia avoided" },
+      { value: ">75%", label: "Hourly monitoring among CGM users" },
     ],
     subtitle:
       "A first-author, two-cycle audit of perioperative diabetes care, with continuous glucose monitoring introduced between cycles.",
@@ -266,12 +274,12 @@ export const PROJECTS: Project[] = [
       },
       {
         type: "paragraph",
-        text: "CGM is standard in outpatient diabetic care but rarely used for surgical inpatients.",
+        text: "CGM is widely used in outpatient diabetes care, particularly type 1, but was rarely used for surgical inpatients on this ward.",
       },
       { type: "heading", text: "Takeaway" },
       {
         type: "paragraph",
-        text: "The sensor technology was not new. The guidelines were not new. What was new was applying an existing tool in a setting where it had not been tried, measuring the result, and showing that the value lay in the workflow change rather than the device.",
+        text: "Introducing CGM between audit cycles was associated with improvement in hourly monitoring adherence among users. The audit measured ward workflow and monitoring practice, not device outcomes alone.",
       },
     ],
   },
@@ -283,16 +291,16 @@ export const PROJECTS: Project[] = [
     problem:
       "At-risk inpatients aged 65 and over on a diabetes and endocrinology ward were not routinely being tested for vitamin D deficiency.",
     approach:
-      "Led a quality-improvement audit of 55 at-risk inpatients during my FY2 rotation. Delivered a teaching session, put up guideline posters and added reminders at ward meetings.",
+      "Led a quality-improvement audit of 55 at-risk inpatients across two audit cycles during my FY2 rotation. Delivered a teaching session, put up guideline posters and added reminders at ward meetings.",
     outcome:
-      "Testing rates rose from 28.6% to 59.3% (χ² = 5.27, p = 0.022). Between 50% and 71% of those tested were deficient. Recommended electronic prescribing prompts and a re-audit.",
+      "Testing rose from 8/28 (28.6%) to 16/27 (59.3%) per cycle (χ² = 5.27, p = 0.022). Between 50% and 71% of those tested were deficient per cycle. Recommended electronic prescribing prompts and a re-audit.",
     metrics: [
-      { value: "28.6→59.3%", label: "Testing rate after intervention" },
+      { value: "8/28→16/27", label: "Tests per cycle (28.6% → 59.3%)" },
       { value: "p = 0.022", label: "χ² = 5.27" },
-      { value: "55", label: "At-risk inpatients" },
+      { value: "55", label: "Patients across two audit cycles" },
     ],
     subtitle:
-      "A quality-improvement audit that doubled vitamin D testing among at-risk inpatients aged 65 and over.",
+      "A quality-improvement audit that raised vitamin D testing among at-risk inpatients aged 65 and over.",
     date: "2024–25",
     sortDate: "2024-08-01",
     articleBody: [
@@ -300,6 +308,11 @@ export const PROJECTS: Project[] = [
       {
         type: "paragraph",
         text: "Older inpatients are at high risk of vitamin D deficiency, and guidelines recommend testing and supplementation where indicated.",
+      },
+      { type: "heading", text: "Method" },
+      {
+        type: "paragraph",
+        text: "Fifty-five at-risk inpatients were audited across two cycles: 28 in cycle one and 27 in cycle two. Testing and deficiency rates are reported per cycle.",
       },
       { type: "heading", text: "Why it mattered" },
       {
@@ -353,9 +366,9 @@ export const PROJECTS: Project[] = [
     outcome:
       "Recommended a modular architecture for near-term time-to-value, automated revenue reconciliation via A2X, and deferring full ERP until £75m+ revenue. Delivered as a phased technology roadmap and a case-study deck.",
     metrics: [
-      { value: "9", label: "Team members led" },
       { value: "8 wks", label: "Engagement" },
-      { value: "£75m+", label: "Revenue before full ERP" },
+      { value: "Modular", label: "Systems architecture recommended" },
+      { value: "£75m+", label: "ERP deferral threshold in roadmap" },
     ],
     subtitle:
       "Leading a nine-person student consulting team to a phased systems roadmap for a fast-growing personal-care brand.",
@@ -390,6 +403,17 @@ export function getProject(slug: string): Project | undefined {
 /** Every case study, newest first. */
 export const PROJECTS_BY_DATE = [...PROJECTS].sort((a, b) => b.sortDate.localeCompare(a.sortDate));
 
+export function getFeaturedProjects(): Project[] {
+  return FEATURED_PROJECT_SLUGS.map((slug) => getProject(slug)).filter(
+    (p): p is Project => p !== undefined,
+  );
+}
+
+export function getOtherProjects(): Project[] {
+  const featured = new Set<string>(FEATURED_PROJECT_SLUGS);
+  return PROJECTS_BY_DATE.filter((p) => !featured.has(p.slug));
+}
+
 /** Reading time from the actual word count of the summary and article, at ~220 words a minute. */
 export function readingTime(project: Project): string {
   const parts: string[] = [project.problem, project.approach, project.outcome];
@@ -400,3 +424,5 @@ export function readingTime(project: Project): string {
   const words = parts.join(" ").split(/\s+/).filter(Boolean).length;
   return `${Math.max(1, Math.round(words / 220))} min read`;
 }
+
+export const GRABER_DOI = "https://doi.org/10.1001/archinte.165.13.1493";

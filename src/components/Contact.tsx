@@ -13,10 +13,10 @@ export default function Contact() {
         <Reveal className={styles.lead}>
           <div className={styles.label}>Contact</div>
           <h2 className={styles.big}>
-            Building clinical software? <span>Let&apos;s talk.</span>
+            Strategy, health-tech or <span>AI product?</span>
           </h2>
           <p className={styles.sub}>
-            Based in London. Open to clinical product, health-tech and strategy roles.
+            Based in London. Available from September 2027 for strategy, health-tech and AI product roles.
           </p>
         </Reveal>
         <div className={styles.links}>

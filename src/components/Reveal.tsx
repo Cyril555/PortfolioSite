@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, ReactNode } from "react";
+import styles from "./Reveal.module.css";
 
 interface RevealProps {
   children: ReactNode;
@@ -10,27 +11,45 @@ interface RevealProps {
 
 export default function Reveal({ children, delay = 0, className = "" }: RevealProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
+  const [animate, setAnimate] = useState(false);
 
   useEffect(() => {
-    if (!ref.current) return;
+    const node = ref.current;
+    if (!node) return;
+
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) return;
+
+    setAnimate(true);
+    setVisible(false);
+
     const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-      { threshold: 0.1 }
+      ([entry]) => {
+        if (entry.isIntersecting) setVisible(true);
+      },
+      { threshold: 0.1 },
     );
-    observer.observe(ref.current);
+    observer.observe(node);
     return () => observer.disconnect();
   }, []);
 
   return (
     <div
       ref={ref}
-      className={className}
-      style={{
-        opacity: visible ? 1 : 0,
-        transform: visible ? "translateY(0)" : "translateY(28px)",
-        transition: `opacity 0.7s cubic-bezier(0.22,1,0.36,1) ${delay}s, transform 0.7s cubic-bezier(0.22,1,0.36,1) ${delay}s`,
-      }}
+      className={[
+        styles.root,
+        animate && !visible ? styles.pending : "",
+        animate && visible ? styles.shown : "",
+        className,
+      ]
+        .filter(Boolean)
+        .join(" ")}
+      style={
+        animate && visible
+          ? { transitionDelay: `${delay}s` }
+          : undefined
+      }
     >
       {children}
     </div>

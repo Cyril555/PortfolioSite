@@ -35,8 +35,8 @@ export default function NotFound() {
               <Link href="/" className={styles.primary}>
                 Back to home <span aria-hidden="true">→</span>
               </Link>
-              <Link href="/articles" className={styles.secondary}>
-                Articles
+              <Link href="/work" className={styles.secondary}>
+                Work
               </Link>
             </div>
           </div>
