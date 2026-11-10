@@ -18,7 +18,7 @@ const mono = Geist_Mono({
   display: "swap",
 });
 
-const defaultTitle = "Cyril Vijayakumar — Clinical AI, product and strategy";
+const defaultTitle = "Cyril Vijayakumar — Doctor turned technology consultant";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

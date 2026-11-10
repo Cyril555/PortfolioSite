@@ -5,13 +5,14 @@ import Experience from "@/components/Experience";
 import Credentials from "@/components/Credentials";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
-import { SITE_URL } from "@/lib/site";
+import { SITE_DESCRIPTION, SITE_URL } from "@/lib/site";
 
 const PERSON_JSON_LD = {
   "@context": "https://schema.org",
   "@type": "Person",
   name: "Dr Cyrilkumaar Vijayakumar",
   jobTitle: "Clinical AI Fellow",
+  description: SITE_DESCRIPTION,
   url: SITE_URL,
   sameAs: ["https://www.linkedin.com/in/cyrilvijayakumar"],
   alumniOf: [
