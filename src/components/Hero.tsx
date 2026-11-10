@@ -15,12 +15,11 @@ export default function Hero() {
       <div className={styles.inner}>
         <div className={styles.grid}>
           <div className={styles.text}>
-            <h1 className={styles.title}>
-              Doctor turned technology consultant: <span>clinical AI, product and life-sciences strategy.</span>
-            </h1>
+            <h1 className={styles.title}>Doctor turned technology consultant.</h1>
             <p className={styles.sub}>
-              2 years on NHS wards · Clinical AI Fellow at Synthax · LSE Global Master&apos;s in Management.
-              Open to strategy, health-tech and AI product roles from Sep 2027.
+              <span className={styles.focus}>Clinical AI, product and life-sciences strategy</span>
+              {" · "}
+              2 years on NHS wards · Synthax · LSE GMiM · Open from Sep 2027.
             </p>
             <div className={styles.actions}>
               <a className={styles.primary} href="#work">
