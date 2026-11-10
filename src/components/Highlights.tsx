@@ -5,9 +5,9 @@ import ProjectIcon from "./ProjectIcon";
 import { getProject } from "@/lib/projects";
 import styles from "./Highlights.module.css";
 
-/** One key project per discipline. Everything else lives on /articles. */
+/** One key project per discipline. Everything else lives on /work. */
 const HIGHLIGHTS = [
-  { discipline: "Medicine", context: "NHS · FY1 audit", slug: "continuous-glucose-monitoring" },
+  { discipline: "Medicine", context: "NHS · FY2 QI audit", slug: "vitamin-d-audit" },
   { discipline: "Technology", context: "Hackathon winner", slug: "reframe-ai" },
   { discipline: "Strategy", context: "Castore Consulting", slug: "castore-digital-strategy" },
 ];
@@ -50,7 +50,7 @@ export default function Highlights() {
           })}
         </div>
         <div className={styles.moreBar}>
-          <Link href="/articles" className={styles.moreLink}>
+          <Link href="/work" className={styles.moreLink}>
             <span className={styles.moreText}>See more work</span>
             <span className={styles.moreArrow} aria-hidden="true">→</span>
           </Link>

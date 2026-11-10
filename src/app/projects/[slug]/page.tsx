@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { getProject, PROJECTS, PROJECTS_BY_DATE, readingTime } from "@/lib/projects";
+import { getProject, PROJECTS, PROJECTS_BY_DATE, readingTime, GRABER_DOI } from "@/lib/projects";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
@@ -21,12 +21,44 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const project = getProject(slug);
   if (!project) return {};
+  const title = `${project.title} — Cyril Vijayakumar`;
+  const description = project.subtitle ?? project.outcome;
   return {
     title: project.title,
-    description: project.subtitle,
+    description,
     alternates: { canonical: `/projects/${project.slug}` },
-    openGraph: { title: project.title, description: project.subtitle, url: `/projects/${project.slug}` },
+    openGraph: {
+      title,
+      description,
+      url: `/projects/${project.slug}`,
+      images: [{ url: `/projects/${project.slug}/opengraph-image`, width: 1200, height: 630, alt: project.title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+    },
   };
+}
+
+function SummaryText({ slug, label, text }: { slug: string; label: string; text: string }) {
+  if (slug === "reframe-ai" && label === "Problem") {
+    const cite = "(Graber et al., 2005).";
+    const idx = text.indexOf(cite);
+    if (idx !== -1) {
+      return (
+        <p>
+          {text.slice(0, idx)}
+          (
+          <a href={GRABER_DOI} target="_blank" rel="noopener noreferrer">
+            Graber et al., 2005
+          </a>
+          ).
+        </p>
+      );
+    }
+  }
+  return <p>{text}</p>;
 }
 
 export default async function ProjectPage({ params }: Props) {
@@ -34,7 +66,6 @@ export default async function ProjectPage({ params }: Props) {
   const project = getProject(slug);
   if (!project) notFound();
 
-  // Follow the same newest-first order as the Articles page
   const index = PROJECTS_BY_DATE.indexOf(project);
   const next = PROJECTS_BY_DATE[(index + 1) % PROJECTS_BY_DATE.length];
   const facts = [
@@ -46,7 +77,7 @@ export default async function ProjectPage({ params }: Props) {
 
   return (
     <>
-      <Nav mode="page" current="articles" />
+      <Nav mode="page" current="work-page" />
 
       <main>
         <header className={`frame ${styles.header}`}>
@@ -98,7 +129,7 @@ export default async function ProjectPage({ params }: Props) {
           ].map(([label, text]) => (
             <div key={label} className={styles.summaryCell}>
               <div className={styles.cellLabel}>{label}</div>
-              <p>{text}</p>
+              <SummaryText slug={slug} label={label} text={text} />
             </div>
           ))}
         </section>
@@ -111,9 +142,9 @@ export default async function ProjectPage({ params }: Props) {
         )}
 
         <nav className={`frame ${styles.pager}`} aria-label="Project navigation">
-          <Link href="/articles" className={styles.pagerLink}>
+          <Link href="/work" className={styles.pagerLink}>
             <span className={styles.cellLabel}>Back</span>
-            <span className={styles.pagerTitle}>← All articles</span>
+            <span className={styles.pagerTitle}>← All work</span>
           </Link>
           <Link href={`/projects/${next.slug}`} className={`${styles.pagerLink} ${styles.pagerNext}`}>
             <span className={styles.cellLabel}>Next case study</span>

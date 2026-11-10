@@ -1,0 +1,10 @@
+{
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "cyrilv.com" }],
+      "destination": "https://www.cyrilv.com/:path*",
+      "permanent": true
+    }
+  ]
+}

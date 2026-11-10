@@ -18,25 +18,31 @@ const mono = Geist_Mono({
   display: "swap",
 });
 
+const defaultTitle = "Cyril Vijayakumar — Clinical AI, product and strategy";
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Cyril Vijayakumar — Doctor building clinical software",
+    default: defaultTitle,
     template: "%s — Cyril Vijayakumar",
   },
   description: SITE_DESCRIPTION,
   alternates: { canonical: "/" },
+  icons: {
+    icon: [{ url: "/favicon.ico", sizes: "32x32" }, { url: "/icon.svg", type: "image/svg+xml" }],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+  },
   openGraph: {
     type: "website",
     url: "/",
     siteName: SITE_NAME,
-    title: "Cyril Vijayakumar — Doctor building clinical software",
+    title: defaultTitle,
     description: SITE_DESCRIPTION,
     locale: "en_GB",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Cyril Vijayakumar — Doctor building clinical software",
+    title: defaultTitle,
     description: SITE_DESCRIPTION,
   },
 };
